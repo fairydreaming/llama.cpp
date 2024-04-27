@@ -1832,6 +1832,7 @@ enum e_model {
     MODEL_8x7B,
     MODEL_8x22B,
     MODEL_16x12B,
+    MODEL_10B_128x3_66B,
 };
 
 static const size_t kiB = 1024;
@@ -3746,6 +3747,7 @@ static const char * llama_model_type_name(e_model type) {
         case MODEL_8x7B:   return "8x7B";
         case MODEL_8x22B:  return "8x22B";
         case MODEL_16x12B: return "16x12B";
+        case MODEL_10B_128x3_66B: return "10B+128x3.66B";
         default:           return "?B";
     }
 }
@@ -4212,23 +4214,13 @@ static void llm_load_hparams(
             {
                 ml.get_key(LLM_KV_ATTENTION_LAYERNORM_RMS_EPS, hparams.f_norm_rms_eps);
 
-                if (hparams.n_expert == 8) {
+                if (hparams.n_expert == 128) {
                     switch (hparams.n_layer) {
-                        case 32: model.type = e_model::MODEL_8x7B; break;
-                        case 56: model.type = e_model::MODEL_8x22B; break;
+                        case 35: model.type = e_model::MODEL_10B_128x3_66B; break;
                         default: model.type = e_model::MODEL_UNKNOWN;
                     }
                 } else {
-                    switch (hparams.n_layer) {
-                        case 22: model.type = e_model::MODEL_1B; break;
-                        case 26: model.type = e_model::MODEL_3B; break;
-                        case 32: model.type = hparams.n_head == hparams.n_head_kv ? e_model::MODEL_7B : e_model::MODEL_8B; break; // LLaMa 8B v3 uses GQA
-                        case 40: model.type = e_model::MODEL_13B; break;
-                        case 48: model.type = e_model::MODEL_34B; break;
-                        case 60: model.type = e_model::MODEL_30B; break;
-                        case 80: model.type = hparams.n_head == hparams.n_head_kv ? e_model::MODEL_65B : e_model::MODEL_70B; break;
-                        default: model.type = e_model::MODEL_UNKNOWN;
-                    }
+                    model.type = e_model::MODEL_UNKNOWN;
                 }
             } break;
 
