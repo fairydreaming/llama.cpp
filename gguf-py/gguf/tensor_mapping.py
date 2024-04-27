@@ -197,13 +197,14 @@ class TensorNameMap:
             "transformer.h.{bid}.ln_2",                                      # gpt2 refact qwen
             "h.{bid}.post_attention_layernorm",                              # bloom
             "transformer.blocks.{bid}.norm_2",                               # mpt
-            "model.layers.{bid}.post_attention_layernorm",                   # llama-hf
+#            "model.layers.{bid}.post_attention_layernorm",                   # llama-hf
             "layers.{bid}.ffn_norm",                                         # llama-pth
             "language_model.encoder.layers.{bid}.post_attention_layernorm",  # persimmon
             "model.layers.{bid}.ln2",                                        # yi
             "h.{bid}.ln_2",                                                  # gpt2
             "model.layers.{bid}.ffn_norm",                                   # internlm2
             "transformer.decoder_layer.{bid}.rms_norm_2",                    # Grok
+            "model.layers.{bid}.residual_layernorm",                         # arctic
         ),
 
         MODEL_TENSOR.FFN_GATE_INP: (
@@ -240,6 +241,7 @@ class TensorNameMap:
             "model.layers.{bid}.feed_forward.w3",                     # internlm2
             "encoder.layers.{bid}.mlp.fc11",                          # nomic-bert
             "model.layers.{bid}.mlp.c_fc",                            # starcoder2
+            "model.layers.{bid}.residual_mlp.w3"                      # arctic
         ),
 
         MODEL_TENSOR.FFN_UP_EXP: (
@@ -266,6 +268,7 @@ class TensorNameMap:
             "model.layers.layers.{bid}.mlp.gate_proj",    # plamo
             "model.layers.{bid}.feed_forward.w1",         # internlm2
             "encoder.layers.{bid}.mlp.fc12",              # nomic-bert
+            "model.layers.{bid}.residual_mlp.w1"          # arctic
         ),
 
         MODEL_TENSOR.FFN_GATE_EXP: (
@@ -299,6 +302,7 @@ class TensorNameMap:
             "model.layers.{bid}.feed_forward.w2",                     # internlm2
             "encoder.layers.{bid}.mlp.fc2",                           # nomic-bert
             "model.layers.{bid}.mlp.c_proj",                          # starcoder2
+            "model.layers.{bid}.residual_mlp.w2"                      # arctic
         ),
 
         MODEL_TENSOR.FFN_DOWN_EXP: (
@@ -369,6 +373,10 @@ class TensorNameMap:
         MODEL_TENSOR.SSM_OUT: (
             "model.layers.{bid}.out_proj",
             "backbone.layers.{bid}.mixer.out_proj",
+        ),
+
+        MODEL_TENSOR.FFN_NORM_EXP: (
+            "model.layers.{bid}.post_attention_layernorm",                   # arctic
         ),
     }
 
