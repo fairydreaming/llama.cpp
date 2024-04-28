@@ -10776,7 +10776,7 @@ struct llm_build_context {
             cb(cur, "ffn_out", il);
 
             struct ggml_tensor * ffn_out = ggml_add(ctx0, cur, ffn_inp);
-            cb(cur, "ffn_out", il);
+            cb(ffn_out, "ffn_out", il);
 
             // MoE
             cur = llm_build_norm(ctx0, inpL, hparams,
