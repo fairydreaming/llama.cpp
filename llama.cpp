@@ -10779,7 +10779,7 @@ struct llm_build_context {
             cb(ffn_out, "ffn_out", il);
 
             // MoE
-            cur = llm_build_norm(ctx0, inpL, hparams,
+            cur = llm_build_norm(ctx0, inpSA, hparams,
                     model.layers[il].ffn_norm_exps, NULL,
                     LLM_NORM_RMS, cb, il);
             cb(cur, "ffn_norm_exps", il);
