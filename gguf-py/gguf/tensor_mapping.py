@@ -204,7 +204,6 @@ class TensorNameMap:
             "h.{bid}.ln_2",                                                  # gpt2
             "model.layers.{bid}.ffn_norm",                                   # internlm2
             "transformer.decoder_layer.{bid}.rms_norm_2",                    # Grok
-            "model.layers.{bid}.residual_layernorm",                         # arctic
         ),
 
         MODEL_TENSOR.FFN_GATE_INP: (
@@ -241,7 +240,6 @@ class TensorNameMap:
             "model.layers.{bid}.feed_forward.w3",                     # internlm2
             "encoder.layers.{bid}.mlp.fc11",                          # nomic-bert
             "model.layers.{bid}.mlp.c_fc",                            # starcoder2
-            "model.layers.{bid}.residual_mlp.w3"                      # arctic
         ),
 
         MODEL_TENSOR.FFN_UP_EXP: (
@@ -268,7 +266,6 @@ class TensorNameMap:
             "model.layers.layers.{bid}.mlp.gate_proj",    # plamo
             "model.layers.{bid}.feed_forward.w1",         # internlm2
             "encoder.layers.{bid}.mlp.fc12",              # nomic-bert
-            "model.layers.{bid}.residual_mlp.w1"          # arctic
         ),
 
         MODEL_TENSOR.FFN_GATE_EXP: (
@@ -302,7 +299,6 @@ class TensorNameMap:
             "model.layers.{bid}.feed_forward.w2",                     # internlm2
             "encoder.layers.{bid}.mlp.fc2",                           # nomic-bert
             "model.layers.{bid}.mlp.c_proj",                          # starcoder2
-            "model.layers.{bid}.residual_mlp.w2"                      # arctic
         ),
 
         MODEL_TENSOR.FFN_DOWN_EXP: (
@@ -375,9 +371,69 @@ class TensorNameMap:
             "backbone.layers.{bid}.mixer.out_proj",
         ),
 
-        MODEL_TENSOR.FFN_NORM_EXP: (
-            "model.layers.{bid}.post_attention_layernorm",                   # arctic
-        ),
+    }
+
+    # architecture-specific block mappings
+    arch_block_mappings_cfg: dict[MODEL_ARCH, dict[MODEL_TENSOR, tuple[str, ...]]] = {
+        MODEL_ARCH.ARCTIC: {
+            MODEL_TENSOR.TOKEN_EMBD: (
+                "model.embed_tokens",
+            ),
+            MODEL_TENSOR.OUTPUT_NORM: (
+                "model.norm",
+            ),
+            MODEL_TENSOR.OUTPUT: (
+                "lm_head",
+            ),
+            MODEL_TENSOR.ROPE_FREQS: (
+                "rope.freqs",
+            ),
+            MODEL_TENSOR.ATTN_NORM: (
+                "model.layers.{bid}.input_layernorm",
+            ),
+            MODEL_TENSOR.ATTN_Q: (
+                "model.layers.{bid}.self_attn.q_proj",
+            ),
+            MODEL_TENSOR.ATTN_K: (
+                "model.layers.{bid}.self_attn.k_proj",
+            ),
+            MODEL_TENSOR.ATTN_V: (
+                "model.layers.{bid}.self_attn.v_proj",
+            ),
+            MODEL_TENSOR.ATTN_OUT: (
+                "model.layers.{bid}.self_attn.o_proj",
+            ),
+            MODEL_TENSOR.ATTN_ROT_EMBD: (
+                "model.layers.{bid}.self_attn.rotary_emb.inv_freq",
+            ),
+            MODEL_TENSOR.FFN_GATE_INP: (
+                "model.layers.{bid}.block_sparse_moe.gate",
+            ),
+            MODEL_TENSOR.FFN_NORM: (
+                "model.layers.{bid}.residual_layernorm",
+            ),
+            MODEL_TENSOR.FFN_GATE: (
+                "model.layers.{bid}.residual_mlp.w1",
+            ),
+            MODEL_TENSOR.FFN_DOWN: (
+                "model.layers.{bid}.residual_mlp.w2",
+            ),
+            MODEL_TENSOR.FFN_UP: (
+                "model.layers.{bid}.residual_mlp.w3",
+            ),
+            MODEL_TENSOR.FFN_GATE_EXP: (
+                "layers.{bid}.feed_forward.experts.w1",
+            ),
+            MODEL_TENSOR.FFN_DOWN_EXP: (
+                "layers.{bid}.feed_forward.experts.w2",
+            ),
+            MODEL_TENSOR.FFN_UP_EXP: (
+                "layers.{bid}.feed_forward.experts.w3",
+            ),
+            MODEL_TENSOR.FFN_NORM_EXP: (
+                "model.layers.{bid}.post_attention_layernorm",
+            ),
+        }, 
     }
 
     mapping: dict[str, tuple[MODEL_TENSOR, str]]
@@ -391,8 +447,12 @@ class TensorNameMap:
             self.mapping[tensor_name] = (tensor, tensor_name)
             for key in keys:
                 self.mapping[key] = (tensor, tensor_name)
+        if arch in self.arch_block_mappings_cfg:
+            block_mappings = self.arch_block_mappings_cfg[arch]
+        else:
+            block_mappings = self.block_mappings_cfg
         for bid in range(n_blocks):
-            for tensor, keys in self.block_mappings_cfg.items():
+            for tensor, keys in block_mappings.items():
                 if tensor not in MODEL_TENSORS[arch]:
                     continue
                 # TODO: make this configurable
