@@ -1451,7 +1451,6 @@ class ArcticModel(Model):
     def write_tensors(self):
         block_count = self.hparams.get("n_layers", self.hparams.get("num_hidden_layers", self.hparams.get("n_layer")))
         tensor_map = gguf.get_tensor_name_map(self.model_arch, block_count)
-        print(tensor_map)
         n_head = self.hparams.get("num_attention_heads")
         n_kv_head = self.hparams.get("num_key_value_heads")
         n_experts = self.hparams.get("num_local_experts")
@@ -1510,7 +1509,6 @@ class ArcticModel(Model):
                             merged_name = f"layers.{bid}.feed_forward.experts.w{wid}.weight"
 
                             new_name = tensor_map.get_name(merged_name, try_suffixes=(".weight", ".bias"))
-                            print(f"mapped {name} to {new_name}\n")
                             if new_name is None:
                                 print(f"Can not map tensor {name!r}")
                                 sys.exit()
@@ -1522,7 +1520,6 @@ class ArcticModel(Model):
 
             # map tensor names
             new_name = tensor_map.get_name(name, try_suffixes=(".weight", ".bias"))
-            print(f"mapped {name} to {new_name}\n")
             if new_name is None:
                 print(f"Can not map tensor {name!r}")
                 sys.exit()
