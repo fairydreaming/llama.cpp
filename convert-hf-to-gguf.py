@@ -1439,14 +1439,7 @@ class ArcticModel(Model):
     model_arch = gguf.MODEL_ARCH.ARCTIC
 
     def set_vocab(self):
-        try:
-            self. _set_vocab_sentencepiece()
-        except FileNotFoundError:
-            try:
-                self._set_vocab_llama_hf()
-            except (FileNotFoundError, TypeError):
-                # Llama 3
-                self._set_vocab_gpt2()
+        self._set_vocab_llama_hf()
 
     def set_gguf_parameters(self):
         super().set_gguf_parameters()
