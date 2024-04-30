@@ -197,7 +197,7 @@ class TensorNameMap:
             "transformer.h.{bid}.ln_2",                                      # gpt2 refact qwen
             "h.{bid}.post_attention_layernorm",                              # bloom
             "transformer.blocks.{bid}.norm_2",                               # mpt
-#            "model.layers.{bid}.post_attention_layernorm",                   # llama-hf
+            "model.layers.{bid}.post_attention_layernorm",                   # llama-hf
             "layers.{bid}.ffn_norm",                                         # llama-pth
             "language_model.encoder.layers.{bid}.post_attention_layernorm",  # persimmon
             "model.layers.{bid}.ln2",                                        # yi
