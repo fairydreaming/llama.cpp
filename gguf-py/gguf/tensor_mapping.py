@@ -385,9 +385,6 @@ class TensorNameMap:
             MODEL_TENSOR.OUTPUT: (
                 "lm_head",
             ),
-            MODEL_TENSOR.ROPE_FREQS: (
-                "rope.freqs",
-            ),
             MODEL_TENSOR.ATTN_NORM: (
                 "model.layers.{bid}.input_layernorm",
             ),
@@ -402,9 +399,6 @@ class TensorNameMap:
             ),
             MODEL_TENSOR.ATTN_OUT: (
                 "model.layers.{bid}.self_attn.o_proj",
-            ),
-            MODEL_TENSOR.ATTN_ROT_EMBD: (
-                "model.layers.{bid}.self_attn.rotary_emb.inv_freq",
             ),
             MODEL_TENSOR.FFN_GATE_INP: (
                 "model.layers.{bid}.block_sparse_moe.gate",
