@@ -663,7 +663,7 @@ class GPTNeoXModel(Model):
 
     def set_vocab(self):
         try:
-            self. _set_vocab_sentencepiece()
+            self._set_vocab_sentencepiece()
         except FileNotFoundError:
             self._set_vocab_gpt2()
 
