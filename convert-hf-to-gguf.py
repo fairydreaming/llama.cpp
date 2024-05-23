@@ -565,6 +565,9 @@ class Model:
 
         tokenizer_path = self.dir_model / 'tokenizer.model'
 
+        if not tokenizer_path.is_file():
+            tokenizer_path = self.dir_model / 'spiece.model'
+
         tokens: list[bytes] = []
         scores: list[float] = []
         toktypes: list[int] = []
@@ -657,6 +660,12 @@ class Model:
 @Model.register("GPTNeoXForCausalLM")
 class GPTNeoXModel(Model):
     model_arch = gguf.MODEL_ARCH.GPTNEOX
+
+    def set_vocab(self):
+        try:
+            self. _set_vocab_sentencepiece()
+        except FileNotFoundError:
+            self._set_vocab_gpt2()
 
     def set_gguf_parameters(self):
         block_count = self.hparams["num_hidden_layers"]
