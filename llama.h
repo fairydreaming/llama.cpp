@@ -67,6 +67,7 @@ extern "C" {
         LLAMA_VOCAB_TYPE_SPM  = 1, // LLaMA tokenizer based on byte-level BPE with byte fallback
         LLAMA_VOCAB_TYPE_BPE  = 2, // GPT-2 tokenizer based on byte-level BPE
         LLAMA_VOCAB_TYPE_WPM  = 3, // BERT tokenizer based on WordPiece
+        LLAMA_VOCAB_TYPE_UGM  = 4, // T5 tokenizer based on Unigram
     };
 
     // pre-tokenization types
@@ -223,6 +224,9 @@ extern "C" {
         llama_pos    all_pos_0;  // used if pos == NULL
         llama_pos    all_pos_1;  // used if pos == NULL
         llama_seq_id all_seq_id; // used if seq_id == NULL
+
+        int32_t         n_enc_output;
+        float        *  enc_output;
     } llama_batch;
 
     enum llama_model_kv_override_type {
@@ -749,7 +753,9 @@ extern "C" {
                   llama_token * tokens,
                       int32_t   n_tokens,
                     llama_pos   pos_0,
-                 llama_seq_id   seq_id);
+                 llama_seq_id   seq_id,
+                      int32_t   n_enc_output = 0,
+                        float * enc_output = NULL);
 
     // Allocates a batch of tokens on the heap that can hold a maximum of n_tokens
     // Each token can be assigned up to n_seq_max sequence ids
@@ -765,6 +771,14 @@ extern "C" {
 
     // Frees a batch of tokens allocated with llama_batch_init()
     LLAMA_API void llama_batch_free(struct llama_batch batch);
+
+    // Positive return values does not mean a fatal error, but rather a warning.
+    //   0 - success
+    //   1 - could not find a KV slot for the batch (try reducing the size of the batch or increase the context)
+    // < 0 - error
+    LLAMA_API int32_t llama_encode(
+            struct llama_context * ctx,
+              struct llama_batch   batch);
 
     // Positive return values does not mean a fatal error, but rather a warning.
     //   0 - success
