@@ -2717,6 +2717,7 @@ class DeepseekV2Model(Model):
 
 
 @Model.register("T5ForConditionalGeneration")
+@Model.register("T5WithLMHeadModel")
 class T5Model(Model):
     model_arch = gguf.MODEL_ARCH.T5
 
@@ -2816,6 +2817,8 @@ class T5Model(Model):
         self.gguf_writer.add_feed_forward_length(self.hparams["d_ff"])
         self.gguf_writer.add_block_count(self.hparams["num_layers"])
         self.gguf_writer.add_head_count(self.hparams["num_heads"])
+        self.gguf_writer.add_key_length(self.hparams["d_kv"])
+        self.gguf_writer.add_value_length(self.hparams["d_kv"])
         self.gguf_writer.add_layer_norm_eps(self.hparams["layer_norm_epsilon"])
         self.gguf_writer.add_relative_attn_buckets_count(self.hparams["relative_attention_num_buckets"])
         self.gguf_writer.add_layer_norm_rms_eps(self.hparams["layer_norm_epsilon"])
