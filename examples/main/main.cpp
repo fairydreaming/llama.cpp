@@ -510,7 +510,7 @@ int main(int argc, char ** argv) {
     }
 
     embd_inp.clear();
-    embd_inp.push_back(0);
+    embd_inp.push_back(llama_token_pad(model));
 
     while ((n_remain != 0 && !is_antiprompt) || params.interactive) {
         // predict

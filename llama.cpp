@@ -19344,6 +19344,10 @@ llama_token llama_token_eot(const struct llama_model * model) {
     return model->vocab.special_eot_id;
 }
 
+llama_token llama_token_pad(const struct llama_model * model) {
+    return model->vocab.special_pad_id;
+}
+
 int32_t llama_tokenize(
     const struct llama_model * model,
                   const char * text,
