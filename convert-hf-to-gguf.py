@@ -2800,7 +2800,7 @@ class T5Model(Model):
         self.gguf_writer.add_token_scores(scores)
         self.gguf_writer.add_token_types(toktypes)
         self.gguf_writer.add_add_space_prefix(add_prefix)
-        self.gguf_writer.add_remove_extra_whitespaces(add_prefix)
+        self.gguf_writer.add_remove_extra_whitespaces(remove_whitespaces)
         if precompiled_charsmap:
             self.gguf_writer.add_precompiled_charsmap(precompiled_charsmap)
 
