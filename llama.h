@@ -224,9 +224,6 @@ extern "C" {
         llama_pos    all_pos_0;  // used if pos == NULL
         llama_pos    all_pos_1;  // used if pos == NULL
         llama_seq_id all_seq_id; // used if seq_id == NULL
-
-        int32_t         n_enc_output;
-        float        *  enc_output;
     } llama_batch;
 
     enum llama_model_kv_override_type {
@@ -753,9 +750,7 @@ extern "C" {
                   llama_token * tokens,
                       int32_t   n_tokens,
                     llama_pos   pos_0,
-                 llama_seq_id   seq_id,
-                      int32_t   n_enc_output = 0,
-                        float * enc_output = NULL);
+                 llama_seq_id   seq_id);
 
     // Allocates a batch of tokens on the heap that can hold a maximum of n_tokens
     // Each token can be assigned up to n_seq_max sequence ids

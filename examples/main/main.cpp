@@ -509,12 +509,6 @@ int main(int argc, char ** argv) {
         return 1;
     }
 
-    int32_t n_enc_output = enc_input_size;
-    const int n_embd = llama_n_embd(model);
-    size_t enc_output_size = sizeof(float) * n_embd * enc_input_size;
-    float * enc_output = (float*) malloc(enc_output_size);
-    memcpy(enc_output, llama_get_embeddings(ctx), enc_output_size);
-
     embd_inp.clear();
     embd_inp.push_back(0);
 
@@ -663,7 +657,7 @@ int main(int argc, char ** argv) {
 
                 LOG("eval: %s\n", LOG_TOKENS_TOSTR_PRETTY(ctx, embd).c_str());
 
-                if (llama_decode(ctx, llama_batch_get_one(&embd[i], n_eval, n_past, 0, n_enc_output, enc_output))) {
+                if (llama_decode(ctx, llama_batch_get_one(&embd[i], n_eval, n_past, 0))) {
                     LOG_TEE("%s : failed to eval\n", __func__);
                     return 1;
                 }
