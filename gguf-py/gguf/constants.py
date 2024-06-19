@@ -48,6 +48,7 @@ class Keys:
         EXPERT_WEIGHTS_SCALE       = "{arch}.expert_weights_scale"
         POOLING_TYPE               = "{arch}.pooling_type"
         LOGIT_SCALE                = "{arch}.logit_scale"
+        DECODER_START_TOKEN_ID     = "{arch}.decoder_start_token_id"
 
     class Attention:
         HEAD_COUNT        = "{arch}.attention.head_count"
