@@ -501,16 +501,22 @@ int main(int argc, char ** argv) {
         exit(1);
     }
 
-    int enc_input_size = embd_inp.size();
-    llama_token * enc_input_buf = embd_inp.data();
+    if (llama_model_has_encoder(model)) {
+        int enc_input_size = embd_inp.size();
+        llama_token * enc_input_buf = embd_inp.data();
 
-    if (llama_encode(ctx, llama_batch_get_one(enc_input_buf, enc_input_size, 0, 0))) {
-        LOG_TEE("%s : failed to eval\n", __func__);
-        return 1;
+        if (llama_encode(ctx, llama_batch_get_one(enc_input_buf, enc_input_size, 0, 0))) {
+            LOG_TEE("%s : failed to eval\n", __func__);
+            return 1;
+        }
+
+        llama_token decoder_start_token_id = llama_model_decoder_start_token(model);
+        if (decoder_start_token_id == -1) {
+            decoder_start_token_id = llama_token_bos(model);
+        }
+        embd_inp.clear();
+        embd_inp.push_back(decoder_start_token_id);
     }
-
-    embd_inp.clear();
-    embd_inp.push_back(llama_token_pad(model));
 
     while ((n_remain != 0 && !is_antiprompt) || params.interactive) {
         // predict

@@ -296,6 +296,7 @@ enum llm_kv {
     LLM_KV_EXPERT_WEIGHTS_SCALE,
     LLM_KV_POOLING_TYPE,
     LLM_KV_LOGIT_SCALE,
+    LLM_KV_DECODER_START_TOKEN_ID,
 
     LLM_KV_ATTENTION_HEAD_COUNT,
     LLM_KV_ATTENTION_HEAD_COUNT_KV,
@@ -384,6 +385,7 @@ static const std::map<llm_kv, const char *> LLM_KV_NAMES = {
     { LLM_KV_EXPERT_WEIGHTS_SCALE,          "%s.expert_weights_scale"       },
     { LLM_KV_POOLING_TYPE ,                 "%s.pooling_type"               },
     { LLM_KV_LOGIT_SCALE,                   "%s.logit_scale"                },
+    { LLM_KV_DECODER_START_TOKEN_ID,        "%s.decoder_start_token_id"     },
 
     { LLM_KV_ATTENTION_HEAD_COUNT,          "%s.attention.head_count"             },
     { LLM_KV_ATTENTION_HEAD_COUNT_KV,       "%s.attention.head_count_kv"          },
@@ -1908,6 +1910,7 @@ struct llama_hparams {
     uint32_t n_expert_used = 0;
     uint32_t n_vocab_type = 0; // for BERT-style token types
     uint32_t n_rel_attn_bkts = 0;
+    int32_t decoder_start_token_id = -1;
 
     uint32_t n_layer_dense_lead = 0;
     uint32_t n_lora_q = 0;
@@ -4606,6 +4609,10 @@ static void llm_load_hparams(
             {
                 ml.get_key(LLM_KV_ATTENTION_LAYERNORM_RMS_EPS, hparams.f_norm_rms_eps);
                 ml.get_key(LLM_KV_ATTENTION_RELATIVE_BUCKETS_COUNT, hparams.n_rel_attn_bkts);
+                uint32_t decoder_start_token_id;
+                if (ml.get_key(LLM_KV_DECODER_START_TOKEN_ID, decoder_start_token_id, false)) {
+                    hparams.decoder_start_token_id = decoder_start_token_id;
+                }
                 model.type = e_model::MODEL_UNKNOWN;
             } break;
         default: (void)0;
@@ -17870,6 +17877,17 @@ struct ggml_tensor * llama_get_model_tensor(struct llama_model * model, const ch
         return nullptr;
     }
     return it->second;
+}
+
+bool llama_model_has_encoder(const struct llama_model * model) {
+    switch (model->arch) {
+        case LLM_ARCH_T5: return true;
+        default:          return false;
+    }
+}
+
+llama_token llama_model_decoder_start_token(const struct llama_model * model) {
+    return model->hparams.decoder_start_token_id;
 }
 
 uint32_t llama_model_quantize(
