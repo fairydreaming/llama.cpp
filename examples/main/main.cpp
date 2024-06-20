@@ -193,8 +193,6 @@ int main(int argc, char ** argv) {
     g_model = &model;
     g_ctx = &ctx;
 
-    params.warmup = false;
-
     // load the model and apply lora adapter, if any
     LOG("%s: load the model and apply lora adapter, if any\n", __func__);
     std::tie(model, ctx) = llama_init_from_gpt_params(params);
