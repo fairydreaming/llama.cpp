@@ -1974,12 +1974,15 @@ enum e_model {
     MODEL_17M,
     MODEL_22M,
     MODEL_33M,
+    MODEL_60M,
     MODEL_70M,
     MODEL_109M,
     MODEL_137M,
     MODEL_160M,
+    MODEL_220M,
     MODEL_335M,
     MODEL_410M,
+    MODEL_770M,
     MODEL_0_5B,
     MODEL_1B,
     MODEL_1_4B,
@@ -1990,6 +1993,7 @@ enum e_model {
     MODEL_6_9B,
     MODEL_7B,
     MODEL_8B,
+    MODEL_11B,
     MODEL_12B,
     MODEL_13B,
     MODEL_14B,
@@ -4213,12 +4217,15 @@ static const char * llama_model_type_name(e_model type) {
         case MODEL_17M:           return "17M";
         case MODEL_22M:           return "22M";
         case MODEL_33M:           return "33M";
+        case MODEL_60M:           return "60M";
         case MODEL_70M:           return "70M";
         case MODEL_109M:          return "109M";
         case MODEL_137M:          return "137M";
         case MODEL_160M:          return "160M";
+        case MODEL_220M:          return "220M";
         case MODEL_335M:          return "335M";
         case MODEL_410M:          return "410M";
+        case MODEL_770M:          return "770M";
         case MODEL_0_5B:          return "0.5B";
         case MODEL_1B:            return "1B";
         case MODEL_1_4B:          return "1.4B";
@@ -4229,6 +4236,7 @@ static const char * llama_model_type_name(e_model type) {
         case MODEL_6_9B:          return "6.9B";
         case MODEL_7B:            return "7B";
         case MODEL_8B:            return "8B";
+        case MODEL_11B:           return "11B";
         case MODEL_12B:           return "12B";
         case MODEL_13B:           return "13B";
         case MODEL_14B:           return "14B";
@@ -4823,7 +4831,19 @@ static void llm_load_hparams(
                 if (ml.get_key(LLM_KV_DECODER_START_TOKEN_ID, decoder_start_token_id, false)) {
                     hparams.dec_start_token_id = decoder_start_token_id;
                 }
-                model.type = e_model::MODEL_UNKNOWN;
+
+                switch (hparams.n_layer) {
+                    case 6:  model.type = e_model::MODEL_60M;  break;
+                    case 12: model.type = e_model::MODEL_220M; break;
+                    case 24:
+                        switch (hparams.n_ff) {
+                            case 4096:  model.type = e_model::MODEL_770M; break;
+                            case 16384: model.type = e_model::MODEL_3B;  break;
+                            case 65536: model.type = e_model::MODEL_11B; break;
+                            default: model.type = e_model::MODEL_UNKNOWN;
+                        } break;
+                    default: model.type = e_model::MODEL_UNKNOWN;
+               }
             } break;
         default: (void)0;
     }
