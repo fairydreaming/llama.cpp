@@ -244,6 +244,9 @@ int main(int argc, char ** argv) {
     }
 
     const bool add_bos = llama_should_add_bos_token(model);
+    if (!llama_model_has_encoder(model)) {
+        GGML_ASSERT(llama_add_eos_token(model) != 1);
+    }
     LOG("add_bos: %d\n", add_bos);
 
     std::vector<llama_token> embd_inp;
