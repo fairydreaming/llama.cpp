@@ -2476,9 +2476,9 @@ struct llama_context {
     struct ggml_tensor * inp_s_copy;    // I32 [kv_size]
     struct ggml_tensor * inp_s_mask;    // F32 [1, n_kv]
     struct ggml_tensor * inp_s_seq;     // I32 [n_kv, n_batch]
-    struct ggml_tensor * inp_pos_bucket; // I32 []
-    struct ggml_tensor * inp_enc_output; // F32 []
-    struct ggml_tensor * inp_cross_KQ_mask; // F32 []
+    struct ggml_tensor * inp_pos_bucket;    // I32 [n_batch|n_kv, n_batch]
+    struct ggml_tensor * inp_enc_output;    // F32 [n_embd, n_enc_outputs]
+    struct ggml_tensor * inp_cross_KQ_mask; // F32 [n_enc_outputs, n_batch]
 
     // control vectors
     struct llama_control_vector cvec;
