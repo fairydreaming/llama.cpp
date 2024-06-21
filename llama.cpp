@@ -2414,8 +2414,8 @@ struct llama_vocab {
     bool tokenizer_add_bos          = false;
     bool tokenizer_add_eos          = false;
     bool tokenizer_ignore_merges    = false;
-    bool tokenizer_remove_extra_whitespaces = false;
-    bool tokenizer_escape_whitespaces = true;
+    bool tokenizer_remove_extra_whitespaces   = false;
+    bool tokenizer_escape_whitespaces         = true;
     bool tokenizer_treat_whitespace_as_suffix = false;
 
     uint32_t n_precompiled_charsmap = 0;
@@ -4840,8 +4840,8 @@ static void llm_load_hparams(
                     case 24:
                         switch (hparams.n_ff) {
                             case 4096:  model.type = e_model::MODEL_770M; break;
-                            case 16384: model.type = e_model::MODEL_3B;  break;
-                            case 65536: model.type = e_model::MODEL_11B; break;
+                            case 16384: model.type = e_model::MODEL_3B;   break;
+                            case 65536: model.type = e_model::MODEL_11B;  break;
                             default: model.type = e_model::MODEL_UNKNOWN;
                         } break;
                     default: model.type = e_model::MODEL_UNKNOWN;
@@ -7680,8 +7680,8 @@ struct llm_build_context {
         lctx.inp_s_copy  = nullptr;
         lctx.inp_s_mask  = nullptr;
         lctx.inp_s_seq   = nullptr;
-        lctx.inp_pos_bucket = nullptr;
-        lctx.inp_enc_output = nullptr;
+        lctx.inp_pos_bucket    = nullptr;
+        lctx.inp_enc_output    = nullptr;
         lctx.inp_cross_KQ_mask = nullptr;
     }
 

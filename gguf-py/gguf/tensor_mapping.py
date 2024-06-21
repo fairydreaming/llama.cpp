@@ -518,8 +518,6 @@ class TensorNameMap:
         MODEL_TENSOR.ENC_OUTPUT_NORM: (
             "encoder.final_layer_norm", # t5
         ),
-
-
     }
 
     # architecture-specific block mappings
