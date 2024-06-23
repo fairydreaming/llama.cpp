@@ -1979,13 +1979,16 @@ enum e_model {
     MODEL_33M,
     MODEL_60M,
     MODEL_70M,
+    MODEL_80M,
     MODEL_109M,
     MODEL_137M,
     MODEL_160M,
     MODEL_220M,
+    MODEL_250M,
     MODEL_335M,
     MODEL_410M,
     MODEL_770M,
+    MODEL_780M,
     MODEL_0_5B,
     MODEL_1B,
     MODEL_1_4B,
@@ -4225,13 +4228,16 @@ static const char * llama_model_type_name(e_model type) {
         case MODEL_33M:           return "33M";
         case MODEL_60M:           return "60M";
         case MODEL_70M:           return "70M";
+        case MODEL_80M:           return "80M";
         case MODEL_109M:          return "109M";
         case MODEL_137M:          return "137M";
         case MODEL_160M:          return "160M";
         case MODEL_220M:          return "220M";
+        case MODEL_250M:          return "250M";
         case MODEL_335M:          return "335M";
         case MODEL_410M:          return "410M";
         case MODEL_770M:          return "770M";
+        case MODEL_780M:          return "780M";
         case MODEL_0_5B:          return "0.5B";
         case MODEL_1B:            return "1B";
         case MODEL_1_4B:          return "1.4B";
@@ -4839,13 +4845,22 @@ static void llm_load_hparams(
                 }
 
                 switch (hparams.n_layer) {
-                    case 6:  model.type = e_model::MODEL_60M;  break;
-                    case 12: model.type = e_model::MODEL_220M; break;
+                    case 6:  model.type = e_model::MODEL_60M;  break; // t5-small
+                    case 8:  model.type = e_model::MODEL_80M;  break; // flan-t5-small
+                    case 12:
+                        switch (hparams.n_ff) {
+                            case 3072: model.type = e_model::MODEL_220M; break; // t5-base
+                            case 2048: model.type = e_model::MODEL_250M; break; // flan-t5-base
+                            default: model.type = e_model::MODEL_UNKNOWN;
+                        } break;
                     case 24:
                         switch (hparams.n_ff) {
-                            case 4096:  model.type = e_model::MODEL_770M; break;
-                            case 16384: model.type = e_model::MODEL_3B;   break;
-                            case 65536: model.type = e_model::MODEL_11B;  break;
+                            case 4096:  model.type = e_model::MODEL_770M; break; // t5-large
+                            case 2816:  model.type = e_model::MODEL_780M; break; // flan-t5-large
+                            case 16384: model.type = e_model::MODEL_3B;   break; // t5-3b
+                            case 5120:  model.type = e_model::MODEL_3B;   break; // flan-t5-xl
+                            case 65536: model.type = e_model::MODEL_11B;  break; // t5-11b
+                            case 10240: model.type = e_model::MODEL_11B;  break; // flan-t5-xxl
                             default: model.type = e_model::MODEL_UNKNOWN;
                         } break;
                     default: model.type = e_model::MODEL_UNKNOWN;
