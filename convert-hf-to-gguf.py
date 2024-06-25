@@ -2729,8 +2729,10 @@ class DeepseekV2Model(Model):
                 raise ValueError(f"Unprocessed experts: {experts}")
 
 
-@Model.register("T5ForConditionalGeneration")
 @Model.register("T5WithLMHeadModel")
+@Model.register("T5ForConditionalGeneration")
+@Model.register("MT5ForConditionalGeneration")
+@Model.register("UMT5ForConditionalGeneration")
 class T5Model(Model):
     model_arch = gguf.MODEL_ARCH.T5
 
@@ -2745,17 +2747,29 @@ class T5Model(Model):
         from sentencepiece import SentencePieceProcessor
         from sentencepiece import sentencepiece_model_pb2 as model
 
-        tokenizer_path = self.dir_model / 'spiece.model'
+        tokenizer_path = self.dir_model / 'tokenizer.model'
+
+        # many older models use spiece.model tokenizer model filename
+        if not tokenizer_path.is_file():
+            tokenizer_path = self.dir_model / 'spiece.model'
 
         if not tokenizer_path.is_file():
             raise FileNotFoundError(f"File not found: {tokenizer_path}")
 
         sentencepiece_model = model.ModelProto()
         sentencepiece_model.ParseFromString(open(tokenizer_path, "rb").read())
+
+        # some models like Pile-T5 family use BPE tokenizer instead of Unigram
+        if sentencepiece_model.trainer_spec.model_type == 2: # BPE
+            # assure the tokenizer model file name is correct
+            assert tokenizer_path.name == 'tokenizer.model'
+            return self._set_vocab_sentencepiece()
+        else:
+            assert sentencepiece_model.trainer_spec.model_type == 1 # UNIGRAM
+
         add_prefix = sentencepiece_model.normalizer_spec.add_dummy_prefix
         remove_whitespaces = sentencepiece_model.normalizer_spec.remove_extra_whitespaces
         precompiled_charsmap = sentencepiece_model.normalizer_spec.precompiled_charsmap
-        assert sentencepiece_model.trainer_spec.model_type == 1 # UNIGRAM
 
         tokenizer = SentencePieceProcessor()
         tokenizer.LoadFromFile(str(tokenizer_path))
@@ -2825,7 +2839,10 @@ class T5Model(Model):
 
     def set_gguf_parameters(self):
         self.gguf_writer.add_name("T5")
-        self.gguf_writer.add_context_length(self.hparams["n_positions"])
+        if (n_ctx := self.find_hparam(["n_positions"], optional=True)) is None:
+            logger.warning("Couldn't find context length in config.json, assuming default value of 512")
+            n_ctx = 512
+        self.gguf_writer.add_context_length(n_ctx)
         self.gguf_writer.add_embedding_length(self.hparams["d_model"])
         self.gguf_writer.add_feed_forward_length(self.hparams["d_ff"])
         self.gguf_writer.add_block_count(self.hparams["num_layers"])
