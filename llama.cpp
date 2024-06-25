@@ -2231,6 +2231,11 @@ struct llama_layer {
     struct ggml_tensor * bo;
     struct ggml_tensor * bqkv;
 
+    // relative position bias
+    struct ggml_tensor * rel_attn_b;
+    struct ggml_tensor * enc_rel_attn_b;
+    struct ggml_tensor * cross_rel_attn_b;
+
     // normalization
     struct ggml_tensor * ffn_norm;
     struct ggml_tensor * ffn_norm_b;
@@ -2458,9 +2463,6 @@ struct llama_model {
     struct ggml_tensor * pos_embd;
     struct ggml_tensor * tok_norm;
     struct ggml_tensor * tok_norm_b;
-    struct ggml_tensor * rel_attn_b;
-    struct ggml_tensor * enc_rel_attn_b;
-    struct ggml_tensor * cross_rel_attn_b;
 
     struct ggml_tensor * output_norm;
     struct ggml_tensor * output_norm_b;
@@ -6842,11 +6844,7 @@ static bool llm_load_tensors(
             case LLM_ARCH_T5:
                 {
                     model.tok_embd = ml.create_tensor(ctx_input, tn(LLM_TENSOR_TOKEN_EMBD, "weight"), {n_embd, n_vocab});
-                    model.enc_rel_attn_b = ml.create_tensor(ctx_input, tn(LLM_TENSOR_ENC_ATTN_REL_B, "weight", 0), {hparams.n_head, hparams.n_rel_attn_bkts});
 
-                    model.rel_attn_b = ml.create_tensor(ctx_input, tn(LLM_TENSOR_DEC_ATTN_REL_B, "weight", 0), {hparams.n_head, hparams.n_rel_attn_bkts});
-                    // this tensor seems to be unused in HF transformers implementation
-                    model.cross_rel_attn_b = ml.create_tensor(ctx_input, tn(LLM_TENSOR_DEC_CROSS_ATTN_REL_B, "weight", 0), {hparams.n_head, hparams.n_rel_attn_bkts}, llama_model_loader::TENSOR_NOT_REQUIRED);
 
                     // output
                     {
@@ -6866,6 +6864,7 @@ static bool llm_load_tensors(
                         auto & layer = model.layers[i];
 
                         layer.enc_attn_norm = ml.create_tensor(ctx_layer, tn(LLM_TENSOR_ENC_ATTN_NORM, "weight", i), {n_embd});
+                        layer.enc_rel_attn_b = ml.create_tensor(ctx_input, tn(LLM_TENSOR_ENC_ATTN_REL_B, "weight", i), {hparams.n_head, hparams.n_rel_attn_bkts}, llama_model_loader::TENSOR_NOT_REQUIRED);
 
                         layer.enc_wq = ml.create_tensor(ctx_split, tn(LLM_TENSOR_ENC_ATTN_Q,   "weight", i), {n_embd, n_embd_k_gqa});
                         layer.enc_wk = ml.create_tensor(ctx_split, tn(LLM_TENSOR_ENC_ATTN_K,   "weight", i), {n_embd, n_embd_k_gqa});
@@ -6878,6 +6877,7 @@ static bool llm_load_tensors(
                         layer.enc_ffn_up   = ml.create_tensor(ctx_split, tn(LLM_TENSOR_ENC_FFN_UP,   "weight", i), {n_embd,   n_ff});
 
                         layer.attn_norm = ml.create_tensor(ctx_layer, tn(LLM_TENSOR_DEC_ATTN_NORM, "weight", i), {n_embd});
+                        layer.rel_attn_b = ml.create_tensor(ctx_input, tn(LLM_TENSOR_DEC_ATTN_REL_B, "weight", i), {hparams.n_head, hparams.n_rel_attn_bkts}, llama_model_loader::TENSOR_NOT_REQUIRED);
 
                         layer.wq = ml.create_tensor(ctx_split, tn(LLM_TENSOR_DEC_ATTN_Q,   "weight", i), {n_embd, n_embd_k_gqa});
                         layer.wk = ml.create_tensor(ctx_split, tn(LLM_TENSOR_DEC_ATTN_K,   "weight", i), {n_embd, n_embd_k_gqa});
@@ -6885,6 +6885,8 @@ static bool llm_load_tensors(
                         layer.wo = ml.create_tensor(ctx_split, tn(LLM_TENSOR_DEC_ATTN_OUT, "weight", i), {n_embd_v_gqa, n_embd});
 
                         layer.cross_attn_norm = ml.create_tensor(ctx_layer, tn(LLM_TENSOR_DEC_CROSS_ATTN_NORM, "weight", i), {n_embd});
+                        // this tensor seems to be unused in HF transformers implementation
+                        layer.cross_rel_attn_b = ml.create_tensor(ctx_input, tn(LLM_TENSOR_DEC_CROSS_ATTN_REL_B, "weight", i), {hparams.n_head, hparams.n_rel_attn_bkts}, llama_model_loader::TENSOR_NOT_REQUIRED);
 
                         layer.cross_wq = ml.create_tensor(ctx_split, tn(LLM_TENSOR_DEC_CROSS_ATTN_Q,   "weight", i), {n_embd, n_embd_k_gqa});
                         layer.cross_wk = ml.create_tensor(ctx_split, tn(LLM_TENSOR_DEC_CROSS_ATTN_K,   "weight", i), {n_embd, n_embd_k_gqa});
@@ -7946,8 +7948,7 @@ struct llm_build_context {
         return gf;
     }
 
-    struct ggml_tensor * llm_build_inp_rel_pos_bias(
-         struct ggml_tensor * rel_attn_b,
+    struct ggml_tensor * llm_build_inp_rel_pos_bucket(
                        bool   causal) {
 
         if (causal) {
@@ -7959,8 +7960,12 @@ struct llm_build_context {
         ggml_set_input(lctx.inp_pos_bucket);
         cb(lctx.inp_pos_bucket, "pos_bucket", -1);
 
-        struct ggml_tensor * pos_bucket = ggml_dup(ctx0, lctx.inp_pos_bucket);
-        cb(pos_bucket, "pos_bucket", -1);
+        return lctx.inp_pos_bucket;
+    }
+
+    struct ggml_tensor * llm_build_rel_pos_bias(
+         struct ggml_tensor * pos_bucket,
+         struct ggml_tensor * rel_attn_b) {
 
         struct ggml_tensor * pos_bucket_1d = ggml_view_1d(ctx0, pos_bucket, pos_bucket->ne[0] * pos_bucket->ne[1], 0);
         cb(pos_bucket_1d, "pos_bucket_1d", -1);
@@ -12019,7 +12024,7 @@ struct llm_build_context {
         inpL = llm_build_inp_embd(ctx0, lctx, hparams, batch, model.tok_embd, cb);
 
         if (lctx.is_encoding) {
-            struct ggml_tensor * pos_bias = llm_build_inp_rel_pos_bias(model.enc_rel_attn_b, false);
+            struct ggml_tensor * enc_pos_buckets = llm_build_inp_rel_pos_bucket(false);
 
             // KQ_mask (mask for 1 head, it will be broadcasted to all heads)
             struct ggml_tensor * enc_KQ_mask = build_inp_KQ_mask(false);
@@ -12053,6 +12058,8 @@ struct llm_build_context {
                     struct ggml_tensor * kq = ggml_mul_mat(ctx0, k, q);
                     cb(kq, "kq", il);
 
+                    struct ggml_tensor * rel_attn_b = model.layers[il].enc_rel_attn_b ? model.layers[il].enc_rel_attn_b : model.layers[0].enc_rel_attn_b;
+                    struct ggml_tensor * pos_bias = llm_build_rel_pos_bias(enc_pos_buckets, rel_attn_b);
                     struct ggml_tensor * kq_b = ggml_add(ctx0, kq, pos_bias);
                     cb(kq_b, "kq_b", il);
 
@@ -12129,10 +12136,10 @@ struct llm_build_context {
             cb(cur, "result_norm", -1);
         } else {
             struct ggml_tensor * enc_output = llm_build_inp_enc_output();
-            struct ggml_tensor * pos_bias = llm_build_inp_rel_pos_bias(model.rel_attn_b, true);
+            struct ggml_tensor * dec_pos_buckets = llm_build_inp_rel_pos_bucket(true);
 
-            struct ggml_tensor * KQ_mask = build_inp_KQ_mask();
-            struct ggml_tensor * enc_KQ_mask = llm_build_inp_cross_KQ_mask();
+            struct ggml_tensor * dec_KQ_mask = build_inp_KQ_mask();
+            struct ggml_tensor * cross_KQ_mask = llm_build_inp_cross_KQ_mask();
 
             for (int il = 0; il < n_layer; ++il) {
                 struct ggml_tensor * inpSA = inpL;
@@ -12179,10 +12186,12 @@ struct llm_build_context {
                     struct ggml_tensor * kq = ggml_mul_mat(ctx0, k, q);
                     cb(kq, "kq", il);
 
+                    struct ggml_tensor * rel_attn_b = model.layers[il].rel_attn_b ? model.layers[il].rel_attn_b : model.layers[0].rel_attn_b;
+                    struct ggml_tensor * pos_bias = llm_build_rel_pos_bias(dec_pos_buckets, rel_attn_b);
                     struct ggml_tensor * kq_b = ggml_add(ctx0, kq, pos_bias);
                     cb(kq_b, "kq_b", il);
 
-                    kq = ggml_soft_max_ext(ctx0, kq_b, KQ_mask, 1.0f, hparams.f_max_alibi_bias);
+                    kq = ggml_soft_max_ext(ctx0, kq_b, dec_KQ_mask, 1.0f, hparams.f_max_alibi_bias);
                     cb(kq, "kq_soft_max_ext", il);
 
                     struct ggml_tensor * kqv = ggml_mul_mat(ctx0, v, kq);
@@ -12231,7 +12240,7 @@ struct llm_build_context {
                     struct ggml_tensor * kq = ggml_mul_mat(ctx0, k, q);
                     cb(kq, "kq", il);
 
-                    kq = ggml_soft_max_ext(ctx0, kq, enc_KQ_mask, 1.0f, hparams.f_max_alibi_bias);
+                    kq = ggml_soft_max_ext(ctx0, kq, cross_KQ_mask, 1.0f, hparams.f_max_alibi_bias);
                     cb(kq, "kq_soft_max_ext", il);
 
                     struct ggml_tensor * v = ggml_cont(ctx0, ggml_transpose(ctx0, ggml_reshape_2d(ctx0, Vcur, n_embd_gqa, n_enc_outputs)));
@@ -12258,6 +12267,7 @@ struct llm_build_context {
                     n_tokens = n_outputs;
                     cur   = ggml_get_rows(ctx0,   cur, inp_out_ids);
                     inpSA = ggml_get_rows(ctx0, inpSA, inp_out_ids);
+                    inpCA = ggml_get_rows(ctx0, inpCA, inp_out_ids);
                 }
 
                 struct ggml_tensor * ffn_inp = ggml_add(ctx0, cur, inpCA);
