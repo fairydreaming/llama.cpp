@@ -3479,7 +3479,7 @@ class Nemotron4Model(Model):
         self.gguf_writer.add_remove_extra_whitespaces(remove_whitespaces)
 
         special_vocab = gguf.SpecialVocab(
-            self.dir_model, n_vocab=len(tokens), 
+            self.dir_model, n_vocab=len(tokens),
             special_token_types = ('bos', 'eos', 'eot')
         )
         special_vocab._set_special_token("eot", 5) # <extra_id_1>
@@ -3519,7 +3519,6 @@ class Nemotron4Model(Model):
             k = qkv[:, [-2]].reshape(n_head_kv * head_dim, head_dim * n_head)
             v = qkv[:, [-1]].reshape(n_head_kv * head_dim, head_dim * n_head)
             data_torch = torch.cat((q, k, v)).reshape_as(data_torch)
-
 
         return [(self.map_tensor_name(name), data_torch)]
 
