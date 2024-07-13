@@ -3480,7 +3480,7 @@ class Nemotron4Model(Model):
 
         special_vocab = gguf.SpecialVocab(
             self.dir_model, n_vocab=len(tokens),
-            special_token_types = ('bos', 'eos', 'eot')
+            special_token_types = ('bos', 'eos', 'unk', 'pad', 'eot')
         )
         special_vocab._set_special_token("eot", 5) # <extra_id_1>
         special_vocab.add_to_gguf(self.gguf_writer)
