@@ -75,6 +75,7 @@ class TensorNameMap:
             "transformer.rms_norm",                    # Grok
             "encoder.final_layernorm",                 # chatglm
             "transformer.norm",                        # openelm
+            "final_layernorm",                         # nemotron4
         ),
 
         # Rope frequencies
@@ -107,6 +108,7 @@ class TensorNameMap:
             "transformer.blocks.{bid}.norm_attn_norm.norm_1",       # dbrx
             "encoder.layers.{bid}.input_layernorm",                 # chatglm
             "transformer.layers.{bid}.attn_norm",                   # openelm
+            "model.layers.{bid}.self_attention.linear_qkv.layer_norm" # nemotron4
         ),
 
         # Attention norm 2
@@ -131,6 +133,7 @@ class TensorNameMap:
             "model.layers.{bid}.self_attn.qkv_proj",                               # phi3
             "encoder.layers.{bid}.self_attention.query_key_value",                 # chatglm
             "transformer.layers.{bid}.attn.qkv_proj",                              # openelm
+            "model.layers.{bid}.self_attention.linear_qkv"                         # nemotron4
         ),
 
         # Attention query
@@ -190,6 +193,7 @@ class TensorNameMap:
             "transformer.blocks.{bid}.norm_attn_norm.attn.out_proj",        # dbrx
             "encoder.layers.{bid}.self_attention.dense",                    # chatglm
             "transformer.layers.{bid}.attn.out_proj",                       # openelm
+            "model.layers.{bid}.self_attention.linear_proj",                # nemotron4
         ),
 
         # Attention output norm
@@ -227,6 +231,7 @@ class TensorNameMap:
             "transformer.decoder_layer.{bid}.rms_norm_2",                    # Grok
             "encoder.layers.{bid}.post_attention_layernorm",                 # chatglm
             "transformer.layers.{bid}.ffn_norm",                             # openelm
+            "model.layers.{bid}.mlp.linear_fc1.layer_norm",                  # nemotron4
         ),
 
         # Post feed-forward norm
@@ -277,6 +282,7 @@ class TensorNameMap:
             "encoder.layer.{bid}.mlp.gated_layers_v",                 # jina-bert-v2
             "model.layers.{bid}.residual_mlp.w3",                     # arctic
             "encoder.layers.{bid}.mlp.dense_h_to_4h",                 # chatglm
+            "model.layers.{bid}.mlp.linear_fc1",                      # nemotron4
         ),
 
         MODEL_TENSOR.FFN_UP_EXP: (
@@ -347,6 +353,7 @@ class TensorNameMap:
             "model.layers.{bid}.residual_mlp.w2",                     # arctic
             "encoder.layer.{bid}.mlp.down_layer",                     # jina-bert-v2
             "encoder.layers.{bid}.mlp.dense_4h_to_h",                 # chatglm
+            "model.layers.{bid}.mlp.linear_fc2",                      # nemotron4
         ),
 
         MODEL_TENSOR.FFN_DOWN_EXP: (
