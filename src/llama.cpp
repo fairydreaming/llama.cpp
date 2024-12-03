@@ -17988,18 +17988,49 @@ static int llama_encode_internal(
         GGML_ASSERT(backend_embd != nullptr);
 
         if (llama_model_has_decoder(&lctx.model)) {
-            lctx.embd_enc.resize(n_tokens*n_embd);
-            float * embd_out = lctx.embd_enc.data();
+            // gather a set of currently encoded sequence ids
+            std::set<llama_seq_id> encoded_seq_ids;
+            for (uint32_t i = 0; i < n_tokens; i++) {
+                for (int s = 0; s < ubatch.n_seq_id[i]; s++) {
+                    llama_seq_id seq_id = ubatch.seq_id[i][s];
+                    encoded_seq_ids.insert(seq_id);
+                }
+            }
+            // remove obsolete embd_enc entries with the same sequence ids as the currently encoded
+            // TODO optimize for efficient removal of adjacent entries
+            unsigned int embd_enc_offset = 0;
+            for (auto it = lctx.seq_ids_enc.begin(); it != lctx.seq_ids_enc.end();) {
+                std::set<llama_seq_id> seq_ids_diff;
+                std::set_difference(it->begin(), it->end(), encoded_seq_ids.begin(), encoded_seq_ids.end(), std::inserter(seq_ids_diff, seq_ids_diff.begin()));
+                if (seq_ids_diff.empty()) {
+                    // all sequence ids removed - remove the whole entry and corresponding range of embd_enc
+                    it = lctx.seq_ids_enc.erase(it);
+                    lctx.embd_enc.erase(lctx.embd_enc.begin() + embd_enc_offset, lctx.embd_enc.begin() + embd_enc_offset + n_embd);
+                    // embd_enc_offset stays the same
+                } else {
+                    if(seq_ids_diff.size() < it->size()) {
+                        // some sequence ids removed - store the difference set
+                        *it = std::move(seq_ids_diff);
+                    }
+                    ++it;
+                    embd_enc_offset += n_embd;
+                }
+            }
+
+            size_t embd_enc_old_size = lctx.embd_enc.size();
+            lctx.embd_enc.resize(embd_enc_old_size + n_tokens*n_embd);
+            float * embd_out = &lctx.embd_enc[embd_enc_old_size];
 
             ggml_backend_tensor_get_async(backend_embd, embd, embd_out, 0, n_tokens*n_embd*sizeof(float));
             GGML_ASSERT(!ubatch.equal_seqs); // TODO: handle equal splits
 
             // remember the sequence ids used during the encoding - needed for cross attention later
-            lctx.seq_ids_enc.resize(n_tokens);
+            size_t seq_ids_enc_old_size = lctx.seq_ids_enc.size();
+            lctx.seq_ids_enc.resize(seq_ids_enc_old_size + n_tokens);
             for (uint32_t i = 0; i < n_tokens; i++) {
                 for (int s = 0; s < ubatch.n_seq_id[i]; s++) {
                     llama_seq_id seq_id = ubatch.seq_id[i][s];
-                    lctx.seq_ids_enc[i].insert(seq_id);
+                    lctx.seq_ids_enc[seq_ids_enc_old_size + i].insert(seq_id);
                 }
             }
         } else {
