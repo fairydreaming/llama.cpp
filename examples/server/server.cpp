@@ -605,6 +605,7 @@ struct server_context {
     llama_context_params cparams_dft;
 
     llama_batch batch = {};
+    llama_batch batch_enc = {};
 
     bool clean_kv_cache = true;
     bool add_bos_token  = true;
@@ -655,6 +656,7 @@ struct server_context {
         }
 
         llama_batch_free(batch);
+        llama_batch_free(batch_enc);
     }
 
     bool load_model(const common_params & params) {
@@ -787,6 +789,7 @@ struct server_context {
 
             // only a single seq_id per token is needed
             batch = llama_batch_init(std::max(n_batch, params_base.n_parallel), 0, 1);
+            batch_enc = llama_batch_init(std::max(n_batch, params_base.n_parallel), 0, 1);
         }
 
         metrics.init();
@@ -2117,6 +2120,34 @@ struct server_context {
                             SLT_WRN(slot, "need to evaluate at least 1 token to generate logits, n_past = %d, n_prompt_tokens = %d\n", slot.n_past, slot.n_prompt_tokens);
 
                             slot.n_past--;
+                        }
+
+                        // call llama_encode() for encoder-decoder models
+                        if (llama_model_has_encoder(model)) {
+                            // prepare batch for encoder with sequence id equal to slot.id
+                            // it will contain all prompt tokens
+                            common_batch_clear(batch_enc);
+                            for (int i = 0; i < slot.n_prompt_tokens; ++i) {
+                                common_batch_add(batch_enc, prompt_tokens[i], i, { slot.id }, false);
+                            }
+                            // encode the prepared batch
+                            const int ret = llama_encode(ctx, batch_enc);
+                            if (ret != 0) {
+                                slot.release();
+                                send_error(slot, "Failed to encode the batch.");
+                                continue;
+                            }
+                            // prepare token sequence for decoder
+                            if (llama_model_has_decoder(model)) {
+                                llama_token decoder_start_token_id = llama_model_decoder_start_token(model);
+                                if (decoder_start_token_id == -1) {
+                                    decoder_start_token_id = llama_token_bos(model);
+                                }
+
+                                prompt_tokens.clear();
+                                prompt_tokens.push_back(decoder_start_token_id);
+                                slot.n_prompt_tokens = prompt_tokens.size();
+                            }
                         }
 
                         slot.n_prompt_tokens_processed = 0;
