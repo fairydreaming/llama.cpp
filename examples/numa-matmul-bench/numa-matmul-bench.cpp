@@ -27,6 +27,9 @@
 #pragma warning(disable: 4244 4267) // possible loss of data
 #endif
 
+int get_numa_nodes(void * buf, size_t buf_len, int * nodes, size_t nodes_len);
+void segv_handler(int sig, siginfo_t *si, void *ctx);
+
 int get_numa_nodes(void * buf, size_t buf_len, int * nodes, size_t nodes_len) {
     if (buf_len == 0) {
         return 0;
@@ -67,7 +70,6 @@ int get_numa_nodes(void * buf, size_t buf_len, int * nodes, size_t nodes_len) {
 
     for (size_t i = 0; i < num_pages; i++) {
         pages[i] = (void *)(page_start + i * page_size);
-//        printf("%p\n", pages[i]);
     }
 
     int ret = move_pages(0, num_pages, pages, NULL, status, 0);
@@ -137,6 +139,7 @@ struct benchmark_params_struct {
     int     ne2            = 1;
     enum ggml_numa_strategy numa = GGML_NUMA_STRATEGY_DISABLED;
     bool    mmap           = false;
+    bool    verbose        = false;
 };
 
 static void print_usage(int /*argc*/, char ** argv, struct benchmark_params_struct params) {
@@ -153,6 +156,7 @@ static void print_usage(int /*argc*/, char ** argv, struct benchmark_params_stru
     fprintf(stderr, "  -x N                  first dimension of the tensor (default %d)\n", params.ne0);
     fprintf(stderr, "  -y N                  second dimension of the tensor (default %d)\n", params.ne1);
     fprintf(stderr, "  -z N                  third dimension of the tensor (default %d)\n", params.ne2);
+    fprintf(stderr, "  -v,   --verbose       increase output verbosity\n");
     fprintf(stderr, "\n");
 }
 
@@ -247,6 +251,8 @@ int main(int argc, char ** argv)  {
         }  else if (arg == "-h" || arg == "--help") {
             print_usage(argc, argv, benchmark_params);
             exit(0);
+        } else if (arg == "-v" || arg == "--verbose") {
+            benchmark_params.verbose = true;
         }
     }
     if (invalid_param) {
@@ -271,6 +277,7 @@ int main(int argc, char ** argv)  {
     int n_layers = benchmark_params.n_layers;
     int n_experts = benchmark_params.n_experts;
     int n_experts_used = benchmark_params.n_experts_used;
+    GGML_UNUSED(n_experts_used);
 
     // create the ggml context
     struct ggml_context * ctx;
@@ -323,8 +330,6 @@ int main(int argc, char ** argv)  {
         fprintf(stderr, "%s: ggml_init() failed\n", __func__);
         return 1;
     }
-
-    printf("n_threads=%i\n", benchmark_params.n_threads);
 
     ggml_backend_t backend = ggml_backend_cpu_init();
     ggml_backend_cpu_set_n_threads(backend, benchmark_params.n_threads);
@@ -391,7 +396,7 @@ int main(int argc, char ** argv)  {
     ggml_backend_graph_compute(backend, gf31);
 
     // examine NUMA nodes owning tensor buffer pages
-    if (benchmark_params.mmap) {
+    if (benchmark_params.mmap && benchmark_params.verbose) {
         #define NUM_NODES 65536
         int nodes[NUM_NODES];
         for (int l = 0; l < n_layers; ++l) {
