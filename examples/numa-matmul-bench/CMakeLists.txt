@@ -1,0 +1,5 @@
+set(TARGET llama-numa-matmul-bench)
+add_executable(${TARGET} numa-matmul-bench.cpp)
+install(TARGETS ${TARGET} RUNTIME)
+target_link_libraries(${TARGET} PRIVATE common llama ${CMAKE_THREAD_LIBS_INIT} numa)
+target_compile_features(${TARGET} PRIVATE cxx_std_17)
