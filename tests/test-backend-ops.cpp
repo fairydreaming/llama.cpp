@@ -4204,6 +4204,46 @@ struct test_dsv4_hc_post : public test_dsv4_hc {
     }
 };
 
+struct test_lightning_indexer : public test_case {
+    const int64_t n_batch;
+    const int64_t n_kv;
+    const int64_t n_stream;
+
+    std::string vars() override {
+        return VARS_TO_STR3(n_batch, n_kv, n_stream);
+    }
+
+    double err(const float * a, const float * b, size_t n) override {
+        double max_abs = 0.0;
+        for (size_t i = 0; i < n; ++i) {
+            max_abs = std::max<double>(max_abs, fabsf(a[i] - b[i]));
+        }
+        return max_abs;
+    }
+
+    double max_err() override {
+        return 1e-4;
+    }
+
+    test_lightning_indexer(int64_t n_batch = 3, int64_t n_kv = 65, int64_t n_stream = 2)
+        : n_batch(n_batch), n_kv(n_kv), n_stream(n_stream) {}
+
+    ggml_tensor * build_graph(ggml_context * ctx) override {
+        ggml_tensor * q = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, 128, 64, n_batch, n_stream);
+        ggml_set_name(q, "q");
+
+        ggml_tensor * k = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, 128, 1, n_kv, n_stream);
+        ggml_set_name(k, "k");
+
+        ggml_tensor * weights = ggml_new_tensor_4d(ctx, GGML_TYPE_F32, 64, n_batch, 1, n_stream);
+        ggml_set_name(weights, "weights");
+
+        ggml_tensor * out = ggml_lightning_indexer(ctx, q, k, weights, 1.0f/sqrtf(128.0f), 1.0f/sqrtf(64.0f));
+        ggml_set_name(out, "out");
+        return out;
+    }
+};
+
 
 // GGML_OP_SSM_CONV
 struct test_ssm_conv : public test_case {
@@ -8219,6 +8259,8 @@ static std::vector<std::unique_ptr<test_case>> make_test_cases_eval() {
     test_cases.emplace_back(new test_dsv4_hc_post(1, 1));
     test_cases.emplace_back(new test_dsv4_hc_post(31, 17));
     test_cases.emplace_back(new test_dsv4_hc_post(128, 257));
+
+    test_cases.emplace_back(new test_lightning_indexer());
 
     // glu ops
     for (ggml_type type : {GGML_TYPE_F16, GGML_TYPE_F32}) {

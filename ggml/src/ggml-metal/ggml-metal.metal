@@ -10798,7 +10798,8 @@ void kernel_lightning_indexer_compute(
             const int i_head_inner = i_q / LI_N_EMBD_4;
             const int i_head = i_head_0 + i_head_inner;
             const int i_embd = i_q % LI_N_EMBD_4;
-            q_shared[i_head_inner * LI_N_EMBD_4 + i_embd] = q_base[i_head*LI_N_EMBD_4 + i_embd];
+            q_shared[i_head_inner * LI_N_EMBD_4 + i_embd] =
+                *(device const float4 *) ((device const char *) q_base + i_head*args.nb01 + i_embd*sizeof(float4));
         }
 
         threadgroup_barrier(mem_flags::mem_threadgroup);
@@ -11039,16 +11040,15 @@ kernel void kernel_dsv4_hc_pre(
 
     constexpr int hc = 4;
 
-    device const float * x_row = (device const float *) ((device const char *) x + it*args.nbx2);
     device const float * w_row = (device const float *) ((device const char *) weights + it*args.nbw1);
 
-    float sum = x_row[i0 + 0*args.nbx1/sizeof(float)] * w_row[0];
+    float sum = *(device const float *) ((device const char *) x + i0*args.nbx0 + it*args.nbx2) * w_row[0];
     for (int ih = 1; ih < hc; ++ih) {
-        sum += x_row[i0 + ih*args.nbx1/sizeof(float)] * w_row[ih*args.nbw0/sizeof(float)];
+        sum += *(device const float *) ((device const char *) x + i0*args.nbx0 + ih*args.nbx1 + it*args.nbx2) *
+            w_row[ih*args.nbw0/sizeof(float)];
     }
 
-    device float * dst_row = (device float *) ((device char *) dst + it*args.nbd1);
-    dst_row[i0] = sum;
+    *(device float *) ((device char *) dst + i0*args.nbd0 + it*args.nbd1) = sum;
 }
 
 // HC_POST: residual blend
