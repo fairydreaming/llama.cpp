@@ -101,6 +101,7 @@
 #define FC_SUM_ROWS                    1400
 #define FC_UPSCALE                     1500
 #define FC_GATED_DELTA_NET             1600
+#define FC_LIGHTNING_INDEXER           1700
 
 // op-specific constants
 #define OP_FLASH_ATTN_EXT_NQPSG 8
@@ -1171,5 +1172,24 @@ typedef struct {
 typedef struct {
     int64_t  np;
 } ggml_metal_kargs_opt_step_sgd;
+
+typedef struct {
+    int32_t  n_kv;
+    int32_t  n_head;
+    uint64_t nb1;
+    uint64_t nb2;
+    uint64_t nb3;
+    uint64_t nb01;
+    uint64_t nb02;
+    uint64_t nb03;
+    uint64_t nb11;
+    uint64_t nb12;
+    uint64_t nb13;
+    uint64_t nb21;
+    uint64_t nb22;
+    uint64_t nb23;
+    float    scale_embd;
+    float    scale_heads;
+} ggml_metal_kargs_lightning_indexer;
 
 #endif // GGML_METAL_IMPL

@@ -10752,3 +10752,265 @@ kernel void kernel_count_equal(
 typedef decltype(kernel_count_equal<int32_t>) kernel_count_equal_t;
 
 template [[host_name("kernel_count_equal_i32")]] kernel kernel_count_equal_t kernel_count_equal<int32_t>;
+
+// Lightning indexer kernel
+// Follows the CUDA vec kernel approach:
+// - Each threadgroup processes K_VECS_PER_TG K vectors
+// - Each SIMD group processes K_VECS_PER_SG K vectors
+// - Each thread (lane) handles one float4 (4 elements) of the 128-element vectors
+// - n_embd=128, n_head=64 are hardcoded (matching DeepSeek V4)
+
+constexpr constant int LI_N_EMBD = 128;
+constexpr constant int LI_N_HEAD = 64;
+constexpr constant int LI_N_EMBD_4 = LI_N_EMBD / 4;   // 32 float4s per vector
+constexpr constant int LI_K_VECS_PER_SG = 8;
+constexpr constant int LI_N_SG_PER_TG = 8;
+constexpr constant int LI_K_VECS_PER_TG = LI_K_VECS_PER_SG * LI_N_SG_PER_TG; // 64
+constexpr constant int LI_N_HEAD_INNER = LI_N_HEAD / 4; // 16
+
+// shared compute logic, after K has been loaded to float4 registers
+// threadgroup memory pointers are passed in from the kernel entry point
+void kernel_lightning_indexer_compute(
+        constant ggml_metal_kargs_lightning_indexer & args,
+        device const float * q_base,
+        device const float * w_base,
+        device       float * dst,
+        thread float4 * k_reg,
+        threadgroup float  * w_shared,
+        threadgroup float4 * q_shared,
+        threadgroup float  * dst_shared,
+        int start_kv_block,
+        int i_batch, int i_stream,
+        ushort tiisg, ushort sgitg) {
+
+    float score_k[LI_K_VECS_PER_SG] = { 0.0f };
+
+    for (int i_head_0 = 0; i_head_0 < LI_N_HEAD; i_head_0 += LI_N_HEAD_INNER) {
+        const int tid_tg = (int) (tiisg + sgitg * N_SIMDWIDTH);
+        if (tid_tg < LI_N_HEAD_INNER) {
+            w_shared[tid_tg] = w_base[i_head_0 + tid_tg];
+        }
+
+        const int n_q = LI_N_HEAD_INNER * LI_N_EMBD_4;
+        const int n_tg = LI_N_SG_PER_TG * N_SIMDWIDTH;
+
+        for (int i_q = tid_tg; i_q < n_q; i_q += n_tg) {
+            const int i_head_inner = i_q / LI_N_EMBD_4;
+            const int i_head = i_head_0 + i_head_inner;
+            const int i_embd = i_q % LI_N_EMBD_4;
+            q_shared[i_head_inner * LI_N_EMBD_4 + i_embd] = q_base[i_head*LI_N_EMBD_4 + i_embd];
+        }
+
+        threadgroup_barrier(mem_flags::mem_threadgroup);
+
+        for (int i_head_inner = 0; i_head_inner < LI_N_HEAD_INNER; ++i_head_inner) {
+            const float w_val = w_shared[i_head_inner];
+            float qk[LI_K_VECS_PER_SG] = { 0.0f };
+
+            const float4 q_vec = q_shared[i_head_inner * LI_N_EMBD_4 + tiisg];
+
+            for (int k = 0; k < LI_K_VECS_PER_SG; ++k) {
+                qk[k] += q_vec.x * k_reg[k].x;
+                qk[k] += q_vec.y * k_reg[k].y;
+                qk[k] += q_vec.z * k_reg[k].z;
+                qk[k] += q_vec.w * k_reg[k].w;
+            }
+
+            for (int k = 0; k < LI_K_VECS_PER_SG; ++k) {
+                float sum = simd_sum(qk[k]);
+
+                if (tiisg == 0) {
+                    sum *= args.scale_embd;
+                    sum = (sum > 0.0f) ? sum : 0.0f;
+                    score_k[k] += sum * w_val;
+                }
+            }
+        }
+
+        threadgroup_barrier(mem_flags::mem_threadgroup);
+    }
+
+    if (tiisg == 0) {
+        for (int k = 0; k < LI_K_VECS_PER_SG; ++k) {
+            dst_shared[sgitg * LI_K_VECS_PER_SG + k] = score_k[k] * args.scale_heads;
+        }
+    }
+
+    threadgroup_barrier(mem_flags::mem_threadgroup);
+
+    const int tid_tg = (int) (tiisg + sgitg * N_SIMDWIDTH);
+    if (tid_tg < LI_K_VECS_PER_TG) {
+        int i_kv = start_kv_block + tid_tg;
+        if (i_kv < args.n_kv) {
+            device float * dst_base = (device float *) ((device char *) dst + i_batch*args.nb1 + i_stream*args.nb3);
+            dst_base[i_kv] = dst_shared[tid_tg];
+        }
+    }
+}
+
+// kernel entry point for F32 K type
+kernel void kernel_lightning_indexer_f32(
+        constant ggml_metal_kargs_lightning_indexer & args,
+        device const float * src0,
+        device const char  * src1,
+        device const float * src2,
+        device       float * dst,
+        uint3   tgpig[[threadgroup_position_in_grid]],
+        ushort  tiisg[[thread_index_in_simdgroup]],
+        ushort  sgitg[[simdgroup_index_in_threadgroup]]) {
+
+    threadgroup float  w_shared[LI_N_HEAD_INNER];
+    threadgroup float4 q_shared[LI_N_HEAD_INNER * LI_N_EMBD_4];
+    threadgroup float  dst_shared[LI_K_VECS_PER_TG];
+
+    const int i_batch  = (int) tgpig.y;
+    const int i_stream = (int) tgpig.z;
+    const int start_kv_block = (int) tgpig.x * LI_K_VECS_PER_TG;
+    const int start_kv = start_kv_block + (int) sgitg * LI_K_VECS_PER_SG;
+
+    device const float * q_base = (device const float *) ((device const char *) src0 + i_batch*args.nb02 + i_stream*args.nb03);
+    device const float * w_base = (device const float *) ((device const char *) src2 + i_batch*args.nb21 + i_stream*args.nb23);
+
+    float4 k_reg[LI_K_VECS_PER_SG];
+    for (int k = 0; k < LI_K_VECS_PER_SG; ++k) {
+        int i_kv = start_kv + k;
+        if (i_kv < args.n_kv) {
+            device const float4 * k_base = (device const float4 *) ((device const char *) src1 + i_kv*args.nb12 + i_stream*args.nb13);
+            k_reg[k] = k_base[tiisg];
+        } else {
+            k_reg[k] = float4(0);
+        }
+    }
+    kernel_lightning_indexer_compute(args, q_base, w_base, dst, k_reg,
+        w_shared, q_shared, dst_shared, start_kv_block, i_batch, i_stream, tiisg, sgitg);
+}
+
+// kernel entry point for F16 K type
+kernel void kernel_lightning_indexer_f16(
+        constant ggml_metal_kargs_lightning_indexer & args,
+        device const float * src0,
+        device const char  * src1,
+        device const float * src2,
+        device       float * dst,
+        uint3   tgpig[[threadgroup_position_in_grid]],
+        ushort  tiisg[[thread_index_in_simdgroup]],
+        ushort  sgitg[[simdgroup_index_in_threadgroup]]) {
+
+    threadgroup float  w_shared[LI_N_HEAD_INNER];
+    threadgroup float4 q_shared[LI_N_HEAD_INNER * LI_N_EMBD_4];
+    threadgroup float  dst_shared[LI_K_VECS_PER_TG];
+
+    const int i_batch  = (int) tgpig.y;
+    const int i_stream = (int) tgpig.z;
+    const int start_kv_block = (int) tgpig.x * LI_K_VECS_PER_TG;
+    const int start_kv = start_kv_block + (int) sgitg * LI_K_VECS_PER_SG;
+
+    device const float * q_base = (device const float *) ((device const char *) src0 + i_batch*args.nb02 + i_stream*args.nb03);
+    device const float * w_base = (device const float *) ((device const char *) src2 + i_batch*args.nb21 + i_stream*args.nb23);
+
+    float4 k_reg[LI_K_VECS_PER_SG];
+    for (int k = 0; k < LI_K_VECS_PER_SG; ++k) {
+        int i_kv = start_kv + k;
+        if (i_kv < args.n_kv) {
+            device const half4 * k_base = (device const half4 *) ((device const char *) src1 + i_kv*args.nb12 + i_stream*args.nb13);
+            k_reg[k] = float4(k_base[tiisg]);
+        } else {
+            k_reg[k] = float4(0);
+        }
+    }
+    kernel_lightning_indexer_compute(args, q_base, w_base, dst, k_reg,
+        w_shared, q_shared, dst_shared, start_kv_block, i_batch, i_stream, tiisg, sgitg);
+}
+
+#if defined(GGML_METAL_HAS_BF16)
+// kernel entry point for BF16 K type
+kernel void kernel_lightning_indexer_bf16(
+        constant ggml_metal_kargs_lightning_indexer & args,
+        device const float * src0,
+        device const char  * src1,
+        device const float * src2,
+        device       float * dst,
+        uint3   tgpig[[threadgroup_position_in_grid]],
+        ushort  tiisg[[thread_index_in_simdgroup]],
+        ushort  sgitg[[simdgroup_index_in_threadgroup]]) {
+
+    threadgroup float  w_shared[LI_N_HEAD_INNER];
+    threadgroup float4 q_shared[LI_N_HEAD_INNER * LI_N_EMBD_4];
+    threadgroup float  dst_shared[LI_K_VECS_PER_TG];
+
+    const int i_batch  = (int) tgpig.y;
+    const int i_stream = (int) tgpig.z;
+    const int start_kv_block = (int) tgpig.x * LI_K_VECS_PER_TG;
+    const int start_kv = start_kv_block + (int) sgitg * LI_K_VECS_PER_SG;
+
+    device const float * q_base = (device const float *) ((device const char *) src0 + i_batch*args.nb02 + i_stream*args.nb03);
+    device const float * w_base = (device const float *) ((device const char *) src2 + i_batch*args.nb21 + i_stream*args.nb23);
+
+    float4 k_reg[LI_K_VECS_PER_SG];
+    for (int k = 0; k < LI_K_VECS_PER_SG; ++k) {
+        int i_kv = start_kv + k;
+        if (i_kv < args.n_kv) {
+            device const bfloat4 * k_base = (device const bfloat4 *) ((device const char *) src1 + i_kv*args.nb12 + i_stream*args.nb13);
+            k_reg[k] = float4(k_base[tiisg]);
+        } else {
+            k_reg[k] = float4(0);
+        }
+    }
+    kernel_lightning_indexer_compute(args, q_base, w_base, dst, k_reg,
+        w_shared, q_shared, dst_shared, start_kv_block, i_batch, i_stream, tiisg, sgitg);
+}
+#endif
+
+// quantized type kernels: template with function pointer for dequantize
+
+template<typename block_t, void (*deq_t4)(device const block_t *, short, thread float4 &)>
+kernel void kernel_lightning_indexer_quantized(
+        constant ggml_metal_kargs_lightning_indexer & args,
+        device const float * src0,
+        device const char  * src1,
+        device const float * src2,
+        device       float * dst,
+        uint3   tgpig[[threadgroup_position_in_grid]],
+        ushort  tiisg[[thread_index_in_simdgroup]],
+        ushort  sgitg[[simdgroup_index_in_threadgroup]]) {
+
+    threadgroup float  w_shared[LI_N_HEAD_INNER];
+    threadgroup float4 q_shared[LI_N_HEAD_INNER * LI_N_EMBD_4];
+    threadgroup float  dst_shared[LI_K_VECS_PER_TG];
+
+    const int i_batch  = (int) tgpig.y;
+    const int i_stream = (int) tgpig.z;
+    const int start_kv_block = (int) tgpig.x * LI_K_VECS_PER_TG;
+    const int start_kv = start_kv_block + (int) sgitg * LI_K_VECS_PER_SG;
+
+    device const float * q_base = (device const float *) ((device const char *) src0 + i_batch*args.nb02 + i_stream*args.nb03);
+    device const float * w_base = (device const float *) ((device const char *) src2 + i_batch*args.nb21 + i_stream*args.nb23);
+
+    // dequantize K to float4 registers
+    // n_embd=128, block_size=32 -> 4 blocks per K vector, 8 positions per block
+    constexpr int positions_per_block = 32 / 4; // 8
+    const int il = (int) tiisg % positions_per_block;
+    const int block_idx = (int) tiisg / positions_per_block;
+
+    float4 k_reg[LI_K_VECS_PER_SG];
+    for (int k = 0; k < LI_K_VECS_PER_SG; ++k) {
+        int i_kv = start_kv + k;
+        if (i_kv < args.n_kv) {
+            device const block_t * k_block = (device const block_t *) ((device const char *) src1 + i_kv*args.nb12 + i_stream*args.nb13);
+            deq_t4(k_block + block_idx, (short) il, k_reg[k]);
+        } else {
+            k_reg[k] = float4(0);
+        }
+    }
+
+    kernel_lightning_indexer_compute(args, q_base, w_base, dst, k_reg,
+        w_shared, q_shared, dst_shared, start_kv_block, i_batch, i_stream, tiisg, sgitg);
+}
+
+typedef decltype(kernel_lightning_indexer_quantized<block_q4_0, dequantize_q4_0_t4>) kernel_lightning_indexer_quantized_t;
+
+template [[host_name("kernel_lightning_indexer_q4_0")]] kernel kernel_lightning_indexer_quantized_t kernel_lightning_indexer_quantized<block_q4_0, dequantize_q4_0_t4>;
+template [[host_name("kernel_lightning_indexer_q4_1")]] kernel kernel_lightning_indexer_quantized_t kernel_lightning_indexer_quantized<block_q4_1, dequantize_q4_1_t4>;
+template [[host_name("kernel_lightning_indexer_q5_0")]] kernel kernel_lightning_indexer_quantized_t kernel_lightning_indexer_quantized<block_q5_0, dequantize_q5_0_t4>;
+template [[host_name("kernel_lightning_indexer_q5_1")]] kernel kernel_lightning_indexer_quantized_t kernel_lightning_indexer_quantized<block_q5_1, dequantize_q5_1_t4>;
+template [[host_name("kernel_lightning_indexer_q8_0")]] kernel kernel_lightning_indexer_quantized_t kernel_lightning_indexer_quantized<block_q8_0, dequantize_q8_0_t4>;

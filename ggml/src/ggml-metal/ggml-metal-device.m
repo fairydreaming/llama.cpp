@@ -1255,6 +1255,43 @@ bool ggml_metal_device_supports_op(ggml_metal_device_t dev, const struct ggml_te
                     return false;
             }
             return has_simdgroup_mm; // TODO: over-restricted for vec-kernels
+        case GGML_OP_LIGHTNING_INDEXER:
+            {
+                // DeepSeek V4 lightning indexer: n_embd=128, n_head=64
+                const int64_t n_embd = op->src[0]->ne[0];
+                const int64_t n_head = op->src[0]->ne[1];
+
+                if (n_embd != 128 || n_head != 64) {
+                    return false;
+                }
+
+                if (op->src[0]->type != GGML_TYPE_F32) {
+                    return false;
+                }
+                if (op->src[2]->type != GGML_TYPE_F32) {
+                    return false;
+                }
+
+                switch (op->src[1]->type) {
+                    case GGML_TYPE_F32:
+                    case GGML_TYPE_F16:
+                    case GGML_TYPE_Q8_0:
+                    case GGML_TYPE_Q4_0:
+                    case GGML_TYPE_Q4_1:
+                    case GGML_TYPE_Q5_0:
+                    case GGML_TYPE_Q5_1:
+                        break;
+                    case GGML_TYPE_BF16:
+                        if (!has_bfloat) {
+                            return false;
+                        }
+                        break;
+                    default:
+                        return false;
+                }
+
+                return true;
+            }
         case GGML_OP_SSM_CONV:
         case GGML_OP_SSM_SCAN:
             return has_simdgroup_reduction;

@@ -316,6 +316,10 @@ static int ggml_metal_op_encode_impl(ggml_metal_op_t ctx, int idx) {
             {
                 n_fuse = ggml_metal_op_cumsum(ctx, idx);
             } break;
+        case GGML_OP_LIGHTNING_INDEXER:
+            {
+                n_fuse = ggml_metal_op_lightning_indexer(ctx, idx);
+            } break;
         case GGML_OP_SOFT_MAX:
             {
                 n_fuse = ggml_metal_op_soft_max(ctx, idx);
@@ -1285,6 +1289,86 @@ int ggml_metal_op_diag(ggml_metal_op_t ctx, int idx) {
     ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(op),         2);
 
     ggml_metal_encoder_dispatch_threadgroups(enc, ne1, ne2, ne3, 32, 1, 1);
+
+    return 1;
+}
+
+int ggml_metal_op_lightning_indexer(ggml_metal_op_t ctx, int idx) {
+    ggml_tensor * dst = ctx->node(idx);
+
+    ggml_metal_library_t lib = ctx->lib;
+    ggml_metal_encoder_t enc = ctx->enc;
+
+    GGML_ASSERT(dst->op == GGML_OP_LIGHTNING_INDEXER);
+
+    const ggml_tensor * src0 = dst->src[0];
+    const ggml_tensor * src1 = dst->src[1];
+    const ggml_tensor * src2 = dst->src[2];
+
+    GGML_ASSERT(src0->type == GGML_TYPE_F32);
+    GGML_ASSERT(src2->type == GGML_TYPE_F32);
+    GGML_ASSERT(dst->type == GGML_TYPE_F32);
+
+    GGML_TENSOR_TERNARY_OP_LOCALS
+
+    // input tensor rows must be contiguous
+    GGML_ASSERT(nb00 == ggml_type_size(src0->type));
+    GGML_ASSERT(nb10 == ggml_type_size(src1->type));
+    GGML_ASSERT(nb20 == ggml_type_size(src2->type));
+
+    // dst cannot be transposed or permuted
+    GGML_ASSERT(nb0 == sizeof(float));
+    GGML_ASSERT(nb0 <= nb1);
+    GGML_ASSERT(nb1 <= nb2);
+    GGML_ASSERT(nb2 <= nb3);
+
+    const int n_embd   = (int) src0->ne[0];
+    const int n_head   = (int) src0->ne[1];
+    const int n_batch  = (int) src0->ne[2];
+    const int n_stream = (int) src0->ne[3];
+    const int n_kv     = (int) src1->ne[2];
+
+    const float scale_embd = ggml_get_op_params_f32(dst, 0);
+    const float scale_heads = ggml_get_op_params_f32(dst, 1);
+
+    GGML_ASSERT(n_embd == 128);
+    GGML_ASSERT(n_head == 64);
+
+    ggml_metal_kargs_lightning_indexer args = {
+        /*.n_kv       =*/ n_kv,
+        /*.n_head     =*/ n_head,
+        /*.nb1        =*/ nb1,
+        /*.nb2        =*/ nb2,
+        /*.nb3        =*/ nb3,
+        /*.nb01       =*/ nb01,
+        /*.nb02       =*/ nb02,
+        /*.nb03       =*/ nb03,
+        /*.nb11       =*/ nb11,
+        /*.nb12       =*/ nb12,
+        /*.nb13       =*/ nb13,
+        /*.nb21       =*/ nb21,
+        /*.nb22       =*/ nb22,
+        /*.nb23       =*/ nb23,
+        /*.scale_embd =*/ scale_embd,
+        /*.scale_heads=*/ scale_heads,
+    };
+
+    auto pipeline = ggml_metal_library_get_pipeline_lightning_indexer(lib, dst);
+
+    constexpr int K_VECS_PER_SG = 8;
+    constexpr int N_SG_PER_TG = 8;
+    constexpr int K_VECS_PER_TG = K_VECS_PER_SG * N_SG_PER_TG;
+
+    int num_kv_blocks = (n_kv + K_VECS_PER_TG - 1) / K_VECS_PER_TG;
+
+    ggml_metal_encoder_set_pipeline(enc, pipeline);
+    ggml_metal_encoder_set_bytes(enc, &args, sizeof(args), 0);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(src0), 1);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(src1), 2);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(src2), 3);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(dst),  4);
+
+    ggml_metal_encoder_dispatch_threadgroups(enc, num_kv_blocks, n_batch, n_stream, 32, N_SG_PER_TG, 1);
 
     return 1;
 }
