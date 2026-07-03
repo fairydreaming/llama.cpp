@@ -11014,3 +11014,174 @@ template [[host_name("kernel_lightning_indexer_q4_1")]] kernel kernel_lightning_
 template [[host_name("kernel_lightning_indexer_q5_0")]] kernel kernel_lightning_indexer_quantized_t kernel_lightning_indexer_quantized<block_q5_0, dequantize_q5_0_t4>;
 template [[host_name("kernel_lightning_indexer_q5_1")]] kernel kernel_lightning_indexer_quantized_t kernel_lightning_indexer_quantized<block_q5_1, dequantize_q5_1_t4>;
 template [[host_name("kernel_lightning_indexer_q8_0")]] kernel kernel_lightning_indexer_quantized_t kernel_lightning_indexer_quantized<block_q8_0, dequantize_q8_0_t4>;
+
+// DeepSeek V4 hierarchical connection kernels
+
+// HC_PRE: weighted sum over hc slices
+//   x[n_embd, hc, n_tokens] * weights[hc, n_tokens] -> dst[n_embd, n_tokens]
+kernel void kernel_dsv4_hc_pre(
+        constant ggml_metal_kargs_dsv4_hc_pre & args,
+        device const float * x,
+        device const float * weights,
+        device       float * dst,
+        uint3 tgpig[[threadgroup_position_in_grid]],
+        uint  tiitg[[thread_index_in_threadgroup]]) {
+
+    const int ir = (int) tgpig.x * 256 + (int) tiitg;
+    const int nr = args.n_embd * args.n_tokens;
+
+    if (ir >= nr) {
+        return;
+    }
+
+    const int i0 = ir % args.n_embd;
+    const int it = ir / args.n_embd;
+
+    constexpr int hc = 4;
+
+    device const float * x_row = (device const float *) ((device const char *) x + it*args.nbx2);
+    device const float * w_row = (device const float *) ((device const char *) weights + it*args.nbw1);
+
+    float sum = x_row[i0 + 0*args.nbx1/sizeof(float)] * w_row[0];
+    for (int ih = 1; ih < hc; ++ih) {
+        sum += x_row[i0 + ih*args.nbx1/sizeof(float)] * w_row[ih*args.nbw0/sizeof(float)];
+    }
+
+    device float * dst_row = (device float *) ((device char *) dst + it*args.nbd1);
+    dst_row[i0] = sum;
+}
+
+// HC_POST: residual blend
+//   dst[i_embd, idst, it] = x[i_embd, it] * post[idst, it]
+//                         + sum_{isrc} residual[i_embd, isrc, it] * comb[idst, isrc, it]
+kernel void kernel_dsv4_hc_post(
+        constant ggml_metal_kargs_dsv4_hc_post & args,
+        device const float * x,
+        device const float * residual,
+        device const float * post,
+        device const float * comb,
+        device       float * dst,
+        uint3 tgpig[[threadgroup_position_in_grid]],
+        uint  tiitg[[thread_index_in_threadgroup]]) {
+
+    const int ir = (int) tgpig.x * 256 + (int) tiitg;
+
+    constexpr int hc = 4;
+    const int nr = args.n_embd * hc * args.n_tokens;
+
+    if (ir >= nr) {
+        return;
+    }
+
+    const int i0   = ir % args.n_embd;
+    const int idst = (ir / args.n_embd) % hc;
+    const int it   = ir / (args.n_embd * hc);
+
+    const float xv  = *(device const float *) ((device const char *) x    + i0*args.nbx0 + it*args.nbx1);
+    const float pv  = *(device const float *) ((device const char *) post + idst*args.nbp0 + it*args.nbp1);
+
+    float sum = xv * pv;
+    for (int isrc = 0; isrc < hc; ++isrc) {
+        const float rv = *(device const float *) ((device const char *) residual + i0*args.nbr0 + isrc*args.nbr1 + it*args.nbr2);
+        const float cv = *(device const float *) ((device const char *) comb     + idst*args.nbc0 + isrc*args.nbc1 + it*args.nbc2);
+        sum += rv * cv;
+    }
+
+    *(device float *) ((device char *) dst + i0*args.nbd0 + idst*args.nbd1 + it*args.nbd2) = sum;
+}
+
+// HC_COMB: Sinkhorn normalization of combination matrix
+//   mixes[24, n_tokens], scale[3], base[24] -> comb[4, 4, n_tokens]
+kernel void kernel_dsv4_hc_comb(
+        constant ggml_metal_kargs_dsv4_hc_comb & args,
+        device const float * mixes,
+        device const float * scale,
+        device const float * base,
+        device       float * dst,
+        uint3 tgpig[[threadgroup_position_in_grid]],
+        uint  tiitg[[thread_index_in_threadgroup]]) {
+
+    const int it = (int) tgpig.x * 256 + (int) tiitg;
+
+    if (it >= args.n_tokens) {
+        return;
+    }
+
+    constexpr int hc = 4;
+    constexpr int comb_offset = 2 * hc; // 8
+
+    device const float * mixes_row = (device const float *) ((device const char *) mixes + it*args.nm1);
+    device const float * base_data = (device const float *) base;
+
+    const float scale_comb = scale[2*args.ns0/sizeof(float)];
+
+    float comb[hc * hc];
+
+    // row softmax with scale + base affine
+    for (int isrc = 0; isrc < hc; ++isrc) {
+        float max = -INFINITY;
+        for (int idst = 0; idst < hc; ++idst) {
+            const int idx = idst + hc*isrc;
+            const int mix_idx = comb_offset + idx;
+            const float v = mixes_row[mix_idx*args.nm0/sizeof(float)] * scale_comb + base_data[mix_idx*args.nb0/sizeof(float)];
+            comb[idx] = v;
+            max = fmax(max, v);
+        }
+
+        float sum = 0.0f;
+        for (int idst = 0; idst < hc; ++idst) {
+            const int idx = idst + hc*isrc;
+            const float v = exp(comb[idx] - max);
+            comb[idx] = v;
+            sum += v;
+        }
+
+        const float inv_sum = 1.0f / sum;
+        for (int idst = 0; idst < hc; ++idst) {
+            const int idx = idst + hc*isrc;
+            comb[idx] = comb[idx] * inv_sum + args.eps;
+        }
+    }
+
+    // Sinkhorn iterations: normalize columns, then rows alternately
+    auto norm_cols = [&]() {
+        for (int idst = 0; idst < hc; ++idst) {
+            float sum = args.eps;
+            for (int isrc = 0; isrc < hc; ++isrc) {
+                sum += comb[idst + hc*isrc];
+            }
+            const float inv_sum = 1.0f / sum;
+            for (int isrc = 0; isrc < hc; ++isrc) {
+                comb[idst + hc*isrc] *= inv_sum;
+            }
+        }
+    };
+
+    auto norm_rows = [&]() {
+        for (int isrc = 0; isrc < hc; ++isrc) {
+            float sum = args.eps;
+            for (int idst = 0; idst < hc; ++idst) {
+                sum += comb[idst + hc*isrc];
+            }
+            const float inv_sum = 1.0f / sum;
+            for (int idst = 0; idst < hc; ++idst) {
+                comb[idst + hc*isrc] *= inv_sum;
+            }
+        }
+    };
+
+    norm_cols();
+    for (int i = 1; i < args.n_iter; ++i) {
+        norm_rows();
+        norm_cols();
+    }
+
+    // store output
+    device float * dst_row = (device float *) ((device char *) dst + it*args.nd2);
+    for (int isrc = 0; isrc < hc; ++isrc) {
+        for (int idst = 0; idst < hc; ++idst) {
+            const int idx = idst + hc*isrc;
+            *(device float *) ((device char *) dst + idst*args.nd0 + isrc*args.nd1 + it*args.nd2) = comb[idx];
+        }
+    }
+}

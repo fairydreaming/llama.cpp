@@ -102,6 +102,9 @@
 #define FC_UPSCALE                     1500
 #define FC_GATED_DELTA_NET             1600
 #define FC_LIGHTNING_INDEXER           1700
+#define FC_DSV4_HC_COMB                1800
+#define FC_DSV4_HC_PRE                 1900
+#define FC_DSV4_HC_POST                2000
 
 // op-specific constants
 #define OP_FLASH_ATTN_EXT_NQPSG 8
@@ -1191,5 +1194,49 @@ typedef struct {
     float    scale_embd;
     float    scale_heads;
 } ggml_metal_kargs_lightning_indexer;
+
+typedef struct {
+    uint64_t nd0;
+    uint64_t nd1;
+    uint64_t nd2;
+    uint64_t nm0;
+    uint64_t nm1;
+    uint64_t ns0;
+    uint64_t nb0;
+    int32_t  n_tokens;
+    int32_t  n_iter;
+    float    eps;
+    int32_t  pad;
+} ggml_metal_kargs_dsv4_hc_comb;
+
+typedef struct {
+    uint64_t nbx0;
+    uint64_t nbx1;
+    uint64_t nbx2;
+    uint64_t nbw0;
+    uint64_t nbw1;
+    uint64_t nbd0;
+    uint64_t nbd1;
+    int32_t  n_embd;
+    int32_t  n_tokens;
+} ggml_metal_kargs_dsv4_hc_pre;
+
+typedef struct {
+    uint64_t nbx0;
+    uint64_t nbx1;
+    uint64_t nbr0;
+    uint64_t nbr1;
+    uint64_t nbr2;
+    uint64_t nbp0;
+    uint64_t nbp1;
+    uint64_t nbc0;
+    uint64_t nbc1;
+    uint64_t nbc2;
+    uint64_t nbd0;
+    uint64_t nbd1;
+    uint64_t nbd2;
+    int32_t  n_embd;
+    int32_t  n_tokens;
+} ggml_metal_kargs_dsv4_hc_post;
 
 #endif // GGML_METAL_IMPL

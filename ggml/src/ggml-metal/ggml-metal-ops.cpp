@@ -320,6 +320,18 @@ static int ggml_metal_op_encode_impl(ggml_metal_op_t ctx, int idx) {
             {
                 n_fuse = ggml_metal_op_lightning_indexer(ctx, idx);
             } break;
+        case GGML_OP_DSV4_HC_COMB:
+            {
+                n_fuse = ggml_metal_op_dsv4_hc_comb(ctx, idx);
+            } break;
+        case GGML_OP_DSV4_HC_PRE:
+            {
+                n_fuse = ggml_metal_op_dsv4_hc_pre(ctx, idx);
+            } break;
+        case GGML_OP_DSV4_HC_POST:
+            {
+                n_fuse = ggml_metal_op_dsv4_hc_post(ctx, idx);
+            } break;
         case GGML_OP_SOFT_MAX:
             {
                 n_fuse = ggml_metal_op_soft_max(ctx, idx);
@@ -1289,6 +1301,180 @@ int ggml_metal_op_diag(ggml_metal_op_t ctx, int idx) {
     ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(op),         2);
 
     ggml_metal_encoder_dispatch_threadgroups(enc, ne1, ne2, ne3, 32, 1, 1);
+
+    return 1;
+}
+
+int ggml_metal_op_dsv4_hc_comb(ggml_metal_op_t ctx, int idx) {
+    ggml_tensor * dst = ctx->node(idx);
+
+    ggml_metal_library_t lib = ctx->lib;
+    ggml_metal_encoder_t enc = ctx->enc;
+
+    GGML_ASSERT(dst->op == GGML_OP_DSV4_HC_COMB);
+
+    const ggml_tensor * mixes = dst->src[0];
+    const ggml_tensor * scale = dst->src[1];
+    const ggml_tensor * base  = dst->src[2];
+
+    GGML_ASSERT(mixes->type == GGML_TYPE_F32);
+    GGML_ASSERT(scale->type == GGML_TYPE_F32);
+    GGML_ASSERT(base->type  == GGML_TYPE_F32);
+    GGML_ASSERT(dst->type   == GGML_TYPE_F32);
+
+    GGML_TENSOR_LOCALS(size_t,  nbm, mixes, nb);
+    GGML_TENSOR_LOCALS(size_t,  nbs, scale, nb);
+    GGML_TENSOR_LOCALS(size_t,  nbb, base,  nb);
+    GGML_TENSOR_LOCALS(size_t,  nbd, dst,   nb);
+
+    const int32_t n_tokens = (int32_t) mixes->ne[1];
+    const float   eps      = ggml_get_op_params_f32(dst, 0);
+    const int32_t n_iter   = ggml_get_op_params_i32(dst, 1);
+
+    ggml_metal_kargs_dsv4_hc_comb args = {
+        /*.nd0     =*/ nbd0,
+        /*.nd1     =*/ nbd1,
+        /*.nd2     =*/ nbd2,
+        /*.nm0     =*/ nbm0,
+        /*.nm1     =*/ nbm1,
+        /*.ns0     =*/ nbs0,
+        /*.nb0     =*/ nbb0,
+        /*.n_tokens=*/ n_tokens,
+        /*.n_iter  =*/ n_iter,
+        /*.eps     =*/ eps,
+        /*.pad     =*/ 0,
+    };
+
+    auto pipeline = ggml_metal_library_get_pipeline_dsv4_hc_comb(lib, dst);
+
+    const int block_size = 256;
+    const int grid_size  = (n_tokens + block_size - 1) / block_size;
+
+    ggml_metal_encoder_set_pipeline(enc, pipeline);
+    ggml_metal_encoder_set_bytes(enc, &args, sizeof(args), 0);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(mixes), 1);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(scale), 2);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(base),  3);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(dst),   4);
+
+    ggml_metal_encoder_dispatch_threadgroups(enc, grid_size, 1, 1, block_size, 1, 1);
+
+    return 1;
+}
+
+int ggml_metal_op_dsv4_hc_pre(ggml_metal_op_t ctx, int idx) {
+    ggml_tensor * dst = ctx->node(idx);
+
+    ggml_metal_library_t lib = ctx->lib;
+    ggml_metal_encoder_t enc = ctx->enc;
+
+    GGML_ASSERT(dst->op == GGML_OP_DSV4_HC_PRE);
+
+    const ggml_tensor * x       = dst->src[0];
+    const ggml_tensor * weights = dst->src[1];
+
+    GGML_ASSERT(x->type       == GGML_TYPE_F32);
+    GGML_ASSERT(weights->type == GGML_TYPE_F32);
+    GGML_ASSERT(dst->type     == GGML_TYPE_F32);
+
+    GGML_TENSOR_LOCALS(size_t, nbx, x,       nb);
+    GGML_TENSOR_LOCALS(size_t, nbw, weights, nb);
+    GGML_TENSOR_LOCALS(size_t, nbd, dst,     nb);
+
+    const int32_t n_embd   = (int32_t) x->ne[0];
+    const int32_t n_tokens = (int32_t) x->ne[2];
+
+    ggml_metal_kargs_dsv4_hc_pre args = {
+        /*.nbx0    =*/ nbx0,
+        /*.nbx1    =*/ nbx1,
+        /*.nbx2    =*/ nbx2,
+        /*.nbw0    =*/ nbw0,
+        /*.nbw1    =*/ nbw1,
+        /*.nbd0    =*/ nbd0,
+        /*.nbd1    =*/ nbd1,
+        /*.n_embd  =*/ n_embd,
+        /*.n_tokens=*/ n_tokens,
+    };
+
+    auto pipeline = ggml_metal_library_get_pipeline_dsv4_hc_pre(lib, dst);
+
+    const int block_size = 256;
+    const int nr = n_embd * n_tokens;
+    const int grid_size = (nr + block_size - 1) / block_size;
+
+    ggml_metal_encoder_set_pipeline(enc, pipeline);
+    ggml_metal_encoder_set_bytes(enc, &args, sizeof(args), 0);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(x),       1);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(weights), 2);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(dst),     3);
+
+    ggml_metal_encoder_dispatch_threadgroups(enc, grid_size, 1, 1, block_size, 1, 1);
+
+    return 1;
+}
+
+int ggml_metal_op_dsv4_hc_post(ggml_metal_op_t ctx, int idx) {
+    ggml_tensor * dst = ctx->node(idx);
+
+    ggml_metal_library_t lib = ctx->lib;
+    ggml_metal_encoder_t enc = ctx->enc;
+
+    GGML_ASSERT(dst->op == GGML_OP_DSV4_HC_POST);
+
+    const ggml_tensor * x        = dst->src[0];
+    const ggml_tensor * residual = dst->src[1];
+    const ggml_tensor * post     = dst->src[2];
+    const ggml_tensor * comb     = dst->src[3];
+
+    GGML_ASSERT(x->type        == GGML_TYPE_F32);
+    GGML_ASSERT(residual->type == GGML_TYPE_F32);
+    GGML_ASSERT(post->type     == GGML_TYPE_F32);
+    GGML_ASSERT(comb->type     == GGML_TYPE_F32);
+    GGML_ASSERT(dst->type      == GGML_TYPE_F32);
+
+    GGML_TENSOR_LOCALS(size_t, nbx, x,        nb);
+    GGML_TENSOR_LOCALS(size_t, nbr, residual, nb);
+    GGML_TENSOR_LOCALS(size_t, nbp, post,     nb);
+    GGML_TENSOR_LOCALS(size_t, nbc, comb,     nb);
+    GGML_TENSOR_LOCALS(size_t, nbd, dst,      nb);
+
+    const int32_t n_embd   = (int32_t) x->ne[0];
+    const int32_t n_tokens = (int32_t) x->ne[1];
+
+    ggml_metal_kargs_dsv4_hc_post args = {
+        /*.nbx0    =*/ nbx0,
+        /*.nbx1    =*/ nbx1,
+        /*.nbr0    =*/ nbr0,
+        /*.nbr1    =*/ nbr1,
+        /*.nbr2    =*/ nbr2,
+        /*.nbp0    =*/ nbp0,
+        /*.nbp1    =*/ nbp1,
+        /*.nbc0    =*/ nbc0,
+        /*.nbc1    =*/ nbc1,
+        /*.nbc2    =*/ nbc2,
+        /*.nbd0    =*/ nbd0,
+        /*.nbd1    =*/ nbd1,
+        /*.nbd2    =*/ nbd2,
+        /*.n_embd  =*/ n_embd,
+        /*.n_tokens=*/ n_tokens,
+    };
+
+    auto pipeline = ggml_metal_library_get_pipeline_dsv4_hc_post(lib, dst);
+
+    constexpr int hc = 4;
+    const int block_size = 256;
+    const int nr = n_embd * hc * n_tokens;
+    const int grid_size = (nr + block_size - 1) / block_size;
+
+    ggml_metal_encoder_set_pipeline(enc, pipeline);
+    ggml_metal_encoder_set_bytes(enc, &args, sizeof(args), 0);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(x),        1);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(residual), 2);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(post),     3);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(comb),     4);
+    ggml_metal_encoder_set_buffer(enc, ggml_metal_get_buffer_id(dst),      5);
+
+    ggml_metal_encoder_dispatch_threadgroups(enc, grid_size, 1, 1, block_size, 1, 1);
 
     return 1;
 }

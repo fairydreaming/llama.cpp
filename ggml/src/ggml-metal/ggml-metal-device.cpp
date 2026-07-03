@@ -496,6 +496,39 @@ ggml_metal_pipeline_with_params ggml_metal_library_get_pipeline_lightning_indexe
     return res;
 }
 
+ggml_metal_pipeline_with_params ggml_metal_library_get_pipeline_dsv4_hc_comb(ggml_metal_library_t lib, const ggml_tensor * op) {
+    GGML_ASSERT(op->op == GGML_OP_DSV4_HC_COMB);
+
+    ggml_metal_pipeline_with_params res = ggml_metal_library_get_pipeline(lib, "kernel_dsv4_hc_comb");
+    if (!res.pipeline) {
+        res = ggml_metal_library_compile_pipeline(lib, "kernel_dsv4_hc_comb", "kernel_dsv4_hc_comb", nullptr);
+    }
+
+    return res;
+}
+
+ggml_metal_pipeline_with_params ggml_metal_library_get_pipeline_dsv4_hc_pre(ggml_metal_library_t lib, const ggml_tensor * op) {
+    GGML_ASSERT(op->op == GGML_OP_DSV4_HC_PRE);
+
+    ggml_metal_pipeline_with_params res = ggml_metal_library_get_pipeline(lib, "kernel_dsv4_hc_pre");
+    if (!res.pipeline) {
+        res = ggml_metal_library_compile_pipeline(lib, "kernel_dsv4_hc_pre", "kernel_dsv4_hc_pre", nullptr);
+    }
+
+    return res;
+}
+
+ggml_metal_pipeline_with_params ggml_metal_library_get_pipeline_dsv4_hc_post(ggml_metal_library_t lib, const ggml_tensor * op) {
+    GGML_ASSERT(op->op == GGML_OP_DSV4_HC_POST);
+
+    ggml_metal_pipeline_with_params res = ggml_metal_library_get_pipeline(lib, "kernel_dsv4_hc_post");
+    if (!res.pipeline) {
+        res = ggml_metal_library_compile_pipeline(lib, "kernel_dsv4_hc_post", "kernel_dsv4_hc_post", nullptr);
+    }
+
+    return res;
+}
+
 ggml_metal_pipeline_with_params ggml_metal_library_get_pipeline_ssm_conv(ggml_metal_library_t lib, const ggml_tensor * op) {
     GGML_ASSERT(op->src[0]->type == GGML_TYPE_F32);
     GGML_ASSERT(op->src[1]->type == GGML_TYPE_F32);
