@@ -70,6 +70,11 @@ static bool has_content_or_tool_calls(const common_chat_msg & msg) {
     return !msg.content.empty() || !msg.tool_calls.empty();
 }
 
+static bool common_chat_template_uses_deepseek_dsml(const std::string & src) {
+    return src.find("dsml_token") != std::string::npos &&
+           src.find("DSML") != std::string::npos;
+}
+
 std::string common_chat_msg::render_content(const std::string & delimiter) const {
     if (!content.empty() && !content_parts.empty()) {
         throw std::runtime_error("Cannot specify both content and content_parts");
@@ -1928,8 +1933,8 @@ static common_chat_params common_chat_params_init_deepseek_v3_2(const common_cha
                 auto schema_info = common_schema_info();
                 schema_info.resolve_refs(params);
 
-                std::vector<common_peg_parser> required_parsers;
-                std::vector<common_peg_parser> optional_parsers;
+                std::vector<size_t>            required_indices;
+                std::vector<common_peg_parser> arg_parsers;
                 for (const auto & [param_name, param_schema] : props.items()) {
                     bool is_required = required.find(param_name) != required.end();
                     bool is_string   = schema_info.resolves_to_string(param_schema);
@@ -1947,28 +1952,60 @@ static common_chat_params common_chat_params_init_deepseek_v3_2(const common_cha
                         p.tool_arg_close(p.literal(PARAM_END)));
 
                     auto named_arg = p.rule("tool-" + name + "-arg-" + param_name, arg);
+                    const auto arg_idx = arg_parsers.size();
+                    arg_parsers.push_back(named_arg);
                     if (is_required) {
-                        required_parsers.push_back(named_arg);
-                    } else {
-                        optional_parsers.push_back(named_arg);
+                        required_indices.push_back(arg_idx);
                     }
                 }
 
-                common_peg_parser args_seq = p.eps();
-                for (size_t i = 0; i < required_parsers.size(); i++) {
-                    if (i > 0) {
-                        args_seq = args_seq + p.space();
+                auto contains_index = [](const std::vector<size_t> & values, size_t needle) {
+                    for (const auto value : values) {
+                        if (value == needle) {
+                            return true;
+                        }
                     }
-                    args_seq = args_seq + required_parsers[i];
-                }
+                    return false;
+                };
 
-                if (!optional_parsers.empty()) {
-                    common_peg_parser any_opt = p.choice();
-                    for (const auto & opt : optional_parsers) {
-                        any_opt |= opt;
-                    }
-                    args_seq = args_seq + p.repeat(p.space() + any_opt, 0, -1);
-                }
+                std::function<common_peg_parser(const std::vector<size_t> &)> build_args_seq =
+                    [&](const std::vector<size_t> & remaining_required) {
+                        if (arg_parsers.empty()) {
+                            return p.eps();
+                        }
+
+                        common_peg_parser skippable_args = p.choice();
+                        bool has_skippable_args = false;
+                        for (size_t i = 0; i < arg_parsers.size(); i++) {
+                            if (contains_index(remaining_required, i)) {
+                                continue;
+                            }
+                            skippable_args |= arg_parsers[i];
+                            has_skippable_args = true;
+                        }
+
+                        auto skipped = has_skippable_args ? p.repeat(skippable_args + p.space(), 0, -1) : p.eps();
+                        if (remaining_required.empty()) {
+                            return skipped;
+                        }
+
+                        common_peg_parser args_choice = p.choice();
+                        for (size_t i = 0; i < remaining_required.size(); i++) {
+                            std::vector<size_t> next_required;
+                            next_required.reserve(remaining_required.size() - 1);
+                            for (size_t j = 0; j < remaining_required.size(); j++) {
+                                if (i != j) {
+                                    next_required.push_back(remaining_required[j]);
+                                }
+                            }
+
+                            auto required_arg = arg_parsers[remaining_required[i]] + p.space();
+                            args_choice |= skipped + required_arg + build_args_seq(next_required);
+                        }
+                        return args_choice;
+                    };
+
+                common_peg_parser args_seq = build_args_seq(required_indices);
 
                 common_peg_parser invoke_body = args_seq;
                 auto func_parser = p.tool(
@@ -2217,6 +2254,71 @@ static void requires_non_null_content(json & messages) {
         if (message.contains("tool_calls") && !message.contains("content")) {
             message["content"] = "";
         }
+    }
+}
+
+static void sort_tool_results_by_previous_tool_calls(json & messages) {
+    GGML_ASSERT(messages.is_array());
+
+    for (size_t i = 0; i + 1 < messages.size(); i++) {
+        auto & assistant = messages[i];
+        if (!assistant.is_object() ||
+            assistant.value("role", "") != "assistant" ||
+            !assistant.contains("tool_calls") ||
+            !assistant.at("tool_calls").is_array() ||
+            assistant.at("tool_calls").empty()) {
+            continue;
+        }
+
+        size_t begin = i + 1;
+        size_t end   = begin;
+        while (end < messages.size() &&
+               messages[end].is_object() &&
+               messages[end].value("role", "") == "tool") {
+            end++;
+        }
+        if (begin == end) {
+            continue;
+        }
+
+        std::vector<bool> used(end - begin, false);
+        std::vector<json> ordered;
+        ordered.reserve(end - begin);
+
+        for (const auto & tool_call : assistant.at("tool_calls")) {
+            if (!tool_call.is_object() ||
+                !tool_call.contains("id") ||
+                !tool_call.at("id").is_string()) {
+                continue;
+            }
+
+            const auto id = tool_call.at("id").get<std::string>();
+            for (size_t j = begin; j < end; j++) {
+                auto & tool_result = messages[j];
+                if (used[j - begin] ||
+                    !tool_result.contains("tool_call_id") ||
+                    !tool_result.at("tool_call_id").is_string() ||
+                    tool_result.at("tool_call_id").get<std::string>() != id) {
+                    continue;
+                }
+
+                ordered.push_back(tool_result);
+                used[j - begin] = true;
+                break;
+            }
+        }
+
+        for (size_t j = begin; j < end; j++) {
+            if (!used[j - begin]) {
+                ordered.push_back(messages[j]);
+            }
+        }
+
+        for (size_t j = 0; j < ordered.size(); j++) {
+            messages[begin + j] = ordered[j];
+        }
+
+        i = end - 1;
     }
 }
 
@@ -2603,18 +2705,16 @@ std::optional<common_chat_params> common_chat_try_specialized_template(
 
     // DeepSeek V3.2 format detection: template defines dsml_token and uses it for tool calls.
     // The template source contains the token as a variable assignment, not as a literal in markup.
-    if (src.find("dsml_token") != std::string::npos &&
-        src.find("function_calls") != std::string::npos &&
-        src.find("DSML") != std::string::npos) {
+    if (common_chat_template_uses_deepseek_dsml(src) &&
+        src.find("function_calls") != std::string::npos) {
         LOG_DBG("Using specialized template: DeepSeek V3.2\n");
         return common_chat_params_init_deepseek_v3_2(tmpl, params);
     }
 
     // DeepSeek V4 format detection: same DSML invoke/parameter shape as V3.2,
     // but the outer block is tool_calls instead of function_calls.
-    if (src.find("dsml_token") != std::string::npos &&
-        src.find("tool_calls>") != std::string::npos &&
-        src.find("DSML") != std::string::npos) {
+    if (common_chat_template_uses_deepseek_dsml(src) &&
+        src.find("tool_calls>") != std::string::npos) {
         LOG_DBG("Using specialized template: DeepSeek V4\n");
         return common_chat_params_init_deepseek_v3_2(tmpl, params, "tool_calls");
     }
@@ -2698,6 +2798,10 @@ static common_chat_params common_chat_templates_apply_jinja(const struct common_
 
     if (tmpl.original_caps().supports_object_arguments) {
         workaround::func_args_not_string(params.messages);
+    }
+
+    if (common_chat_template_uses_deepseek_dsml(src)) {
+        workaround::sort_tool_results_by_previous_tool_calls(params.messages);
     }
 
     params.extra_context = common_chat_extra_context();

@@ -4011,6 +4011,23 @@ static void test_template_output_peg_parsers(bool detailed_debug) {
             .run();
 
         tst.test(
+               "Optional first</think>\n\n"
+               "<｜DSML｜tool_calls>\n"
+               "<｜DSML｜invoke name=\"magic_int\">\n"
+               "<｜DSML｜parameter name=\"name\" string=\"true\">foo bar</｜DSML｜parameter>\n"
+               "<｜DSML｜parameter name=\"ref\" string=\"false\">42</｜DSML｜parameter>\n"
+               "</｜DSML｜invoke>\n"
+               "</｜DSML｜tool_calls>")
+            .enable_thinking(true)
+            .reasoning_format(COMMON_REASONING_FORMAT_DEEPSEEK)
+            .tools({ magic_int_tool })
+            .expect_reasoning("Optional first")
+            .expect_tool_calls({
+                { "magic_int", R"({"name": "foo bar", "ref": 42})", {} },
+            })
+            .run();
+
+        tst.test(
                "Still thinking\n\n"
                "<｜DSML｜tool_calls>\n"
                "<｜DSML｜invoke name=\"get_time\">\n"
@@ -4030,6 +4047,36 @@ static void test_template_output_peg_parsers(bool detailed_debug) {
             .expect_content("")
             .expect_tool_calls({})
             .run();
+
+        {
+            auto tmpls = read_templates("models/templates/deepseek-ai-DeepSeek-V4.jinja");
+
+            common_chat_templates_inputs inputs;
+            inputs.messages         = { message_user };
+            inputs.reasoning_format = COMMON_REASONING_FORMAT_DEEPSEEK;
+            inputs.enable_thinking  = true;
+            inputs.tools            = { magic_int_tool };
+
+            make_peg_parser parser(tmpls.get(), inputs, detailed_debug);
+
+            bool got_error = false;
+            try {
+                parser.parse(
+                    "Missing required</think>\n\n"
+                    "<｜DSML｜tool_calls>\n"
+                    "<｜DSML｜invoke name=\"magic_int\">\n"
+                    "<｜DSML｜parameter name=\"name\" string=\"true\">foo bar</｜DSML｜parameter>\n"
+                    "</｜DSML｜invoke>\n"
+                    "</｜DSML｜tool_calls>",
+                    false);
+            } catch (const std::runtime_error &) {
+                got_error = true;
+            }
+
+            if (!got_error) {
+                throw std::runtime_error("Expected DeepSeek V4 parser to reject missing required parameter");
+            }
+        }
     }
 
     // GLM-4.6 tests - format: <tool_call>function_name\n<arg_key>...</arg_key>\n<arg_value>...</arg_value>\n</tool_call>
@@ -5879,6 +5926,54 @@ static void test_template_generation_prompt() {
         check(tmpls, basic(),                  "<｜Assistant｜><think>");
         check(tmpls, continuation_content(),   "<｜Assistant｜><think>I'm thinking</think>Hello, ");
         check(tmpls, continuation_reasoning(), "<｜Assistant｜><think>I'm");
+    }
+
+    {
+        auto tmpls = read_templates("models/templates/deepseek-ai-DeepSeek-V4.jinja");
+        check(tmpls, basic(),                  "<｜Assistant｜><think>");
+        check(tmpls, continuation_content(),   "<｜Assistant｜><think>I'm thinking</think>Hello, ");
+        check(tmpls, continuation_reasoning(), "<｜Assistant｜><think>I'm");
+
+        common_chat_msg user_start;
+        user_start.role    = "user";
+        user_start.content = "Check time and weather.";
+
+        common_chat_msg assistant_tools;
+        assistant_tools.role              = "assistant";
+        assistant_tools.reasoning_content = "Need both";
+        assistant_tools.tool_calls = {
+            { "get_time",    R"({"city":"Paris"})", "call_time"    },
+            { "get_weather", R"({"city":"Paris"})", "call_weather" },
+        };
+
+        common_chat_msg weather_result;
+        weather_result.role         = "tool";
+        weather_result.content      = "weather result";
+        weather_result.tool_call_id = "call_weather";
+
+        common_chat_msg time_result;
+        time_result.role         = "tool";
+        time_result.content      = "time result";
+        time_result.tool_call_id = "call_time";
+
+        common_chat_msg user_continue;
+        user_continue.role    = "user";
+        user_continue.content = "Continue.";
+
+        common_chat_templates_inputs inputs;
+        inputs.messages = { user_start, assistant_tools, weather_result, time_result, user_continue };
+        inputs.tools    = { get_time_tool, get_weather_tool };
+
+        auto params = common_chat_templates_apply(tmpls.get(), inputs);
+        assert_contains(params.prompt, "<｜Assistant｜><think>Need both</think>\n\n<｜DSML｜tool_calls>");
+
+        const auto time_pos    = params.prompt.find("<tool_result>time result</tool_result>");
+        const auto weather_pos = params.prompt.find("<tool_result>weather result</tool_result>");
+        if (time_pos == std::string::npos || weather_pos == std::string::npos || time_pos > weather_pos) {
+            LOG_ERR("Expected tool results in tool-call order\nActual: %s\n", params.prompt.c_str());
+            common_log_flush(common_log_main());
+            throw std::runtime_error("Test failed");
+        }
     }
 
     {
