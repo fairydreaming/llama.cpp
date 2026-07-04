@@ -1856,7 +1856,8 @@ static common_chat_params common_chat_params_init_gigachat_v3(
 }
 
 static common_chat_params common_chat_params_init_deepseek_v3_2(const common_chat_template &    tmpl,
-                                                                 const autoparser::generation_params & inputs) {
+                                                                 const autoparser::generation_params & inputs,
+                                                                 const std::string & tool_calls_tag = "function_calls") {
     common_chat_params data;
 
     data.prompt             = common_chat_template_direct_apply_impl(tmpl, inputs);
@@ -1879,8 +1880,8 @@ static common_chat_params common_chat_params_init_deepseek_v3_2(const common_cha
     const std::string DSML         = "｜DSML｜";
     const std::string THINK_START  = "<think>";
     const std::string THINK_END    = "</think>";
-    const std::string FC_START     = "<" + DSML + "function_calls>";
-    const std::string FC_END       = "</" + DSML + "function_calls>";
+    const std::string FC_START     = "<" + DSML + tool_calls_tag + ">";
+    const std::string FC_END       = "</" + DSML + tool_calls_tag + ">";
     const std::string INVOKE_START = "<" + DSML + "invoke";
     const std::string INVOKE_END   = "</" + DSML + "invoke>";
     const std::string PARAM_START  = "<" + DSML + "parameter";
@@ -1902,112 +1903,117 @@ static common_chat_params common_chat_params_init_deepseek_v3_2(const common_cha
         auto generation_prompt = p.literal(GEN_PROMPT);
         auto end = p.end();
 
-        auto reasoning = p.eps();
-        if (extract_reasoning && inputs.enable_thinking) {
-            reasoning = p.optional(THINK_START + p.reasoning(p.until(THINK_END)) + THINK_END);
-        } else if (extract_reasoning) {
-            // Thinking disabled but reasoning extraction requested: the generation prompt
-            // contains an empty <think></think> pair that must still be consumed.
-            reasoning = p.optional(p.literal(THINK_START) + p.until(THINK_END) + p.literal(THINK_END));
-        }
-
+        auto after_reasoning = p.eps();
         if (has_response_format) {
             auto response_format = p.rule("response-format",
                 p.literal("```json") + p.space() +
                 p.content(p.schema(p.json(), "response-format-schema", inputs.json_schema)) +
                 p.space() + p.literal("```"));
-            return generation_prompt + reasoning + response_format + end;
-        }
-
-        if (!has_tools || inputs.tool_choice == COMMON_CHAT_TOOL_CHOICE_NONE) {
-            return generation_prompt + reasoning + p.content(p.rest()) + end;
-        }
-
-        auto tool_choice = p.choice();
-        foreach_function(inputs.tools, [&](const json & tool) {
-            const auto & function = tool.at("function");
-            std::string  name     = function.at("name");
-            auto params   = function.contains("parameters") ? function.at("parameters") : json::object();
-            const auto & props    = params.contains("properties") ? params.at("properties") : json::object();
-
-            std::set<std::string> required;
-            if (params.contains("required")) {
-                params.at("required").get_to(required);
-            }
-
-            auto schema_info = common_schema_info();
-            schema_info.resolve_refs(params);
-
-            std::vector<common_peg_parser> required_parsers;
-            std::vector<common_peg_parser> optional_parsers;
-            for (const auto & [param_name, param_schema] : props.items()) {
-                bool is_required = required.find(param_name) != required.end();
-                bool is_string   = schema_info.resolves_to_string(param_schema);
-
-                auto arg = p.tool_arg(
-                    p.tool_arg_open(
-                        p.literal(PARAM_START + " name=\"") +
-                        p.tool_arg_name(p.literal(param_name)) +
-                        p.literal("\" string=\"" + std::string(is_string ? "true" : "false") + "\">")) +
-                    (is_string
-                         ? p.tool_arg_string_value(p.until(PARAM_END))
-                         : p.tool_arg_json_value(p.schema(p.json(),
-                                                          "tool-" + name + "-arg-" + param_name + "-schema",
-                                                          param_schema, false))) +
-                    p.tool_arg_close(p.literal(PARAM_END)));
-
-                auto named_arg = p.rule("tool-" + name + "-arg-" + param_name, arg);
-                if (is_required) {
-                    required_parsers.push_back(named_arg);
-                } else {
-                    optional_parsers.push_back(named_arg);
-                }
-            }
-
-            common_peg_parser args_seq = p.eps();
-            for (size_t i = 0; i < required_parsers.size(); i++) {
-                if (i > 0) {
-                    args_seq = args_seq + p.space();
-                }
-                args_seq = args_seq + required_parsers[i];
-            }
-
-            if (!optional_parsers.empty()) {
-                common_peg_parser any_opt = p.choice();
-                for (const auto & opt : optional_parsers) {
-                    any_opt |= opt;
-                }
-                args_seq = args_seq + p.repeat(p.space() + any_opt, 0, -1);
-            }
-
-            common_peg_parser invoke_body = args_seq;
-            auto func_parser = p.tool(
-                p.tool_open(p.literal(INVOKE_START + " name=\"") +
-                            p.tool_name(p.literal(name)) + p.literal("\">\n")) +
-                invoke_body + p.space() +
-                p.tool_close(p.literal(INVOKE_END)));
-
-            tool_choice |= p.rule("tool-" + name, func_parser);
-        });
-
-        auto require_tools = inputs.tool_choice == COMMON_CHAT_TOOL_CHOICE_REQUIRED;
-
-        common_peg_parser tool_calls = p.eps();
-        if (inputs.parallel_tool_calls) {
-            tool_calls = p.trigger_rule("tool-call",
-                p.literal(FC_START) + p.space() + tool_choice +
-                p.zero_or_more(p.space() + tool_choice) + p.space() + p.literal(FC_END));
+            after_reasoning = response_format;
+        } else if (!has_tools || inputs.tool_choice == COMMON_CHAT_TOOL_CHOICE_NONE) {
+            after_reasoning = p.content(p.rest());
         } else {
-            tool_calls = p.trigger_rule("tool-call",
-                p.literal(FC_START) + p.space() + tool_choice + p.space() + p.literal(FC_END));
+            auto tool_choice = p.choice();
+            foreach_function(inputs.tools, [&](const json & tool) {
+                const auto & function = tool.at("function");
+                std::string  name     = function.at("name");
+                auto params   = function.contains("parameters") ? function.at("parameters") : json::object();
+                const auto & props    = params.contains("properties") ? params.at("properties") : json::object();
+
+                std::set<std::string> required;
+                if (params.contains("required")) {
+                    params.at("required").get_to(required);
+                }
+
+                auto schema_info = common_schema_info();
+                schema_info.resolve_refs(params);
+
+                std::vector<common_peg_parser> required_parsers;
+                std::vector<common_peg_parser> optional_parsers;
+                for (const auto & [param_name, param_schema] : props.items()) {
+                    bool is_required = required.find(param_name) != required.end();
+                    bool is_string   = schema_info.resolves_to_string(param_schema);
+
+                    auto arg = p.tool_arg(
+                        p.tool_arg_open(
+                            p.literal(PARAM_START + " name=\"") +
+                            p.tool_arg_name(p.literal(param_name)) +
+                            p.literal("\" string=\"" + std::string(is_string ? "true" : "false") + "\">")) +
+                        (is_string
+                             ? p.tool_arg_string_value(p.until(PARAM_END))
+                             : p.tool_arg_json_value(p.schema(p.json(),
+                                                              "tool-" + name + "-arg-" + param_name + "-schema",
+                                                              param_schema, false))) +
+                        p.tool_arg_close(p.literal(PARAM_END)));
+
+                    auto named_arg = p.rule("tool-" + name + "-arg-" + param_name, arg);
+                    if (is_required) {
+                        required_parsers.push_back(named_arg);
+                    } else {
+                        optional_parsers.push_back(named_arg);
+                    }
+                }
+
+                common_peg_parser args_seq = p.eps();
+                for (size_t i = 0; i < required_parsers.size(); i++) {
+                    if (i > 0) {
+                        args_seq = args_seq + p.space();
+                    }
+                    args_seq = args_seq + required_parsers[i];
+                }
+
+                if (!optional_parsers.empty()) {
+                    common_peg_parser any_opt = p.choice();
+                    for (const auto & opt : optional_parsers) {
+                        any_opt |= opt;
+                    }
+                    args_seq = args_seq + p.repeat(p.space() + any_opt, 0, -1);
+                }
+
+                common_peg_parser invoke_body = args_seq;
+                auto func_parser = p.tool(
+                    p.tool_open(p.literal(INVOKE_START + " name=\"") +
+                                p.tool_name(p.literal(name)) + p.literal("\">\n")) +
+                    invoke_body + p.space() +
+                    p.tool_close(p.literal(INVOKE_END)));
+
+                tool_choice |= p.rule("tool-" + name, func_parser);
+            });
+
+            auto require_tools = inputs.tool_choice == COMMON_CHAT_TOOL_CHOICE_REQUIRED;
+
+            common_peg_parser tool_calls = p.eps();
+            if (inputs.parallel_tool_calls) {
+                tool_calls = p.trigger_rule("tool-call",
+                    p.literal(FC_START) + p.space() + tool_choice +
+                    p.zero_or_more(p.space() + tool_choice) + p.space() + p.literal(FC_END));
+            } else {
+                tool_calls = p.trigger_rule("tool-call",
+                    p.literal(FC_START) + p.space() + tool_choice + p.space() + p.literal(FC_END));
+            }
+
+            if (!require_tools) {
+                tool_calls = p.optional(tool_calls);
+            }
+
+            auto content_before_tools = p.content(p.until(FC_START));
+            after_reasoning = content_before_tools + tool_calls;
         }
 
-        if (!require_tools) {
-            tool_calls = p.optional(tool_calls);
+        if (extract_reasoning && inputs.enable_thinking) {
+            auto closed_reasoning = p.literal(THINK_START) + p.reasoning(p.until(THINK_END)) + p.literal(THINK_END) + after_reasoning;
+            auto open_reasoning   = p.literal(THINK_START) + p.reasoning(p.rest());
+            return generation_prompt + p.choice({ closed_reasoning, open_reasoning }) + end;
+        } else if (extract_reasoning) {
+            // V3.2 pre-fills <think></think>, while V4 pre-fills </think> directly.
+            auto reasoning = p.optional(p.choice({
+                p.literal(THINK_START) + p.until(THINK_END) + p.literal(THINK_END),
+                p.literal(THINK_END),
+            }));
+            return generation_prompt + reasoning + after_reasoning + end;
         }
 
-        auto content_before_tools = p.content(p.until(FC_START));
-        return generation_prompt + reasoning + content_before_tools + tool_calls + end;
+        return generation_prompt + after_reasoning + end;
     });
 
     data.parser = parser.save();
@@ -2602,6 +2608,15 @@ std::optional<common_chat_params> common_chat_try_specialized_template(
         src.find("DSML") != std::string::npos) {
         LOG_DBG("Using specialized template: DeepSeek V3.2\n");
         return common_chat_params_init_deepseek_v3_2(tmpl, params);
+    }
+
+    // DeepSeek V4 format detection: same DSML invoke/parameter shape as V3.2,
+    // but the outer block is tool_calls instead of function_calls.
+    if (src.find("dsml_token") != std::string::npos &&
+        src.find("tool_calls>") != std::string::npos &&
+        src.find("DSML") != std::string::npos) {
+        LOG_DBG("Using specialized template: DeepSeek V4\n");
+        return common_chat_params_init_deepseek_v3_2(tmpl, params, "tool_calls");
     }
 
     // Gemma4 format detection

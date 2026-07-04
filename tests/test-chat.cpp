@@ -3963,6 +3963,75 @@ static void test_template_output_peg_parsers(bool detailed_debug) {
             .run();
     }
 
+    // DeepSeek V4 tests - format uses DSML markup:
+    //   <｜DSML｜tool_calls>
+    //   <｜DSML｜invoke name="foo">
+    //   <｜DSML｜parameter name="bar" string="true|false">value</｜DSML｜parameter>
+    //   </｜DSML｜invoke>
+    //   </｜DSML｜tool_calls>
+    {
+        auto tst = peg_tester("models/templates/deepseek-ai-DeepSeek-V4.jinja", detailed_debug);
+
+        tst.test("Hello, world!\nWhat's up?")
+            .enable_thinking(false)
+            .reasoning_format(COMMON_REASONING_FORMAT_DEEPSEEK)
+            .expect(message_assist)
+            .run();
+
+        tst.test(
+               "Let me check the time</think>\n\n"
+               "<｜DSML｜tool_calls>\n"
+               "<｜DSML｜invoke name=\"get_time\">\n"
+               "<｜DSML｜parameter name=\"city\" string=\"true\">Tokyo</｜DSML｜parameter>\n"
+               "</｜DSML｜invoke>\n"
+               "</｜DSML｜tool_calls>")
+            .enable_thinking(true)
+            .reasoning_format(COMMON_REASONING_FORMAT_DEEPSEEK)
+            .tools({ get_time_tool })
+            .expect(message_with_tool_calls_and_reasoning("get_time", R"({"city": "Tokyo"})", "Let me check the time"))
+            .run();
+
+        tst.test(
+               "Calling both</think>\n\n"
+               "<｜DSML｜tool_calls>\n"
+               "<｜DSML｜invoke name=\"get_time\">\n"
+               "<｜DSML｜parameter name=\"city\" string=\"true\">Paris</｜DSML｜parameter>\n"
+               "</｜DSML｜invoke>\n"
+               "<｜DSML｜invoke name=\"get_weather\">\n"
+               "<｜DSML｜parameter name=\"city\" string=\"true\">Paris</｜DSML｜parameter>\n"
+               "</｜DSML｜invoke>\n"
+               "</｜DSML｜tool_calls>")
+            .enable_thinking(true)
+            .reasoning_format(COMMON_REASONING_FORMAT_DEEPSEEK)
+            .parallel_tool_calls(true)
+            .tools({ get_time_tool, get_weather_tool })
+            .expect(message_with_reasoning_content_and_multiple_tool_calls(
+                "Calling both", "",
+                { { "get_time", R"({"city": "Paris"})" }, { "get_weather", R"({"city": "Paris"})" } }))
+            .run();
+
+        tst.test(
+               "Still thinking\n\n"
+               "<｜DSML｜tool_calls>\n"
+               "<｜DSML｜invoke name=\"get_time\">\n"
+               "<｜DSML｜parameter name=\"city\" string=\"true\">Tokyo</｜DSML｜parameter>\n"
+               "</｜DSML｜invoke>\n"
+               "</｜DSML｜tool_calls>")
+            .enable_thinking(true)
+            .reasoning_format(COMMON_REASONING_FORMAT_DEEPSEEK)
+            .tools({ get_time_tool })
+            .expect_reasoning(
+               "Still thinking\n\n"
+               "<｜DSML｜tool_calls>\n"
+               "<｜DSML｜invoke name=\"get_time\">\n"
+               "<｜DSML｜parameter name=\"city\" string=\"true\">Tokyo</｜DSML｜parameter>\n"
+               "</｜DSML｜invoke>\n"
+               "</｜DSML｜tool_calls>")
+            .expect_content("")
+            .expect_tool_calls({})
+            .run();
+    }
+
     // GLM-4.6 tests - format: <tool_call>function_name\n<arg_key>...</arg_key>\n<arg_value>...</arg_value>\n</tool_call>
     {
         auto tst = peg_tester("models/templates/GLM-4.6.jinja", detailed_debug);
