@@ -793,6 +793,9 @@ class GGUFWriter:
     def add_indexer_top_k(self, top_k: int) -> None:
         self.add_uint32(Keys.Attention.Indexer.TOP_K.format(arch=self.arch), top_k)
 
+    def add_indexer_is_full(self, values: Sequence[int]) -> None:
+        self.add_array(Keys.Attention.Indexer.IS_FULL.format(arch=self.arch), values)
+
     def add_max_alibi_bias(self, bias: float) -> None:
         self.add_float32(Keys.Attention.MAX_ALIBI_BIAS.format(arch=self.arch), bias)
 
@@ -975,6 +978,9 @@ class GGUFWriter:
 
     def add_hyper_connection_epsilon(self, value: float) -> None:
         self.add_float32(Keys.HyperConnection.EPSILON.format(arch=self.arch), value)
+
+    def add_hyper_connection_magnitude(self, value: float) -> None:
+        self.add_float32(Keys.HyperConnection.MAGNITUDE.format(arch=self.arch), value)
 
     def add_attention_scale(self, value: float) -> None:
         self.add_float32(Keys.Attention.SCALE.format(arch=self.arch), value)

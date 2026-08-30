@@ -318,6 +318,11 @@ struct llm_tokenizer_bpe : llm_tokenizer {
             case LLAMA_VOCAB_PRE_TYPE_DEEPSEEK3_LLM:
             case LLAMA_VOCAB_PRE_TYPE_HUNYUAN_DENSE:
             case LLAMA_VOCAB_PRE_TYPE_JOYAI_LLM:
+            case LLAMA_VOCAB_PRE_TYPE_HYV4:
+                // shared regex group: this tokenizer.json pre_tokenizer Sequence is three
+                // Isolated Split regexes (digits / CJK / GPT-style) then ByteLevel. HY4
+                // (hy_v4_internal) uses exactly these three regexes; llama.cpp applies the
+                // list as sequential splits, matching the HF Sequence.
                 regex_exprs = {
                     "\\p{N}{1,3}",
                     "[一-龥぀-ゟ゠-ヿ]+",
@@ -2331,6 +2336,10 @@ void llama_vocab::impl::load(llama_model_loader & ml, const LLM_KV & kv) {
             } else if (
                 tokenizer_pre == "hunyuan-dense") {
                 pre_type = LLAMA_VOCAB_PRE_TYPE_HUNYUAN_DENSE;
+                clean_spaces = false;
+            } else if (
+                tokenizer_pre == "hyv4") {
+                pre_type = LLAMA_VOCAB_PRE_TYPE_HYV4;
                 clean_spaces = false;
             } else if (
                 tokenizer_pre == "joyai-llm") {

@@ -227,6 +227,9 @@ struct llama_hparams {
     uint32_t indexer_head_size = 0;
     uint32_t indexer_top_k     = 0;
 
+    // if indexer_is_full[il] == 0, layer il reuses the top-k of the last preceding full layer
+    std::array<uint32_t, LLAMA_MAX_LAYERS> indexer_is_full;
+
     // DeepSeek-V4
     uint32_t dsv4_o_group_count        = 0;
     uint32_t dsv4_o_lora_rank          = 0;
@@ -236,6 +239,10 @@ struct llama_hparams {
     float    dsv4_compress_rope_base   = 0.0f;
     float    dsv4_hc_eps               = 0.0f;
     std::array<uint32_t, LLAMA_MAX_LAYERS> dsv4_compress_ratios;
+
+    // HY4 (hyv4) iHC: reuses dsv4_hc_mult (count) and dsv4_hc_eps (epsilon);
+    // the post-gate branch is scaled by this magnitude (dsv4 hardcodes 2.0)
+    float    hc_magnitude              = 0.0f;
 
     // qwen3vl deepstack
     // When parsed from GGUF, this implies the first N layers consume the first

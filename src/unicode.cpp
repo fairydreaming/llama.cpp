@@ -1047,6 +1047,147 @@ static std::vector<size_t> unicode_regex_split_custom_newlines(const std::string
     return bpe_offsets;
 }
 
+// HY4 (hy_v4_internal) third pre-tokenizer Split (Isolated), applied within the offsets
+// produced by the preceding \p{N}{1,3} and CJK splits:
+//   [!"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~][A-Za-z]+
+//   | [^\r\n\p{L}\p{P}\p{S}]?[\p{L}\p{M}]+
+//   |  ?[\p{P}\p{S}]+[\r\n]*
+//   | \s*[\r\n]+ | \s+(?!\S) | \s+
+// Hand-coded to reproduce HF fancy-regex leftmost-first semantics exactly (the generic
+// std::regex path mis-splits adjacent punctuation/symbol runs like ",~"). Shared by the
+// deepseek3-llm / hunyuan-dense regex family (identical regex string).
+static std::vector<size_t> unicode_regex_split_custom_hyv4(const std::string & text, const std::vector<size_t> & offsets) {
+    std::vector<size_t> bpe_offsets;
+    bpe_offsets.reserve(offsets.size());
+
+    const auto cpts = unicode_cpts_from_utf8(text);
+
+    auto _is_ascii_alpha = [] (const uint32_t c) {
+        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
+    };
+    // exactly [!"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~] (all 32 ASCII punctuation/symbol chars)
+    auto _is_ascii_punct = [] (const uint32_t c) {
+        return (c >= 0x21 && c <= 0x2F) || (c >= 0x3A && c <= 0x40) ||
+               (c >= 0x5B && c <= 0x60) || (c >= 0x7B && c <= 0x7E);
+    };
+
+    size_t start = 0;
+    for (auto offset : offsets) {
+        const size_t offset_ini = start;
+        const size_t offset_end = start + offset;
+        assert(offset_end <= cpts.size());
+        start = offset_end;
+
+        static const uint32_t OUT_OF_RANGE = 0xFFFFFFFF;
+        auto _get_cpt = [&] (const size_t pos) -> uint32_t {
+            return (offset_ini <= pos && pos < offset_end) ? cpts[pos] : OUT_OF_RANGE;
+        };
+        auto _get_flags = [&] (const size_t pos) -> unicode_cpt_flags {
+            return (offset_ini <= pos && pos < offset_end) ? unicode_cpt_flags_from_cpt(cpts[pos]) : unicode_cpt_flags{};
+        };
+        size_t _prev_end = offset_ini;
+        auto _add_token = [&] (const size_t end) -> size_t {
+            assert(_prev_end <= end && end <= offset_end);
+            size_t len = end - _prev_end;
+            if (len > 0) {
+                bpe_offsets.push_back(len);
+            }
+            _prev_end = end;
+            return len;
+        };
+
+        for (size_t pos = offset_ini; pos < offset_end; /*pos++*/ ) {
+            const uint32_t cpt = _get_cpt(pos);
+            const auto flags = _get_flags(pos);
+
+            // find the end of a regex match starting exactly at pos (mend == pos means no match).
+            // Split "Isolated" behavior: chars matching no alternative are left as-is, so any
+            // maximal non-matching run (e.g. a digit piece already isolated by \p{N}{1,3}) is
+            // emitted as a single token via the gap-flush below.
+            size_t mend = pos;
+
+            // regex: [<ascii punct>][A-Za-z]+
+            if (_is_ascii_punct(cpt) && _is_ascii_alpha(_get_cpt(pos+1))) {
+                size_t p = pos + 1;
+                while (_is_ascii_alpha(_get_cpt(p))) {
+                    p++;
+                }
+                mend = p;
+            }
+
+            // regex: [^\r\n\p{L}\p{P}\p{S}]?[\p{L}\p{M}]+
+            if (mend == pos) {
+                const bool cur_lm = flags.is_letter || flags.is_accent_mark;
+                const bool cur_leadable = !(cpt == '\r' || cpt == '\n' ||
+                                            flags.is_letter || flags.is_punctuation || flags.is_symbol);
+                const auto nf = _get_flags(pos+1);
+                const bool next_lm = nf.is_letter || nf.is_accent_mark;
+                if (cur_lm || (cur_leadable && next_lm)) {
+                    size_t p = pos + 1; // first [\p{L}\p{M}] or the optional leading char
+                    while (_get_flags(p).is_letter || _get_flags(p).is_accent_mark) {
+                        p++;
+                    }
+                    mend = p;
+                }
+            }
+
+            // regex: <space>?[\p{P}\p{S}]+[\r\n]*
+            if (mend == pos) {
+                const bool lead_space = (cpt == ' ');
+                const auto ff = lead_space ? _get_flags(pos+1) : flags;
+                if (ff.is_punctuation || ff.is_symbol) {
+                    size_t p = pos + (lead_space ? 1 : 0);
+                    while (_get_flags(p).is_punctuation || _get_flags(p).is_symbol) {
+                        p++;
+                    }
+                    uint32_t c2 = _get_cpt(p);
+                    while (c2 == '\r' || c2 == '\n') {
+                        c2 = _get_cpt(++p);
+                    }
+                    mend = p;
+                }
+            }
+
+            // regex: \s*[\r\n]+ | \s+(?!\S) | \s+
+            if (mend == pos) {
+                size_t num_whitespaces = 0;
+                size_t last_end_r_or_n = 0;
+                while (_get_flags(pos+num_whitespaces).is_whitespace) {
+                    uint32_t cpt2 = _get_cpt(pos+num_whitespaces);
+                    if (cpt2 == '\r' || cpt2 == '\n') {
+                        last_end_r_or_n = pos + num_whitespaces + 1;
+                    }
+                    num_whitespaces++;
+                }
+                if (last_end_r_or_n > 0) {
+                    mend = last_end_r_or_n;                                    // \s*[\r\n]+
+                } else if (num_whitespaces > 1 && _get_cpt(pos+num_whitespaces) != OUT_OF_RANGE) {
+                    mend = pos + num_whitespaces - 1;                          // \s+(?!\S)
+                } else if (num_whitespaces > 0) {
+                    mend = pos + num_whitespaces;                             // \s+
+                }
+            }
+
+            if (mend > pos) {
+                if (pos > _prev_end) {
+                    _add_token(pos); // flush the preceding non-matching gap as one token
+                }
+                pos = mend;
+                _add_token(pos);     // the matched span
+            } else {
+                pos++;               // extend the current non-matching gap
+            }
+        }
+
+        // flush any trailing non-matching gap
+        if (offset_end > _prev_end) {
+            _add_token(offset_end);
+        }
+    }
+
+    return bpe_offsets;
+}
+
 static std::vector<size_t> unicode_regex_split_custom(const std::string & text, const std::string & regex_expr, const std::vector<size_t> & offsets) {
     std::vector<size_t> bpe_offsets;
 
@@ -1076,6 +1217,9 @@ static std::vector<size_t> unicode_regex_split_custom(const std::string & text, 
         // Splits digits into groups of 3 from the right (e.g., 1234567 -> 1, 234, 567)
         // TODO: Revisit this regex, in case there are any subtle tokenization differences with the original regex.
         bpe_offsets = unicode_regex_split_custom_afmoe(text, offsets);
+    } else if (regex_expr == "[!\"#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~][A-Za-z]+|[^\r\n\\p{L}\\p{P}\\p{S}]?[\\p{L}\\p{M}]+| ?[\\p{P}\\p{S}]+[\r\n]*|\\s*[\r\n]+|\\s+(?!\\S)|\\s+") {
+        // HY4 (hy_v4_internal) / deepseek3-llm / hunyuan-dense third Split regex
+        bpe_offsets = unicode_regex_split_custom_hyv4(text, offsets);
     }
 
     return bpe_offsets;

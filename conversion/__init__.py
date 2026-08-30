@@ -54,6 +54,7 @@ TEXT_MODEL_MAP: dict[str, str] = {
     "DeepseekV32ForCausalLM": "deepseek",
     "DFlashDraftModel": "qwen",
     "DeepseekV4ForCausalLM": "deepseek",
+    "HYV4ForCausalLM": "hyv4",
     "DistilBertForMaskedLM": "bert",
     "DistilBertForSequenceClassification": "bert",
     "DistilBertModel": "bert",

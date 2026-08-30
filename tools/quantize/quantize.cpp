@@ -12,6 +12,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <limits>
 #include <vector>
 #include <string>
 #include <unordered_map>
@@ -352,6 +353,10 @@ static bool parse_tensor_type_file(const char * filename, std::vector<tensor_typ
 
     std::string arg;
     while (file >> arg) {
+        if (arg[0] == '#') { // comment - skip the rest of the line
+            file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
         if (!parse_tensor_type(arg.c_str(), tensor_type)) {
             return false;
         }

@@ -1685,6 +1685,10 @@ class TextModel(ModelBase):
         if chkhsh == "972da7b59cec44d1f0a490a86c96df53859e486e481563e5dddac155013d87ac":
             # ref: https://huggingface.co/poolside/Laguna-XS.2
             res = "laguna"
+        if chkhsh == "e6ddf9c6686791c12d698d34c31ab9be1fea9af5a3d9a6909783ab382198ae1c":
+            # HY4 (hy_v4_internal / HYV4ForCausalLM). Dedicated pre-tokenizer whose regexes
+            # exactly reproduce tokenizer.json (digits / CJK / GPT-style Split + ByteLevel).
+            res = "hyv4"
 
         if res is None:
             logger.warning("\n")

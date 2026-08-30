@@ -185,6 +185,8 @@ static llama_model * llama_model_mapping(llm_arch arch, const llama_model_params
             return new llama_model_deepseek32(params);
         case LLM_ARCH_DEEPSEEK4:
             return new llama_model_deepseek4(params);
+        case LLM_ARCH_HYV4:
+            return new llama_model_hyv4(params);
         case LLM_ARCH_GLM_DSA:
             return new llama_model_glm_dsa(params);
         case LLM_ARCH_MISTRAL4:
@@ -2080,6 +2082,44 @@ llama_memory_i * llama_model::create_memory(const llama_memory_params & params, 
                         nullptr,
                         nullptr);
             } break;
+        case LLM_ARCH_HYV4:
+            {
+                if (hparams.indexer_top_k == 0) {
+                    // all-full_attention checkpoint: no indexer, so no indexer key cache
+                    res = new llama_kv_cache(
+                            *this,
+                            hparams,
+                            params.type_k,
+                            params.type_v,
+                            !cparams.flash_attn,
+                            cparams.offload_kqv,
+                            cparams.kv_unified,
+                            cparams.n_ctx_seq,
+                            cparams.n_seq_max,
+                            1,
+                            hparams.n_swa,
+                            hparams.swa_type,
+                            nullptr,
+                            nullptr,
+                            nullptr,
+                            nullptr);
+                } else {
+                    res = new llama_kv_cache_dsa(
+                            *this,
+                            params.type_k,
+                            params.type_v,
+                            !cparams.flash_attn,
+                            cparams.offload_kqv,
+                            cparams.kv_unified,
+                            cparams.n_ctx_seq,
+                            cparams.n_seq_max,
+                            1,
+                            hparams.n_swa,
+                            hparams.swa_type,
+                            nullptr,
+                            nullptr);
+                }
+            } break;
         // Models that need standard caching should rely on recurrent/hybrid
         // checks
         default:
@@ -2485,6 +2525,12 @@ llama_rope_type llama_model_rope_type(const llama_model * model) {
         case LLM_ARCH_LLAMA_EMBED:
         case LLM_ARCH_MAINCODER:
         case LLM_ARCH_GLM_DSA:
+        // HYV4 uses interleaved (consecutive-pair) rope, matching the deployed vLLM
+        // (hunyuan_v4.py: is_neox_style=False) and the checkpoint's native
+        // hy_v4_internal (5.10.2) module. This aligns with vLLM on short prompts.
+        // (transformers 5.15 hy_v4 switched to rotate_half/NEOX; we intentionally do
+        // NOT follow that here - see DECISIONS.md D-N12/rope revert.)
+        case LLM_ARCH_HYV4:
             return LLAMA_ROPE_TYPE_NORM;
 
         // the pairs of head values are offset by n_rot/2
