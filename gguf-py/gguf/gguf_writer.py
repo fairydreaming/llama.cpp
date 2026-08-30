@@ -821,9 +821,6 @@ class GGUFWriter:
         key = Keys.Attention.Indexer.TYPES.format(arch=self.arch)
         self.add_array(key, value)
 
-    def add_indexer_is_full(self, values: Sequence[int]) -> None:
-        self.add_array(Keys.Attention.Indexer.IS_FULL.format(arch=self.arch), values)
-
     def add_max_alibi_bias(self, bias: float) -> None:
         self.add_float32(Keys.Attention.MAX_ALIBI_BIAS.format(arch=self.arch), bias)
 

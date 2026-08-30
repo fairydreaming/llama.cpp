@@ -225,7 +225,6 @@ class Keys:
             BLOCK_SIZE   = "{arch}.attention.indexer.block_size"    # MSA
             LOCAL_BLOCKS = "{arch}.attention.indexer.local_blocks"  # MSA
             TYPES      = "{arch}.attention.indexer.types"
-            IS_FULL    = "{arch}.attention.indexer.is_full"
 
     class HyperConnection:
         COUNT                = "{arch}.hyper_connection.count"

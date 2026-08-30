@@ -269,9 +269,6 @@ struct llama_hparams {
     // Shared indexers reuse top-k from previous full layer
     std::array<uint32_t, LLAMA_MAX_LAYERS> is_indexer_full_impl;
 
-    // if indexer_is_full[il] == 0, layer il reuses the top-k of the last preceding full layer
-    std::array<uint32_t, LLAMA_MAX_LAYERS> indexer_is_full;
-
     // DeepSeek-V4
     uint32_t dsv4_o_group_count        = 0;
     uint32_t dsv4_o_lora_rank          = 0;

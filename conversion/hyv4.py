@@ -173,7 +173,7 @@ class HYV4Model(DeepseekV2Model):
             self.gguf_writer.add_indexer_head_count(hparams["index_n_heads"])
             self.gguf_writer.add_indexer_key_length(hparams["index_head_dim"])
             self.gguf_writer.add_indexer_top_k(hparams["index_topk"])
-            self.gguf_writer.add_indexer_is_full([int(v) for v in is_full])
+            self.gguf_writer.add_indexer_types(is_full)
             logger.info(
                 "HYV4 DSA: %d/%d layers own an indexer (top_k=%d, n_heads=%d, head_dim=%d)",
                 sum(is_full), len(is_full), hparams["index_topk"],

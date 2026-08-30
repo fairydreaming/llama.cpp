@@ -47,7 +47,6 @@ void llama_model_hyv4::load_arch_hparams(llama_model_loader & ml) {
     ml.get_key(LLM_KV_ATTENTION_INDEXER_KEY_LENGTH, hparams.indexer_head_size, false);
     ml.get_key(LLM_KV_ATTENTION_INDEXER_TOP_K,      hparams.indexer_top_k,     false);
 
-    hparams.indexer_is_full.fill(0);
     if (hparams.indexer_top_k > 0) {
         // the reference plumbs rms_norm_eps into the indexer k_norm LayerNorm, and build_norm
         // reads f_norm_eps for LLM_NORM
@@ -57,8 +56,8 @@ void llama_model_hyv4::load_arch_hparams(llama_model_loader & ml) {
             throw std::runtime_error("hyv4: bad indexer head count / key length");
         }
 
-        ml.get_arr(LLM_KV_ATTENTION_INDEXER_IS_FULL, hparams.indexer_is_full);
-        if (!hparams.indexer_is_full[0]) {
+        ml.get_key_or_arr(LLM_KV_ATTENTION_INDEXER_TYPES, hparams.is_indexer_full_impl, hparams.n_layer(), false);
+        if (!hparams.is_indexer_full(0)) {
             throw std::runtime_error("hyv4: layer 0 must own an indexer, nothing precedes it to share");
         }
     }
@@ -109,7 +108,7 @@ void llama_model_hyv4::load_arch_tensors(llama_model_loader &) {
         layer.wqkv_gate     = create_tensor(tn(LLM_TENSOR_ATTN_GATE,     "weight", i), {n_embd, n_head * n_embd_head_v_mla}, 0);
 
         // only "full" indexer layers ship weights; "shared" layers reuse their top-k
-        if (hparams.indexer_top_k > 0 && hparams.indexer_is_full[i]) {
+        if (hparams.indexer_top_k > 0 && hparams.is_indexer_full(i)) {
             const int64_t n_indexer_head = hparams.indexer_n_head;
             const int64_t n_embd_indexer = hparams.indexer_head_size;
 
@@ -453,7 +452,7 @@ ggml_tensor * llama_model_hyv4::graph::build_attention_dsa(
     ggml_tensor * qr = ggml_mul_mat(ctx0, layer.wq_a, cur);
     qr = build_norm(qr, layer.attn_q_a_norm, nullptr, LLM_NORM_RMS, il);
 
-    if (hparams.indexer_is_full[il]) {
+    if (hparams.is_indexer_full(il)) {
         *last_top_k = build_indexer_top_k(model, inp_attn_dsa, cur, qr, inp_pos, il);
         cb(*last_top_k, "top_k", il);
     }
