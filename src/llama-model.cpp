@@ -200,8 +200,6 @@ static llama_model * llama_model_mapping(llm_arch arch, const llama_model_params
             return new llama_model_dots3note(params);
         case LLM_ARCH_DEEPSEEK4:
             return new llama_model_deepseek4(params);
-        case LLM_ARCH_HYV4:
-            return new llama_model_hyv4(params);
         case LLM_ARCH_GLM_DSA:
             return new llama_model_glm_dsa(params);
         case LLM_ARCH_MISTRAL4:
@@ -290,6 +288,8 @@ static llama_model * llama_model_mapping(llm_arch arch, const llama_model_params
             return new llama_model_hunyuan_dense(params);
         case LLM_ARCH_HY_V3:
             return new llama_model_hy_v3(params);
+        case LLM_ARCH_HY_V4:
+            return new llama_model_hy_v4(params);
         case LLM_ARCH_SMOLLM3:
             return new llama_model_smollm3(params);
         case LLM_ARCH_OPENAI_MOE:
@@ -2250,7 +2250,7 @@ llama_memory_i * llama_model::create_memory(const llama_memory_params & params, 
                         filter_idx,
                         nullptr);
             } break;
-        case LLM_ARCH_HYV4:
+        case LLM_ARCH_HY_V4:
             {
                 if (hparams.indexer_top_k == 0) {
                     // all-full_attention checkpoint: no indexer, so no indexer key cache
@@ -2906,7 +2906,7 @@ llama_rope_type llama_model_rope_type(const llama_model * model) {
         // hy_v4_internal (5.10.2) module. This aligns with vLLM on short prompts.
         // (transformers 5.15 hy_v4 switched to rotate_half/NEOX; we intentionally do
         // NOT follow that here - see DECISIONS.md D-N12/rope revert.)
-        case LLM_ARCH_HYV4:
+        case LLM_ARCH_HY_V4:
             return LLAMA_ROPE_TYPE_NORM;
 
         // the pairs of head values are offset by n_rot/2

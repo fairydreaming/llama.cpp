@@ -1307,8 +1307,8 @@ struct llama_model_deepseek4 : public llama_model_base {
 };
 
 
-struct llama_model_hyv4 : public llama_model_base {
-    llama_model_hyv4(const struct llama_model_params & params) : llama_model_base(params) {}
+struct llama_model_hy_v4 : public llama_model_base {
+    llama_model_hy_v4(const struct llama_model_params & params) : llama_model_base(params) {}
     void load_arch_hparams(llama_model_loader & ml) override;
     void load_arch_tensors(llama_model_loader & ml) override;
 

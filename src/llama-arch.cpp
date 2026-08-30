@@ -80,7 +80,6 @@ static const std::map<llm_arch, const char *> LLM_ARCH_NAMES = {
     { LLM_ARCH_DEEPSEEK2OCR,     "deepseek2-ocr"    },
     { LLM_ARCH_DEEPSEEK32,       "deepseek32"       },
     { LLM_ARCH_DEEPSEEK4,        "deepseek4"        },
-    { LLM_ARCH_HYV4,             "hyv4"             },
     { LLM_ARCH_CHATGLM,          "chatglm"          },
     { LLM_ARCH_GLM4,             "glm4"             },
     { LLM_ARCH_GLM4_MOE,         "glm4moe"          },
@@ -122,6 +121,7 @@ static const std::map<llm_arch, const char *> LLM_ARCH_NAMES = {
     { LLM_ARCH_HUNYUAN_DENSE,    "hunyuan-dense"    },
     { LLM_ARCH_HUNYUAN_VL,       "hunyuan_vl"       },
     { LLM_ARCH_HY_V3,            "hy_v3"            },
+    { LLM_ARCH_HY_V4,            "hy_v4"            },
     { LLM_ARCH_SMOLLM3,          "smollm3"          },
     { LLM_ARCH_OPENAI_MOE,       "gpt-oss"          },
     { LLM_ARCH_LFM2,             "lfm2"             },
@@ -1129,7 +1129,7 @@ bool llm_arch_supports_sm_tensor(const llm_arch & arch) {
         case LLM_ARCH_OLMOE:
         case LLM_ARCH_DEEPSEEK2:
         case LLM_ARCH_DEEPSEEK32:
-        case LLM_ARCH_HYV4:
+        case LLM_ARCH_HY_V4:
         case LLM_ARCH_DOTS3NOTE:
         case LLM_ARCH_GLM_DSA:
         case LLM_ARCH_BITNET:

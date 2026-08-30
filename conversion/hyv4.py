@@ -54,7 +54,7 @@ class HYV4Model(DeepseekV2Model):
     logits. Consequence: the GGUF does not support speculative decoding.
     """
 
-    model_arch = gguf.MODEL_ARCH.HYV4
+    model_arch = gguf.MODEL_ARCH.HY_V4
 
     # tensors a "full" indexer layer must carry
     INDEXER_SUFFIXES = frozenset({

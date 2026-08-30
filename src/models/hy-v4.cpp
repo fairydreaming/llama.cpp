@@ -21,7 +21,7 @@ static ggml_tensor * hyv4_view_2d(ggml_context * ctx, ggml_tensor * t, int64_t n
     return ggml_view_2d(ctx, t, ne0, ne1, t->nb[1], hyv4_elem_offset(t, i0));
 }
 
-void llama_model_hyv4::load_arch_hparams(llama_model_loader & ml) {
+void llama_model_hy_v4::load_arch_hparams(llama_model_loader & ml) {
     ml.get_key(LLM_KV_ATTENTION_LAYERNORM_RMS_EPS, hparams.f_norm_rms_eps);
     ml.get_key(LLM_KV_LEADING_DENSE_BLOCK_COUNT,   hparams.n_layer_dense_lead, false);
     ml.get_key(LLM_KV_ATTENTION_Q_LORA_RANK,       hparams.n_lora_q);
@@ -67,7 +67,7 @@ void llama_model_hyv4::load_arch_hparams(llama_model_loader & ml) {
     type = LLM_TYPE_UNKNOWN;
 }
 
-void llama_model_hyv4::load_arch_tensors(llama_model_loader &) {
+void llama_model_hy_v4::load_arch_tensors(llama_model_loader &) {
     LLAMA_LOAD_LOCALS;
 
     const int64_t n_embd_head_k_mla   = hparams.n_embd_head_k_mla();
@@ -154,7 +154,7 @@ void llama_model_hyv4::load_arch_tensors(llama_model_loader &) {
     }
 }
 
-std::unique_ptr<llm_graph_context> llama_model_hyv4::build_arch_graph(const llm_graph_params & params) const {
+std::unique_ptr<llm_graph_context> llama_model_hy_v4::build_arch_graph(const llm_graph_params & params) const {
     return std::make_unique<graph>(*this, params);
 }
 
@@ -172,7 +172,7 @@ static ggml_tensor * hyv4_hc_reduce(ggml_context * ctx0, ggml_tensor * x, ggml_t
     return ggml_cast(ctx0, result, out_type);
 }
 
-ggml_tensor * llama_model_hyv4::graph::build_hc_pre(
+ggml_tensor * llama_model_hy_v4::graph::build_hc_pre(
         ggml_tensor * x,
         ggml_tensor * hc_fn,
         ggml_tensor * hc_scale,
@@ -214,7 +214,7 @@ ggml_tensor * llama_model_hyv4::graph::build_hc_pre(
     return hyv4_hc_reduce(ctx0, x, pre, hc, n_embd, nt, x->type);
 }
 
-ggml_tensor * llama_model_hyv4::graph::build_hc_post(
+ggml_tensor * llama_model_hy_v4::graph::build_hc_post(
         ggml_tensor * x,
         ggml_tensor * residual,
         ggml_tensor * post,
@@ -245,7 +245,7 @@ ggml_tensor * llama_model_hyv4::graph::build_hc_post(
     return out; // [n_embd, hc, nt]
 }
 
-ggml_tensor * llama_model_hyv4::graph::build_hc_head(
+ggml_tensor * llama_model_hy_v4::graph::build_hc_head(
         ggml_tensor * x,
         ggml_tensor * hc_fn,
         ggml_tensor * hc_scale,
@@ -267,7 +267,7 @@ ggml_tensor * llama_model_hyv4::graph::build_hc_head(
     return hyv4_hc_reduce(ctx0, x, pre, hc, n_embd, nt, x->type);
 }
 
-ggml_tensor * llama_model_hyv4::graph::build_attention(
+ggml_tensor * llama_model_hy_v4::graph::build_attention(
         const llama_model & model,
         llm_graph_input_attn_k * inp_attn,
         ggml_tensor * cur,
@@ -341,7 +341,7 @@ ggml_tensor * llama_model_hyv4::graph::build_attention(
     return out;
 }
 
-ggml_tensor * llama_model_hyv4::graph::build_indexer_top_k(
+ggml_tensor * llama_model_hy_v4::graph::build_indexer_top_k(
         const llama_model & model,
         llm_graph_input_attn_k_dsa * inp_attn_dsa,
         ggml_tensor * cur,
@@ -433,7 +433,7 @@ ggml_tensor * llama_model_hyv4::graph::build_indexer_top_k(
     return ggml_cont(ctx0, ggml_top_k(ctx0, score, n_top_k));
 }
 
-ggml_tensor * llama_model_hyv4::graph::build_attention_dsa(
+ggml_tensor * llama_model_hy_v4::graph::build_attention_dsa(
         const llama_model & model,
         llm_graph_input_attn_k_dsa * inp_attn_dsa,
         ggml_tensor * cur,
@@ -511,7 +511,7 @@ ggml_tensor * llama_model_hyv4::graph::build_attention_dsa(
     return out;
 }
 
-llama_model_hyv4::graph::graph(const llama_model & model, const llm_graph_params & params) :
+llama_model_hy_v4::graph::graph(const llama_model & model, const llm_graph_params & params) :
     llm_graph_context(params) {
     const int64_t hc = hparams.dsv4_hc_mult;
     const int64_t n_embd_head_k = hparams.n_embd_head_k_mla();
