@@ -359,34 +359,22 @@ ggml_tensor * llama_model_hy_v4::graph::build_indexer_top_k(
     // de-interleave, same as the main MLA path
     ggml_tensor * iq = ggml_mul_mat(ctx0, layer.indexer_attn_q_b, qr);
 
-    ggml_tensor * iq_nope = ggml_view_3d(ctx0, iq, n_embd_indexer_nope, n_indexer_head, n_tokens,
-            ggml_row_size(iq->type, n_embd_indexer),
-            ggml_row_size(iq->type, n_embd_indexer) * n_indexer_head, 0);
-    ggml_tensor * iq_pe = ggml_view_3d(ctx0, iq, n_embd_indexer_rope, n_indexer_head, n_tokens,
-            ggml_row_size(iq->type, n_embd_indexer),
-            ggml_row_size(iq->type, n_embd_indexer) * n_indexer_head,
-            ggml_row_size(iq->type, n_embd_indexer_nope));
+    iq = ggml_reshape_3d(ctx0, iq, n_embd_indexer, n_indexer_head, n_tokens);
 
-    iq_pe = ggml_rope_ext(ctx0, iq_pe, inp_pos, nullptr, n_rot, rope_type, n_ctx_orig, freq_base,
-            freq_scale, ext_factor, attn_factor, beta_fast, beta_slow);
-    iq = ggml_concat(ctx0, iq_nope, iq_pe, 0);
+    iq = ggml_rope_ext(ctx0, iq, inp_pos, nullptr, n_rot, rope_type, n_ctx_orig, freq_base,
+         freq_scale, ext_factor, attn_factor, beta_fast, beta_slow);
+    iq = ggml_rope_set_offset(iq, n_embd_indexer_nope);
     cb(iq, "indexer_q", il);
 
     ggml_tensor * ik = ggml_mul_mat(ctx0, layer.indexer_attn_k, cur);
 
     ik = build_norm(ik, layer.indexer_k_norm, layer.indexer_k_norm_b, LLM_NORM, il);
 
-    ggml_tensor * ik_nope = ggml_view_3d(ctx0, ik, n_embd_indexer_nope, 1, n_tokens,
-            ggml_row_size(ik->type, n_embd_indexer),
-            ggml_row_size(ik->type, n_embd_indexer), 0);
-    ggml_tensor * ik_pe = ggml_view_3d(ctx0, ik, n_embd_indexer_rope, 1, n_tokens,
-            ggml_row_size(ik->type, n_embd_indexer),
-            ggml_row_size(ik->type, n_embd_indexer),
-            ggml_row_size(ik->type, n_embd_indexer_nope));
+    ik = ggml_reshape_3d(ctx0, ik, n_embd_indexer, 1, n_tokens);
 
-    ik_pe = ggml_rope_ext(ctx0, ik_pe, inp_pos, nullptr, n_rot, rope_type, n_ctx_orig, freq_base,
-            freq_scale, ext_factor, attn_factor, beta_fast, beta_slow);
-    ik = ggml_concat(ctx0, ik_nope, ik_pe, 0);
+    ik = ggml_rope_ext(ctx0, ik, inp_pos, nullptr, n_rot, rope_type, n_ctx_orig, freq_base,
+         freq_scale, ext_factor, attn_factor, beta_fast, beta_slow);
+    ik = ggml_rope_set_offset(ik, n_embd_indexer_nope);
     cb(ik, "indexer_k", il);
 
     // no Hadamard rotation: it is orthogonal so it does not change q.k, and it only serves
