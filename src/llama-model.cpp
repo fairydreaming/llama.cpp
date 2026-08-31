@@ -2272,6 +2272,8 @@ llama_memory_i * llama_model::create_memory(const llama_memory_params & params, 
                             nullptr,
                             nullptr);
                 } else {
+                    llama_kv_cache::layer_filter_cb filter_mla = [&](uint32_t il) { return il < hparams.n_layer(); };
+                    llama_kv_cache::layer_filter_cb filter_lid = [&](uint32_t il) { return il < hparams.n_layer() && hparams.is_indexer_full(il); };
                     res = new llama_kv_cache_dsa(
                             *this,
                             params.type_k,
@@ -2284,8 +2286,8 @@ llama_memory_i * llama_model::create_memory(const llama_memory_params & params, 
                             1,
                             hparams.n_swa,
                             hparams.swa_type,
-                            nullptr,
-                            nullptr,
+                            filter_mla,
+                            filter_lid,
                             nullptr);
                 }
             } break;
