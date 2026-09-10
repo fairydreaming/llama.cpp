@@ -560,6 +560,12 @@ struct llama_layer {
     struct ggml_tensor * indexer_attn_k   = nullptr;
     struct ggml_tensor * indexer_attn_q_b = nullptr; // note: for lora a/b, not bias
 
+    // DeepSeek-V4.1 n-gram engram
+    struct ggml_tensor * engram_k   = nullptr;
+    struct ggml_tensor * engram_q   = nullptr;
+    struct ggml_tensor * engram_wkv = nullptr;
+    struct ggml_tensor * engram_embd = nullptr;
+
     // MSA
     struct ggml_tensor * index_q_proj = nullptr;
     struct ggml_tensor * index_k_proj = nullptr;

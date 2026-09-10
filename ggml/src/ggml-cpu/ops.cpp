@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <cfloat>
 #include <cmath>
+#include <vector>
 
 // ggml_compute_forward_dup
 
@@ -11386,6 +11387,387 @@ void ggml_compute_forward_dsv4_hc_post(
             {
                 GGML_ABORT("fatal error");
             }
+    }
+}
+
+// ggml_compute_forward_dsv41_indexer
+
+// bounded min-heap of (idx, val) by val; keeps the n largest values seen
+static void dsv41_heap_push(int32_t * idx, float * val, int n, int * size, int32_t i, float v) {
+    if (*size < n) {
+        // sift up
+        int c = (*size)++;
+        while (c > 0) {
+            const int p = (c - 1)/2;
+            if (val[p] <= v) {
+                break;
+            }
+            idx[c] = idx[p];
+            val[c] = val[p];
+            c = p;
+        }
+        idx[c] = i;
+        val[c] = v;
+        return;
+    }
+    if (v <= val[0]) {
+        return;
+    }
+    // replace min and sift down
+    int p = 0;
+    for (;;) {
+        const int l = 2*p + 1;
+        const int r = l + 1;
+        int c = -1;
+        if (r < n) {
+            c = val[l] < val[r] ? l : r;
+        } else if (l < n) {
+            c = l;
+        }
+        if (c == -1 || val[c] >= v) {
+            break;
+        }
+        idx[p] = idx[c];
+        val[p] = val[c];
+        p = c;
+    }
+    idx[p] = i;
+    val[p] = v;
+}
+
+void ggml_compute_forward_dsv41_indexer(
+        const ggml_compute_params * params,
+        ggml_tensor * dst) {
+    const ggml_tensor * q          = dst->src[0];
+    const ggml_tensor * k          = dst->src[1];
+    const ggml_tensor * w          = dst->src[2]; // weights
+    const ggml_tensor * n_visible  = dst->src[3];
+    const ggml_tensor * candidates = dst->src[4];
+
+    GGML_ASSERT(dst->type == GGML_TYPE_I32);
+    GGML_ASSERT(q->type == GGML_TYPE_F32);
+    GGML_ASSERT(w->type == GGML_TYPE_F32);
+    GGML_ASSERT(n_visible->type == GGML_TYPE_I32);
+    GGML_ASSERT(candidates == NULL || candidates->type == GGML_TYPE_I32);
+
+    const int n_dim      = q->ne[0];
+    const int n_head     = q->ne[1];
+    const int n_tokens   = q->ne[2];
+    const int n_rows     = k->ne[1];
+    const int n_topk     = ggml_get_op_params_i32(dst, 0);
+    const int n_cand     = ggml_get_op_params_i32(dst, 1);
+    const int block_size = ggml_get_op_params_i32(dst, 2);
+
+    GGML_ASSERT(dst->ne[0] == n_topk + (candidates == NULL ? n_cand : 0));
+    GGML_ASSERT(dst->ne[1] == n_tokens);
+    GGML_ASSERT(w->ne[0] == n_head);
+    GGML_ASSERT(w->ne[1] == n_tokens);
+    GGML_ASSERT(n_visible->ne[0] == n_tokens);
+    GGML_ASSERT(k->ne[0] == n_dim);
+    GGML_ASSERT(candidates == NULL || candidates->ne[1] == n_tokens);
+
+    GGML_TENSOR_LOCALS(size_t, nbq,  q,          nb)
+    GGML_TENSOR_LOCALS(size_t, nbk,  k,          nb)
+    GGML_TENSOR_LOCALS(size_t, nbw,  w,          nb)
+    GGML_TENSOR_LOCALS(size_t, nbn,  n_visible,  nb)
+    GGML_TENSOR_LOCALS(size_t, nbc,  candidates, nb)
+    GGML_TENSOR_LOCALS(size_t, nbd,  dst,        nb)
+
+    ggml_to_float_t const k_to_float = ggml_get_type_traits(k->type)->to_float;
+    GGML_ASSERT((k->type == GGML_TYPE_F32 || k_to_float) && "dsv41_indexer: unsupported K-type");
+
+    const int ith = params->ith;
+    const int nth = params->nth;
+
+    // per-thread scratch: pos heap idx/val + block heap idx/val, then K row buffer
+    // matches wsize = nth*(n_topk*8 + n_cand_blocks*8) + nth*(n_dim + CACHE_LINE_SIZE_F32)*sizeof(float)
+    const size_t per_thread = 2*(n_topk + n_cand); // in 4-byte units
+
+    int32_t * const hidx = (int32_t *) params->wdata + ith*per_thread;
+    float   * const hval = (float   *) ((int32_t *) params->wdata + ith*per_thread + (n_topk + n_cand));
+
+    int32_t * const pidx = hidx;
+    float   * const pval = hval;
+
+    int32_t * const bidx = hidx + n_topk;
+    float   * const bval = hval + n_topk;
+
+    // buffer for K converted to float
+    float * const k_row_f32 = (float *) params->wdata + nth*per_thread + ith*(n_dim + CACHE_LINE_SIZE_F32);
+
+    // tokens per thread
+    const int dr = (n_tokens + nth - 1)/nth;
+
+    // token range for this thread
+    const int tr0 = dr*ith;
+    const int tr1 = MIN(tr0 + dr, n_tokens);
+
+    for (int t = tr0; t < tr1; ++t) {
+        const int32_t nv_raw = *(const int32_t *) ((const char *) n_visible->data + t*nbn0);
+        const int nv = MAX(0, MIN((int) nv_raw, n_rows));
+
+        const float * const w_row = (const float *) ((const char *) w->data + t*nbw1);
+
+        int32_t * const out = (int32_t *) ((char *) dst->data + t*nbd1);
+
+        if (nv == 0) {
+            memset(out, 0xFF, dst->ne[0]*sizeof(int32_t));
+            continue;
+        }
+
+        const int want_blocks = candidates == NULL ? n_cand : 0;
+        const int pinned      = (nv - 1)/block_size;
+        bool pinned_in        = false;
+
+        int np = 0; // position heap size
+        int nb = 0; // block heap size
+
+        if (candidates == NULL) {
+            // full scan
+            float bscore = 0.0f;
+            for (int r = 0; r < nv; ++r) {
+                const char * k_row = (char *) k->data + r*nbk1;
+                if (k_to_float) {
+                    k_to_float(k_row, k_row_f32, n_dim);
+                }
+                const float * kv = k_to_float ? k_row_f32 : (const float *) k_row;
+
+                float score = 0.0f;
+                for (int h = 0; h < n_head; ++h) {
+                    float qk = 0.0f;
+                    const float * q_row = (const float *) ((const char *) q->data + h*nbq1 + t*nbq2);
+                    ggml_vec_dot_f32(n_dim, &qk, 0, q_row, 0, kv, 0, 1);
+                    score += MAX(qk, 0.0f) * w_row[h];
+                }
+
+                dsv41_heap_push(pidx, pval, n_topk, &np, r, score);
+
+                if (want_blocks > 0) {
+                    const int b = r/block_size;
+                    // block score = max over reachable rows of the block
+                    if (r % block_size == 0) {
+                        bscore = score;
+                    } else {
+                        bscore = MAX(bscore, score);
+                    }
+                    const bool last = (r == nv - 1) || (r % block_size == block_size - 1);
+                    if (last) {
+                        // pinned newest block always stays in the heap
+                        dsv41_heap_push(bidx, bval, want_blocks, &nb, b, b == pinned ? FLT_MAX : bscore);
+                    }
+                }
+            }
+        } else {
+            // candidate gather
+            const int n_cand_rows = candidates->ne[0];
+            for (int i = 0; i < n_cand_rows; ++i) {
+                const int32_t b = *(const int32_t *) ((const char *) candidates->data + i*nbc0 + t*nbc1);
+                if (b < 0) {
+                    break;
+                }
+                if (b*block_size >= n_rows) {
+                    continue;
+                }
+                const int r0 = b*block_size;
+                const int r1 = MIN(r0 + block_size, nv);
+                for (int r = r0; r < r1; ++r) {
+                    const char * k_row = (char *) k->data + r*nbk1;
+                    if (k_to_float) {
+                        k_to_float(k_row, k_row_f32, n_dim);
+                    }
+                    const float * kv = k_to_float ? k_row_f32 : (const float *) k_row;
+
+                    float score = 0.0f;
+                    for (int h = 0; h < n_head; ++h) {
+                        float qk = 0.0f;
+                        const float * q_row = (const float *) ((const char *) q->data + h*nbq1 + t*nbq2);
+                        ggml_vec_dot_f32(n_dim, &qk, 0, q_row, 0, kv, 0, 1);
+                        score += MAX(qk, 0.0f) * w_row[h];
+                    }
+
+                    dsv41_heap_push(pidx, pval, n_topk, &np, r, score);
+                }
+            }
+        }
+
+        // position ids sorted ascending, -1 padded; the heap is rebuilt per
+        // token, so it can be sorted in place
+        const int n_pos = MIN(np, n_topk);
+        std::sort(pidx, pidx + n_pos);
+        for (int i = 0; i < n_topk; ++i) {
+            out[i] = i < n_pos ? pidx[i] : -1;
+        }
+
+        if (want_blocks > 0) {
+            int32_t * const blocks = out + n_topk;
+            int no = 0;
+            for (int i = 0; i < nb; ++i) {
+                blocks[no++] = bidx[i];
+                if (bidx[i] == pinned) {
+                    pinned_in = true;
+                }
+            }
+            if (!pinned_in) {
+                blocks[no++] = pinned;
+            }
+            for (int i = no; i < want_blocks; ++i) {
+                blocks[i] = -1;
+            }
+        }
+    }
+}
+
+// ggml_compute_forward_dsv41_attn
+
+void ggml_compute_forward_dsv41_attn(
+        const ggml_compute_params * params,
+        ggml_tensor * dst) {
+    const ggml_tensor * q        = dst->src[0];
+    const ggml_tensor * raw_k    = dst->src[1];
+    const ggml_tensor * raw_mask = dst->src[2];
+    const ggml_tensor * band_k   = dst->src[3];
+    const ggml_tensor * band_idx = dst->src[4];
+    const ggml_tensor * sinks    = dst->src[5];
+
+    GGML_ASSERT(dst->type == GGML_TYPE_F32);
+    GGML_ASSERT(q->type == GGML_TYPE_F32);
+    GGML_ASSERT(sinks->type == GGML_TYPE_F32);
+    GGML_ASSERT(band_idx->type == GGML_TYPE_I32);
+    GGML_ASSERT(raw_k->type == GGML_TYPE_F16 || raw_k->type == GGML_TYPE_F32);
+    GGML_ASSERT(raw_mask->type == GGML_TYPE_F16 || raw_mask->type == GGML_TYPE_F32);
+    GGML_ASSERT(band_k->type == GGML_TYPE_F16 || band_k->type == GGML_TYPE_F32);
+
+    const int n_embd_head = q->ne[0];
+    const int n_head      = q->ne[1];
+    const int n_tokens    = q->ne[2];
+    const int n_kv        = raw_k->ne[1];
+    const int n_topk      = band_idx->ne[0];
+    const float scale     = ggml_get_op_params_f32(dst, 0);
+
+    GGML_ASSERT(dst->ne[0] == n_embd_head);
+    GGML_ASSERT(dst->ne[1] == n_head);
+    GGML_ASSERT(dst->ne[2] == n_tokens);
+    GGML_ASSERT(q->ne[0] == n_embd_head);
+    GGML_ASSERT(q->ne[3] == 1);
+    GGML_ASSERT(raw_k->ne[0] == n_embd_head);
+    GGML_ASSERT(band_k->ne[0] == n_embd_head);
+    GGML_ASSERT(band_idx->ne[1] == n_tokens);
+    GGML_ASSERT(raw_mask->ne[0] == n_kv);
+    GGML_ASSERT(raw_mask->ne[1] == n_tokens);
+    GGML_ASSERT(sinks->ne[0] == n_head);
+
+    // raw_k/raw_mask/band_k may have extra dims; only strides matter here
+    const size_t nbq1 = q->nb[1];
+    const size_t nbq2 = q->nb[2];
+    const size_t nbk0 = raw_k->nb[0];
+    const size_t nbk1 = raw_k->nb[1];
+    const size_t nbm0 = raw_mask->nb[0];
+    const size_t nbm1 = raw_mask->nb[1];
+    const size_t nbb0 = band_k->nb[0];
+    const size_t nbb1 = band_k->nb[1];
+    const size_t nbi0 = band_idx->nb[0];
+    const size_t nbi1 = band_idx->nb[1];
+    const size_t nbs0 = sinks->nb[0];
+
+    const bool mask_f16 = raw_mask->type == GGML_TYPE_F16;
+    const bool k_f16    = raw_k->type == GGML_TYPE_F16;
+    const bool band_f16 = band_k->type == GGML_TYPE_F16;
+
+    // rows are converted whole, so the element stride must be the type size
+    GGML_ASSERT(nbk0 == ggml_type_size(raw_k->type));
+    GGML_ASSERT(nbb0 == ggml_type_size(band_k->type));
+
+    const int ith = params->ith;
+    const int nth = params->nth;
+
+    // per-thread scratch: the current token's attended K rows in f32 and their weights
+    thread_local std::vector<float> rows;
+    thread_local std::vector<float> w;
+    rows.resize((size_t) (n_kv + n_topk)*n_embd_head);
+    w.resize(n_kv + n_topk);
+
+    // (token, head) pairs per thread, token-major so each thread gathers a token's rows once;
+    // a single decode token still spreads its heads over the threads
+    const int nr  = n_tokens*n_head;
+    const int dr  = (nr + nth - 1)/nth;
+    const int ir0 = dr*ith;
+    const int ir1 = MIN(ir0 + dr, nr);
+
+    int t_cur  = -1;
+    int n_rows = 0;
+
+    for (int ir = ir0; ir < ir1; ++ir) {
+        const int t = ir/n_head;
+        const int h = ir - t*n_head;
+
+        if (t != t_cur) {
+            t_cur  = t;
+            n_rows = 0;
+
+            // visible raw window rows
+            for (int r = 0; r < n_kv; ++r) {
+                const float mask = mask_f16
+                    ? GGML_CPU_FP16_TO_FP32(*(const ggml_fp16_t *) ((const char *) raw_mask->data + r*nbm0 + t*nbm1))
+                    : *(const float *) ((const char *) raw_mask->data + r*nbm0 + t*nbm1);
+                if (mask != 0.0f) {
+                    continue;
+                }
+                const char * k_row = (const char *) raw_k->data + r*nbk1;
+                float * out = rows.data() + (size_t) n_rows*n_embd_head;
+                if (k_f16) {
+                    ggml_cpu_fp16_to_fp32((const ggml_fp16_t *) k_row, out, n_embd_head);
+                } else {
+                    memcpy(out, k_row, n_embd_head*sizeof(float));
+                }
+                ++n_rows;
+            }
+
+            // selected band rows
+            for (int i = 0; i < n_topk; ++i) {
+                const int32_t idx = *(const int32_t *) ((const char *) band_idx->data + i*nbi0 + t*nbi1);
+                if (idx < 0) {
+                    continue;
+                }
+                const char * k_row = (const char *) band_k->data + idx*nbb1;
+                float * out = rows.data() + (size_t) n_rows*n_embd_head;
+                if (band_f16) {
+                    ggml_cpu_fp16_to_fp32((const ggml_fp16_t *) k_row, out, n_embd_head);
+                } else {
+                    memcpy(out, k_row, n_embd_head*sizeof(float));
+                }
+                ++n_rows;
+            }
+        }
+
+        const float * const q_row = (const float *) ((const char *) q->data + h*nbq1 + t*nbq2);
+        const float sink = *(const float *) ((const char *) sinks->data + h*nbs0);
+
+        float * const dst_row = (float *) ((char *) dst->data + h*dst->nb[1] + t*dst->nb[2]);
+        memset(dst_row, 0, n_embd_head*sizeof(float));
+
+        if (n_rows == 0) {
+            continue;
+        }
+
+        float m = -FLT_MAX;
+        for (int j = 0; j < n_rows; ++j) {
+            float qk = 0.0f;
+            ggml_vec_dot_f32(n_embd_head, &qk, 0, q_row, 0, rows.data() + (size_t) j*n_embd_head, 0, 1);
+            w[j] = scale*qk;
+            m = MAX(m, w[j]);
+        }
+
+        // softmax over the rows; the unscaled sink joins the denominator only
+        float l = expf(sink - m);
+        for (int j = 0; j < n_rows; ++j) {
+            w[j] = expf(w[j] - m);
+            l += w[j];
+        }
+
+        const float inv = 1.0f/l;
+        for (int j = 0; j < n_rows; ++j) {
+            ggml_vec_mad_f32(n_embd_head, dst_row, rows.data() + (size_t) j*n_embd_head, w[j]*inv);
+        }
     }
 }
 

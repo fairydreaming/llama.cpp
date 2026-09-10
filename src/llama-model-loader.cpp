@@ -1403,26 +1403,36 @@ void llama_model_loader::done_getting_tensors(bool partial) const {
 void llama_model_loader::init_mappings(bool prefetch, llama_mlocks * mlock_mmaps) {
     // note: read_lazy also requires mmap; this condition make sure it's usable even when --load-mode is not set to mmap
     if (use_mmap || lazy.any()) {
+        bool is_numa = false;
+
+        auto * dev = ggml_backend_dev_by_type(GGML_BACKEND_DEVICE_TYPE_CPU);
+        if (dev) {
+            auto * reg = ggml_backend_dev_backend_reg(dev);
+            auto * is_numa_fn = (decltype(ggml_is_numa) *) ggml_backend_reg_get_proc_address(reg, "ggml_backend_cpu_is_numa");
+            if (is_numa_fn) {
+                is_numa = is_numa_fn();
+            }
+        }
+
+        // a no_alloc load reads no tensor data, and it does not record lazy
+        // ranges, so prefetching there would page in the lazy tensors in full
+        const size_t prefetch_size = prefetch && use_mmap && !no_alloc ? -1 : 0;
+
+        // prefetch is a sequential page-in per file, so map the files concurrently
+        std::vector<std::future<std::unique_ptr<llama_mmap>>> pending;
+        pending.reserve(files.size());
+        for (uint32_t idx = 0; idx < files.size(); idx++) {
+            llama_file * file = files[idx].get();
+            llama_mmap::ranges lazy_ranges = lazy.for_file(idx);
+            pending.emplace_back(std::async(std::launch::async, [file, prefetch_size, is_numa, lazy_ranges]() {
+                return std::make_unique<llama_mmap>(file, prefetch_size, is_numa, lazy_ranges);
+            }));
+        }
+
         mappings.reserve(files.size());
         mmaps_used.reserve(files.size());
-        for (uint32_t idx = 0; idx < files.size(); idx++) {
-            const auto & file = files[idx];
-
-            bool is_numa = false;
-
-            auto * dev = ggml_backend_dev_by_type(GGML_BACKEND_DEVICE_TYPE_CPU);
-            if (dev) {
-                auto * reg = ggml_backend_dev_backend_reg(dev);
-                auto * is_numa_fn = (decltype(ggml_is_numa) *) ggml_backend_reg_get_proc_address(reg, "ggml_backend_cpu_is_numa");
-                if (is_numa_fn) {
-                    is_numa = is_numa_fn();
-                }
-            }
-
-            const size_t prefetch_size = prefetch && use_mmap ? -1 : 0;
-
-            std::unique_ptr<llama_mmap> mapping = std::make_unique<llama_mmap>(file.get(), prefetch_size, is_numa,
-                    lazy.for_file(idx));
+        for (auto & p : pending) {
+            std::unique_ptr<llama_mmap> mapping = p.get();
             mmaps_used.emplace_back(mapping->size(), 0);
             if (mlock_mmaps) {
                 std::unique_ptr<llama_mlock> mlock_mmap(new llama_mlock());

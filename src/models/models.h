@@ -1183,9 +1183,49 @@ struct llama_model_deepseek4 : public llama_model_base {
     void load_arch_hparams(llama_model_loader & ml) override;
     void load_arch_tensors(llama_model_loader & ml) override;
 
+    // DeepSeek-V4.1: shared-band compression with cross-layer KV reuse and
+    // n-gram engram embeddings. detected by probing blk.1.engram_embd
+    bool is_v41 = false;
+
+    // layers 2, 8, 14 (ratio 2) and 20 (ratio 1) compress their own KV
+    std::vector<uint32_t> dsv41_kv_sources;
+    // layers that run their own indexer top-k (2, 8, 14, 20, 24, 28, 32, 36)
+    std::vector<uint32_t> dsv41_index_sources;
+
+    // n-gram engram hash constants, loaded from the sidecar binary. The
+    // 98 GB embedding tables themselves live in the GGUF and are loaded as
+    // lazy tensors; the sidecar only carries what the CPU hash needs.
+    struct engram_sidecar {
+        bool load(const std::string & path);
+
+        uint32_t vocab = 0;
+        uint32_t n_layers = 0;
+        uint32_t max_ngram = 0;
+        uint32_t n_heads = 0;
+        std::vector<uint32_t> layer_ids;
+        std::vector<uint64_t> n_embeddings;
+        // [layer][shift 0..max_ngram-1]
+        std::vector<int64_t> multipliers;
+        // [layer][col], col = (ngram-2)*n_heads + head
+        std::vector<int64_t> offsets;
+        std::vector<int64_t> primes;
+        // compressed id per vocab token
+        std::vector<int32_t> token_map;
+    };
+    engram_sidecar engram;
+
+    // compressed-id history per sequence, pos-indexed, for the n-gram hashes
+    mutable std::unordered_map<llama_seq_id, std::vector<int32_t>> engram_history;
+
     struct graph : public llm_graph_context {
         graph(const llm_graph_params & params) : llm_graph_context(params) {}
         graph(const llama_model & model, const llm_graph_params & params);
+
+        const llama_model_deepseek4 * pm = nullptr;
+
+        // latest V4.1 index-source selections, reused by the layers after it
+        mutable ggml_tensor * v41_top_k = nullptr;
+        mutable ggml_tensor * v41_cand  = nullptr;
 
         ggml_tensor * build_hc_pre(
                 ggml_tensor * x,
@@ -1304,6 +1344,52 @@ struct llama_model_deepseek4 : public llama_model_base {
         ggml_tensor * build_hc_sinkhorn(
                 ggml_tensor * comb,
                 int il) const;
+
+        ggml_tensor * dsv41_identity_pre_mix(
+                ggml_tensor * x) const;
+
+        ggml_tensor * dsv41_hc_mixes(
+                ggml_tensor * x,
+                ggml_tensor * hc_fn,
+                ggml_tensor * hc_scale,
+                ggml_tensor * hc_base,
+                int il) const;
+
+        ggml_tensor * dsv41_hc_split_pre(
+                ggml_tensor * mixes,
+                ggml_tensor * hc_scale,
+                ggml_tensor * hc_base,
+                int il) const;
+
+        void dsv41_hc_split_post_comb(
+                ggml_tensor * mixes,
+                ggml_tensor * hc_scale,
+                ggml_tensor * hc_base,
+                ggml_tensor ** post,
+                ggml_tensor ** comb,
+                int il) const;
+
+        ggml_tensor * build_inp_engram();
+
+        ggml_tensor * build_v41_attention(
+                const llama_model & model,
+                llm_graph_input_dsv4 * inp_dsv4,
+                llm_graph_input_dsv4_raw * inp_attn,
+                ggml_tensor * q,
+                ggml_tensor * kv,
+                ggml_tensor * qr,
+                ggml_tensor * cur,
+                ggml_tensor * inp_pos,
+                ggml_tensor * sinks,
+                float kq_scale,
+                int il) const;
+
+        // hash the current and previous tokens into engram row ids and apply
+        // the gate at engram layer li; returns the modified stream
+        ggml_tensor * build_v41_engram(
+                ggml_tensor * x,
+                ggml_tensor * hashes,
+                int li) const;
     };
 
     struct graph_mtp : public graph {

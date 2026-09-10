@@ -585,6 +585,8 @@ extern "C" {
         GGML_OP_DSV4_HC_COMB,
         GGML_OP_DSV4_HC_PRE,
         GGML_OP_DSV4_HC_POST,
+        GGML_OP_DSV41_INDEXER,
+        GGML_OP_DSV41_ATTN,
 
         GGML_OP_UNARY,
 
@@ -2715,6 +2717,54 @@ extern "C" {
             struct ggml_tensor  * residual,
             struct ggml_tensor  * post,
             struct ggml_tensor  * comb);
+
+    // DeepSeek V4.1 sparse-attention indexer
+    //
+    // q:          [n_dim, n_head, n_tokens] f32, RoPE'd indexer queries
+    // k:          [n_dim, n_rows] f16 or f32, index-key cache (row-major rows)
+    // weights:    [n_head, n_tokens] f32, per-head weights, prescaled
+    // n_visible:  [n_tokens] i32, per-token count of reachable rows
+    // candidates: [n_cand, n_tokens] i32 block ids, -1 padded, may be NULL
+    //
+    // n_topk:       number of selected positions
+    // n_cand_blocks: number of candidate blocks to select (Mode A, 0 disables)
+    // block_size:   rows per candidate block
+    //
+    // result: [n_topk + (candidates == NULL && n_cand_blocks > 0 ? n_cand_blocks : 0), n_tokens] i32
+    //   first n_topk entries per column: position ids sorted ascending, -1 padded;
+    //   remaining entries (if any): selected block ids plus the pinned newest block, -1 padded
+    GGML_API struct ggml_tensor * ggml_dsv41_indexer(
+            struct ggml_context * ctx,
+            struct ggml_tensor  * q,
+            struct ggml_tensor  * k,
+            struct ggml_tensor  * weights,
+            struct ggml_tensor  * n_visible,
+            struct ggml_tensor  * candidates,
+            int32_t               n_topk,
+            int32_t               n_cand_blocks,
+            int32_t               block_size);
+
+    // DeepSeek V4.1 sparse attention (K == V)
+    //
+    // q:        [n_embd_head, n_head, n_tokens] f32
+    // raw_k:    [n_embd_head, n_kv] f16 or f32, K cache view (K == V)
+    // raw_mask: [n_kv, n_tokens] f32 or f16, 0.0 = visible, negative = masked
+    // band_k:   [n_embd_head, n_rows] f16 or f32
+    // band_idx: [n_topk, n_tokens] i32, -1 = no row
+    // sinks:    [n_head] f32
+    //
+    // result: [n_embd_head, n_head, n_tokens] f32
+    //   online softmax over visible raw_k rows and band_idx rows (V == K), sink
+    //   contributes to the denominator only
+    GGML_API struct ggml_tensor * ggml_dsv41_attn(
+            struct ggml_context * ctx,
+            struct ggml_tensor  * q,
+            struct ggml_tensor  * raw_k,
+            struct ggml_tensor  * raw_mask,
+            struct ggml_tensor  * band_k,
+            struct ggml_tensor  * band_idx,
+            struct ggml_tensor  * sinks,
+            float                 scale);
 
     // custom operators
 

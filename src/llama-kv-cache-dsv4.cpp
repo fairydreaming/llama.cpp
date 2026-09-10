@@ -544,7 +544,7 @@ static llama_kv_cache_dsv4_context::comp_plan dsv4_build_comp_plan(
         }
     }
 
-    if (ratio == DSV4_CSA_RATIO && !plan.state_pos.empty()) {
+    if (overlap && !plan.state_pos.empty()) {
         assert(kv_size > 0);
 
         // Pad each stream to the reserve plan's block count.
@@ -599,7 +599,7 @@ static llama_kv_cache_dsv4_context::comp_plan dsv4_build_comp_plan(
         }
     }
 
-    if (ratio == DSV4_HCA_RATIO && !plan.state_pos.empty() && plan.state_write_idxs.empty()) {
+    if (!overlap && !plan.state_pos.empty() && plan.state_write_idxs.empty()) {
         assert(kv_size > 0);
         // the last slot must not be live, or the dummy write would corrupt it;
         // a full stream implies a completed block, which implies real writes
@@ -1257,6 +1257,28 @@ llama_kv_cache_dsv4::llama_kv_cache_dsv4(
             v_trans, offload, swa_full, unified_raw, kv_size, n_seq_max, n_ubatch, n_pad,
             nullptr, filter_raw, reuse, nullptr);
 
+    // DeepSeek-V4.1 uses ratio-1 and ratio-2 shared bands instead of CSA/HCA.
+    // The csa slot holds the ratio-1 band, the hca slot the ratio-2 bands, and
+    // each row stores the compressed K followed by its index key. lid mirrors
+    // the csa layout and stays unused.
+    bool v41 = false;
+    for (uint32_t il = 0; il < model.hparams.n_layer(); ++il) {
+        const uint32_t r = model.hparams.dsv4_compress_ratios[il];
+        v41 = v41 || r == 1 || r == 2;
+    }
+    const uint32_t ratio_csa = v41 ? 1 : DSV4_CSA_RATIO;
+    const uint32_t ratio_hca = v41 ? 2 : DSV4_HCA_RATIO;
+
+    if (v41) {
+        const uint32_t n_embd_band = model.hparams.n_embd_head_k() + model.hparams.indexer_head_size;
+        for (llama_hparams * hp : { &hparams_csa, &hparams_hca }) {
+            hp->n_embd_head_k_full = n_embd_band;
+            hp->n_embd_head_v_full = n_embd_band;
+            hp->n_embd_head_k_swa  = n_embd_band;
+            hp->n_embd_head_v_swa  = n_embd_band;
+        }
+    }
+
     dsv4_make_k_only(hparams_csa);
     dsv4_make_k_only(hparams_hca);
 
@@ -1273,6 +1295,10 @@ llama_kv_cache_dsv4::llama_kv_cache_dsv4(
             return false;
         }
 
+        if (v41) {
+            return model.hparams.dsv4_compress_ratios[il] == 1 && model.layers[il].attn_comp_wkv != nullptr;
+        }
+
         return model.hparams.dsv4_compress_ratios[il] == DSV4_CSA_RATIO;
     };
 
@@ -1281,52 +1307,59 @@ llama_kv_cache_dsv4::llama_kv_cache_dsv4(
             return false;
         }
 
+        if (v41) {
+            return model.hparams.dsv4_compress_ratios[il] == 2 && model.layers[il].attn_comp_wkv != nullptr;
+        }
+
         return model.hparams.dsv4_compress_ratios[il] == DSV4_HCA_RATIO;
     };
 
     const bool unified_compressed = false;
 
     LLAMA_LOG_INFO("%s: creating DSV4 CSA compressed KV cache, size = %u cells\n",
-            __func__, dsv4_comp_size(kv_size, DSV4_CSA_RATIO));
+            __func__, dsv4_comp_size(kv_size, ratio_csa));
 
     kv_csa = std::make_unique<llama_kv_cache>(
             model, hparams_csa, type_k, type_v,
-            v_trans, offload, unified_compressed, GGML_PAD(dsv4_comp_size(kv_size, DSV4_CSA_RATIO), 256u), n_seq_max, n_pad,
+            v_trans, offload, unified_compressed, GGML_PAD(dsv4_comp_size(kv_size, ratio_csa), 256u), n_seq_max, n_pad,
             0, LLAMA_SWA_TYPE_NONE, nullptr, filter_csa, nullptr, nullptr);
 
     LLAMA_LOG_INFO("%s: creating DSV4 HCA compressed KV cache, size = %u cells\n",
-            __func__, dsv4_comp_size(kv_size, DSV4_HCA_RATIO));
+            __func__, dsv4_comp_size(kv_size, ratio_hca));
 
     kv_hca = std::make_unique<llama_kv_cache>(
             model, hparams_hca, type_k, type_v,
-            v_trans, offload, unified_compressed, GGML_PAD(dsv4_comp_size(kv_size, DSV4_HCA_RATIO), 256u), n_seq_max, n_pad,
+            v_trans, offload, unified_compressed, GGML_PAD(dsv4_comp_size(kv_size, ratio_hca), 256u), n_seq_max, n_pad,
             0, LLAMA_SWA_TYPE_NONE, nullptr, filter_hca, nullptr, nullptr);
 
     LLAMA_LOG_INFO("%s: creating DSV4 lightning-indexer KV cache, size = %u cells\n",
-            __func__, dsv4_comp_size(kv_size, DSV4_CSA_RATIO));
+            __func__, dsv4_comp_size(kv_size, ratio_csa));
 
     kv_lid = std::make_unique<llama_kv_cache>(
             model, hparams_lid, type_k, type_v,
-            v_trans, offload, unified_compressed, GGML_PAD(dsv4_comp_size(kv_size, DSV4_CSA_RATIO), 256u), n_seq_max, n_pad,
+            v_trans, offload, unified_compressed, GGML_PAD(dsv4_comp_size(kv_size, ratio_csa), 256u), n_seq_max, n_pad,
             0, LLAMA_SWA_TYPE_NONE, nullptr, filter_csa, nullptr, nullptr);
+
+    // the V4 CSA compressor overlaps two windows; V4.1 bands never overlap
+    const uint32_t csa_state_size = v41 ? ratio_csa : 2*ratio_csa;
 
     LLAMA_LOG_INFO("%s: creating DSV4 CSA compressor state\n", __func__);
 
     csa_state = std::make_unique<llama_dsv4_comp_state>(
-            model, offload, unified_compressed, n_seq_max, DSV4_CSA_RATIO, 2*DSV4_CSA_RATIO,
-            2*model.hparams.n_embd_head_k(), n_rs_seq, "csa", filter_csa);
+            model, offload, unified_compressed, n_seq_max, ratio_csa, csa_state_size,
+            (csa_state_size/ratio_csa)*model.hparams.n_embd_head_k(), n_rs_seq, "csa", filter_csa);
 
     LLAMA_LOG_INFO("%s: creating DSV4 HCA compressor state\n", __func__);
 
     hca_state = std::make_unique<llama_dsv4_comp_state>(
-            model, offload, unified_compressed, n_seq_max, DSV4_HCA_RATIO, DSV4_HCA_RATIO,
+            model, offload, unified_compressed, n_seq_max, ratio_hca, ratio_hca,
             model.hparams.n_embd_head_k(), n_rs_seq, "hca", filter_hca);
 
     LLAMA_LOG_INFO("%s: creating DSV4 lightning-indexer compressor state\n", __func__);
 
     lid_state = std::make_unique<llama_dsv4_comp_state>(
-            model, offload, unified_compressed, n_seq_max, DSV4_CSA_RATIO, 2*DSV4_CSA_RATIO,
-            2*model.hparams.indexer_head_size, n_rs_seq, "lid", filter_csa);
+            model, offload, unified_compressed, n_seq_max, ratio_csa, csa_state_size,
+            (csa_state_size/ratio_csa)*model.hparams.indexer_head_size, n_rs_seq, "lid", filter_csa);
 
     // DSV4 attention reads compressed-K / compressor-state rows that the current
     // graph does not necessarily overwrite; uninitialized buffer contents would
@@ -1471,9 +1504,9 @@ bool llama_kv_cache_dsv4::seq_rm(llama_seq_id seq_id, llama_pos p0, llama_pos p1
             bool res = true;
 
             res = res & kv_raw->seq_rm(seq_id, p0, -1);
-            res = res & kv_csa->seq_rm(seq_id, p0/DSV4_CSA_RATIO, -1);
-            res = res & kv_hca->seq_rm(seq_id, p0/DSV4_HCA_RATIO, -1);
-            res = res & kv_lid->seq_rm(seq_id, p0/DSV4_CSA_RATIO, -1);
+            res = res & kv_csa->seq_rm(seq_id, p0/csa_state->get_ratio(), -1);
+            res = res & kv_hca->seq_rm(seq_id, p0/hca_state->get_ratio(), -1);
+            res = res & kv_lid->seq_rm(seq_id, p0/lid_state->get_ratio(), -1);
 
             return res;
         }
@@ -1609,11 +1642,11 @@ void llama_kv_cache_dsv4::state_write(llama_io_write_i & io, llama_seq_id seq_id
 
         //FIXME : note that we conflate token positions with rows, which is not true for multi-modal case.
         const uint32_t n_rows_csa = seq_id >= 0 ?
-            dsv4_state_n_used_k_rows(pos_max, DSV4_CSA_RATIO, kv_csa->get_size()) : kv_csa->get_size();
+            dsv4_state_n_used_k_rows(pos_max, csa_state->get_ratio(), kv_csa->get_size()) : kv_csa->get_size();
         const uint32_t n_rows_hca = seq_id >= 0 ?
-            dsv4_state_n_used_k_rows(pos_max, DSV4_HCA_RATIO, kv_hca->get_size()) : kv_hca->get_size();
+            dsv4_state_n_used_k_rows(pos_max, hca_state->get_ratio(), kv_hca->get_size()) : kv_hca->get_size();
         const uint32_t n_rows_lid = seq_id >= 0 ?
-            dsv4_state_n_used_k_rows(pos_max, DSV4_CSA_RATIO, kv_lid->get_size()) : kv_lid->get_size();
+            dsv4_state_n_used_k_rows(pos_max, lid_state->get_ratio(), kv_lid->get_size()) : kv_lid->get_size();
 
         dsv4_state_write_k_cache(io, kv_csa.get(), seq_id, flags, n_rows_csa);
         dsv4_state_write_k_cache(io, kv_hca.get(), seq_id, flags, n_rows_hca);
@@ -2048,13 +2081,16 @@ llama_kv_cache_dsv4_context::llama_kv_cache_dsv4_context(
         std::vector<llama_ubatch> ubatches,
         std::vector<llama_ubatch> ubatches_raw) :
     ubatches(std::move(ubatches)),
-    plans_csa(dsv4_build_comp_plans(this->ubatches, DSV4_CSA_RATIO, true,
+    plans_csa(dsv4_build_comp_plans(this->ubatches, kv->get_csa_state()->get_ratio(),
+                kv->get_csa_state()->get_state_size() > kv->get_csa_state()->get_ratio(),
                 kv->get_csa_state()->get_state_size(), kv->get_csa()->get_size(), kv->get_csa_state()->get_n_stream(),
                 kv->get_n_rs_seq(), kv->get_rs_idx())),
-    plans_hca(dsv4_build_comp_plans(this->ubatches, DSV4_HCA_RATIO, false,
+    plans_hca(dsv4_build_comp_plans(this->ubatches, kv->get_hca_state()->get_ratio(),
+                kv->get_hca_state()->get_state_size() > kv->get_hca_state()->get_ratio(),
                 kv->get_hca_state()->get_state_size(), kv->get_hca()->get_size(), kv->get_hca_state()->get_n_stream(),
                 kv->get_n_rs_seq(), kv->get_rs_idx())),
-    plans_lid(dsv4_build_comp_plans(this->ubatches, DSV4_CSA_RATIO, true,
+    plans_lid(dsv4_build_comp_plans(this->ubatches, kv->get_lid_state()->get_ratio(),
+                kv->get_lid_state()->get_state_size() > kv->get_lid_state()->get_ratio(),
                 kv->get_lid_state()->get_state_size(), kv->get_lid()->get_size(), kv->get_lid_state()->get_n_stream(),
                 kv->get_n_rs_seq(), kv->get_rs_idx())),
     ctx_raw(std::make_unique<llama_kv_cache_dsv4_raw_context>(
@@ -2218,7 +2254,7 @@ const llama_kv_cache_dsv4_context::comp_plan & llama_kv_cache_dsv4_context::get_
     }
 
     reserve_plan_csa = dsv4_build_reserve_comp_plan(
-            ubatch, DSV4_CSA_RATIO, true,
+            ubatch, csa_state->get_ratio(), csa_state->get_state_size() > csa_state->get_ratio(),
             csa_state->get_state_size(), get_csa()->get_n_kv(), csa_state->get_n_stream(), csa_state->get_n_rs_seq());
 
     return reserve_plan_csa;
@@ -2232,7 +2268,7 @@ const llama_kv_cache_dsv4_context::comp_plan & llama_kv_cache_dsv4_context::get_
     }
 
     reserve_plan_hca = dsv4_build_reserve_comp_plan(
-            ubatch, DSV4_HCA_RATIO, false,
+            ubatch, hca_state->get_ratio(), hca_state->get_state_size() > hca_state->get_ratio(),
             hca_state->get_state_size(), get_hca()->get_n_kv(), hca_state->get_n_stream(), hca_state->get_n_rs_seq());
 
     return reserve_plan_hca;
@@ -2246,7 +2282,7 @@ const llama_kv_cache_dsv4_context::comp_plan & llama_kv_cache_dsv4_context::get_
     }
 
     reserve_plan_lid = dsv4_build_reserve_comp_plan(
-            ubatch, DSV4_CSA_RATIO, true,
+            ubatch, lid_state->get_ratio(), lid_state->get_state_size() > lid_state->get_ratio(),
             lid_state->get_state_size(), get_lid()->get_n_kv(), lid_state->get_n_stream(), lid_state->get_n_rs_seq());
 
     return reserve_plan_lid;

@@ -2101,6 +2101,14 @@ static void ggml_compute_forward(struct ggml_compute_params * params, struct ggm
             {
                 ggml_compute_forward_dsv4_hc_post(params, tensor);
             } break;
+        case GGML_OP_DSV41_INDEXER:
+            {
+                ggml_compute_forward_dsv41_indexer(params, tensor);
+            } break;
+        case GGML_OP_DSV41_ATTN:
+            {
+                ggml_compute_forward_dsv41_attn(params, tensor);
+            } break;
         case GGML_OP_MAP_CUSTOM1:
             {
                 ggml_compute_forward_map_custom1(params, tensor);
@@ -2284,6 +2292,8 @@ static int ggml_get_n_tasks(struct ggml_tensor * node, int n_threads) {
         case GGML_OP_DSV4_HC_COMB:
         case GGML_OP_DSV4_HC_PRE:
         case GGML_OP_DSV4_HC_POST:
+        case GGML_OP_DSV41_INDEXER:
+        case GGML_OP_DSV41_ATTN:
             {
                 n_tasks = n_threads;
             } break;
@@ -3039,6 +3049,21 @@ struct ggml_cplan ggml_graph_plan(
                         const int64_t ne10 = node->src[1]->ne[0];
                         cur += sizeof(float)*ne10*n_tasks;
                     } break;
+                case GGML_OP_DSV41_INDEXER:
+                    {
+                        // per-thread heaps (idx + val) and K row converted to float
+                        const int32_t n_topk        = ggml_get_op_params_i32(node, 0);
+                        const int32_t n_cand_blocks = ggml_get_op_params_i32(node, 1);
+                        const int64_t ne10          = node->src[1]->ne[0];
+                        cur += n_tasks*(n_topk*8 + n_cand_blocks*8);
+                        cur += sizeof(float)*(ne10 + CACHE_LINE_SIZE_F32)*n_tasks;
+                    } break;
+                case GGML_OP_DSV41_ATTN:
+                    {
+                        // per-thread online-softmax accumulator
+                        const int64_t ne10 = node->src[0]->ne[0];
+                        cur += sizeof(float)*(ne10 + CACHE_LINE_SIZE_F32)*n_tasks;
+                    } break;
                 default:
                     break;
             }
@@ -3098,6 +3123,47 @@ static int ggml_cpu_try_fuse_ops(
     return 0;
 }
 
+// opt-in per-op wall-time profile (GGML_CPU_OP_PROFILE=1): thread 0 times each node
+// through its barrier, so the time includes waiting for the slowest thread
+static int64_t ggml_cpu_op_prof_us[GGML_OP_COUNT];
+static int64_t ggml_cpu_op_prof_n[GGML_OP_COUNT];
+static int64_t ggml_cpu_op_prof_total_us;
+
+static bool ggml_cpu_op_profile_enabled(void) {
+    static int enabled = -1;
+    if (enabled < 0) {
+        const char * env = getenv("GGML_CPU_OP_PROFILE");
+        enabled = env && atoi(env) > 0;
+    }
+    return enabled > 0;
+}
+
+static void ggml_cpu_op_profile_report(void) {
+    int order[GGML_OP_COUNT];
+    for (int i = 0; i < GGML_OP_COUNT; ++i) {
+        order[i] = i;
+    }
+    for (int i = 1; i < GGML_OP_COUNT; ++i) {
+        for (int j = i; j > 0 && ggml_cpu_op_prof_us[order[j]] > ggml_cpu_op_prof_us[order[j - 1]]; --j) {
+            int tmp = order[j]; order[j] = order[j - 1]; order[j - 1] = tmp;
+        }
+    }
+    fprintf(stderr, "ggml_cpu_op_profile: %.1f s of graph compute\n", ggml_cpu_op_prof_total_us/1e6);
+    for (int i = 0; i < 20 && ggml_cpu_op_prof_us[order[i]] > 0; ++i) {
+        const int op = order[i];
+        fprintf(stderr, "  %-20s %9.1f ms %5.1f%% n=%lld\n", ggml_op_name((enum ggml_op) op),
+                ggml_cpu_op_prof_us[op]/1e3, 100.0*ggml_cpu_op_prof_us[op]/ggml_cpu_op_prof_total_us,
+                (long long) ggml_cpu_op_prof_n[op]);
+        ggml_cpu_op_prof_us[op] = 0;
+        ggml_cpu_op_prof_n[op]  = 0;
+    }
+    for (int i = 0; i < GGML_OP_COUNT; ++i) {
+        ggml_cpu_op_prof_us[i] = 0;
+        ggml_cpu_op_prof_n[i]  = 0;
+    }
+    ggml_cpu_op_prof_total_us = 0;
+}
+
 static thread_ret_t ggml_graph_compute_thread(void * data) {
     struct ggml_compute_state * state = (struct ggml_compute_state *) data;
     struct ggml_threadpool    * tp    = state->threadpool;
@@ -3138,6 +3204,9 @@ static thread_ret_t ggml_graph_compute_thread(void * data) {
             continue;
         }
 
+        const bool    prof    = state->ith == 0 && ggml_cpu_op_profile_enabled();
+        const int64_t prof_t0 = prof ? ggml_time_us() : 0;
+
         // TODO: move fused-op detection into ggml_graph_plan so fusion decisions are made once at planning time
         // Try fused ops, fall back to normal compute
         const int n_fused = ggml_cpu_try_fuse_ops(cgraph, node_n, &params, cplan);
@@ -3155,6 +3224,16 @@ static thread_ret_t ggml_graph_compute_thread(void * data) {
 
         if (node_n + 1 < cgraph->n_nodes) {
             ggml_barrier(state->threadpool);
+        }
+
+        if (prof) {
+            const int64_t dt = ggml_time_us() - prof_t0;
+            ggml_cpu_op_prof_us[node->op] += dt;
+            ggml_cpu_op_prof_n[node->op]  += 1;
+            ggml_cpu_op_prof_total_us     += dt;
+            if (ggml_cpu_op_prof_total_us > 20*1000*1000) {
+                ggml_cpu_op_profile_report();
+            }
         }
     }
 

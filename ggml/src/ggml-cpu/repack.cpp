@@ -3487,9 +3487,8 @@ static int repack_q8_0_to_q8_0_4_bl(struct ggml_tensor *       t,
 
     block_q8_0x4 *     dst = (block_q8_0x4 *) t->data;
     const block_q8_0 * src = (const block_q8_0 *) data;
-    block_q8_0         dst_tmp[4];
-    int                nrow    = ggml_nrows(t);
-    int                nblocks = t->ne[0] / QK8_0;
+    int64_t            nrow    = ggml_nrows(t);
+    int64_t            nblocks = t->ne[0] / QK8_0;
 
     GGML_ASSERT(data_size == nrow * nblocks * sizeof(block_q8_0));
 
@@ -3497,14 +3496,21 @@ static int repack_q8_0_to_q8_0_4_bl(struct ggml_tensor *       t,
         return -1;
     }
 
-    for (int b = 0; b < nrow; b += nrows_interleaved) {
+    // row groups are independent, so repack them in parallel
+    const int64_t ngroups = nrow / nrows_interleaved;
+#ifdef GGML_USE_OPENMP
+    #pragma omp parallel for schedule(static)
+#endif
+    for (int64_t g = 0; g < ngroups; g++) {
+        block_q8_0 tmp[4];
+        const block_q8_0 * s = src + g * nrows_interleaved * nblocks;
+        block_q8_0x4 *     d = dst + g * nblocks;
         for (int64_t x = 0; x < nblocks; x++) {
             for (int i = 0; i < nrows_interleaved; i++) {
-                dst_tmp[i] = src[x + i * nblocks];
+                tmp[i] = s[x + i * nblocks];
             }
-            *dst++ = make_block_q8_0x4(dst_tmp, interleave_block);
+            d[x] = make_block_q8_0x4(tmp, interleave_block);
         }
-        src += nrows_interleaved * nblocks;
     }
     return 0;
 }
@@ -3541,9 +3547,8 @@ static int repack_q8_0_to_q8_0_16_bl(struct ggml_tensor *       t,
 
     block_q8_0x16 *     dst = (block_q8_0x16 *) t->data;
     const block_q8_0 * src = (const block_q8_0 *) data;
-    block_q8_0         dst_tmp[16];
-    int                nrow    = ggml_nrows(t);
-    int                nblocks = t->ne[0] / QK8_0;
+    int64_t            nrow    = ggml_nrows(t);
+    int64_t            nblocks = t->ne[0] / QK8_0;
 
     GGML_ASSERT(data_size == nrow * nblocks * sizeof(block_q8_0));
 
@@ -3551,14 +3556,21 @@ static int repack_q8_0_to_q8_0_16_bl(struct ggml_tensor *       t,
         return -1;
     }
 
-    for (int b = 0; b < nrow; b += nrows_interleaved) {
+    // row groups are independent, so repack them in parallel
+    const int64_t ngroups = nrow / nrows_interleaved;
+#ifdef GGML_USE_OPENMP
+    #pragma omp parallel for schedule(static)
+#endif
+    for (int64_t g = 0; g < ngroups; g++) {
+        block_q8_0 tmp[16];
+        const block_q8_0 * s = src + g * nrows_interleaved * nblocks;
+        block_q8_0x16 *    d = dst + g * nblocks;
         for (int64_t x = 0; x < nblocks; x++) {
             for (int i = 0; i < nrows_interleaved; i++) {
-                dst_tmp[i] = src[x + i * nblocks];
+                tmp[i] = s[x + i * nblocks];
             }
-            *dst++ = make_block_q8_0x16(dst_tmp, interleave_block);
+            d[x] = make_block_q8_0x16(tmp, interleave_block);
         }
-        src += nrows_interleaved * nblocks;
     }
     return 0;
 }
@@ -3776,11 +3788,9 @@ static int repack_mxfp4_to_mxfp4_4_bl(struct ggml_tensor * t, int interleave_blo
     const block_mxfp4   * src = (const block_mxfp4   *)data;
           block_mxfp4x4 * dst = (      block_mxfp4x4 *)t->data;
 
-    block_mxfp4 dst_tmp[4];
-
-    int nrow = ggml_nrows(t);
-    int nrows_interleaved = 4;
-    int nblocks = t->ne[0] / QK_MXFP4;
+    int64_t nrow = ggml_nrows(t);
+    const int nrows_interleaved = 4;
+    int64_t nblocks = t->ne[0] / QK_MXFP4;
 
     GGML_ASSERT(data_size == nrow * nblocks * sizeof(block_mxfp4));
 
@@ -3788,14 +3798,21 @@ static int repack_mxfp4_to_mxfp4_4_bl(struct ggml_tensor * t, int interleave_blo
         return -1;
     }
 
-    for (int b = 0; b < nrow; b += nrows_interleaved) {
+    // row groups are independent, so repack them in parallel
+    const int64_t ngroups = nrow / nrows_interleaved;
+#ifdef GGML_USE_OPENMP
+    #pragma omp parallel for schedule(static)
+#endif
+    for (int64_t g = 0; g < ngroups; g++) {
+        block_mxfp4 tmp[4];
+        const block_mxfp4 * s = src + g * nrows_interleaved * nblocks;
+        block_mxfp4x4 *     d = dst + g * nblocks;
         for (int64_t x = 0; x < nblocks; x++) {
             for (int i = 0; i < nrows_interleaved; i++) {
-                dst_tmp[i] = src[x + i * nblocks];
+                tmp[i] = s[x + i * nblocks];
             }
-            *dst++ = make_block_mxfp4x4(dst_tmp, interleave_block);
+            d[x] = make_block_mxfp4x4(tmp, interleave_block);
         }
-        src += nrows_interleaved * nblocks;
     }
     return 0;
 
@@ -3833,11 +3850,9 @@ static int repack_mxfp4_to_mxfp4_8_bl(struct ggml_tensor * t, int interleave_blo
     const block_mxfp4   * src = (const block_mxfp4   *)data;
           block_mxfp4x8 * dst = (      block_mxfp4x8 *)t->data;
 
-    block_mxfp4 dst_tmp[8];
-
-    int nrow = ggml_nrows(t);
-    int nrows_interleaved = 8;
-    int nblocks = t->ne[0] / QK_MXFP4;
+    int64_t nrow = ggml_nrows(t);
+    const int nrows_interleaved = 8;
+    int64_t nblocks = t->ne[0] / QK_MXFP4;
 
     GGML_ASSERT(data_size == nrow * nblocks * sizeof(block_mxfp4));
 
@@ -3845,14 +3860,21 @@ static int repack_mxfp4_to_mxfp4_8_bl(struct ggml_tensor * t, int interleave_blo
         return -1;
     }
 
-    for (int b = 0; b < nrow; b += nrows_interleaved) {
+    // row groups are independent, so repack them in parallel
+    const int64_t ngroups = nrow / nrows_interleaved;
+#ifdef GGML_USE_OPENMP
+    #pragma omp parallel for schedule(static)
+#endif
+    for (int64_t g = 0; g < ngroups; g++) {
+        block_mxfp4 tmp[8];
+        const block_mxfp4 * s = src + g * nrows_interleaved * nblocks;
+        block_mxfp4x8 *     d = dst + g * nblocks;
         for (int64_t x = 0; x < nblocks; x++) {
             for (int i = 0; i < nrows_interleaved; i++) {
-                dst_tmp[i] = src[x + i * nblocks];
+                tmp[i] = s[x + i * nblocks];
             }
-            *dst++ = make_block_mxfp4x8(dst_tmp, interleave_block);
+            d[x] = make_block_mxfp4x8(tmp, interleave_block);
         }
-        src += nrows_interleaved * nblocks;
     }
     return 0;
 

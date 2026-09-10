@@ -881,6 +881,7 @@ static void dsv4_set_comp_inputs(
     dsv4_set_i32(inp.state_read_idxs, plan.state_read_idxs);
     dsv4_set_i64(inp.state_write_idxs, plan.state_write_idxs);
     dsv4_set_i32(inp.state_write_pos, plan.state_write_pos);
+    dsv4_set_i32(inp.n_visible, plan.n_visible);
     dsv4_set_kq_mask(inp.kq_mask, plan, n_tokens, n_stream);
 
     if (debug || dsv4_compress_debug()) {
@@ -929,6 +930,7 @@ static bool dsv4_can_reuse_comp_input(
     res &= dsv4_can_reuse_tensor_1d(inp.state_read_idxs, plan.state_read_idxs.size());
     res &= dsv4_can_reuse_tensor_1d(inp.state_write_idxs, plan.state_write_idxs.size());
     res &= dsv4_can_reuse_tensor_1d(inp.state_write_pos, plan.state_write_pos.size());
+    res &= dsv4_can_reuse_tensor_1d(inp.n_visible, plan.n_visible.size());
     res &= dsv4_can_reuse_kq_mask(inp.kq_mask, plan, n_tokens, n_stream);
 
     return res;
@@ -967,6 +969,7 @@ static void dsv4_build_comp_inputs(
     inp.state_read_idxs = dsv4_build_input_1d(ctx, GGML_TYPE_I32, plan.state_read_idxs.size(), std::string("dsv4_") + name + "_state_read_idxs");
     inp.state_write_idxs = dsv4_build_input_1d(ctx, GGML_TYPE_I64, plan.state_write_idxs.size(), std::string("dsv4_") + name + "_state_write_idxs");
     inp.state_write_pos = dsv4_build_input_1d(ctx, GGML_TYPE_I32, plan.state_write_pos.size(), std::string("dsv4_") + name + "_state_write_pos");
+    inp.n_visible = dsv4_build_input_1d(ctx, GGML_TYPE_I32, plan.n_visible.size(), std::string("dsv4_") + name + "_n_visible");
 
     if (plan.n_kv > 0) {
         const int64_t n_tokens = (int64_t) plan.n_visible.size();

@@ -5,6 +5,10 @@
 #include <algorithm>
 #include <cassert>
 
+bool llama_hparams::is_engram(uint32_t il) const {
+    return is_engram_impl[il];
+}
+
 void llama_hparams::set_swa_pattern(uint32_t n_pattern, bool dense_first) {
     if (dense_first) {
         for (uint32_t il = 0; il < n_layer(); ++il) {

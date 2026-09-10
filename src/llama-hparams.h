@@ -294,6 +294,14 @@ struct llama_hparams {
     float    dsv4_hc_eps               = 0.0f;
     std::array<uint32_t, LLAMA_MAX_LAYERS> dsv4_compress_ratios;
 
+    // DeepSeek-V4.1 shared-band compression
+    uint32_t dsv41_engram_heads     = 0; // engram.head_count
+    uint32_t dsv41_engram_head_dim  = 0; // engram.key_length
+    uint32_t dsv41_engram_max_ngram = 0; // engram.max_ngram_size
+    std::bitset<LLAMA_MAX_LAYERS> is_engram_impl;
+
+    bool is_engram(uint32_t il) const;
+
     // 0 = full rank (DeepSeek-V4)
     uint32_t hc_low_rank = 0;
 

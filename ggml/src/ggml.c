@@ -1084,6 +1084,8 @@ static const char * GGML_OP_NAME[GGML_OP_COUNT] = {
     "DSV4_HC_COMB",
     "DSV4_HC_PRE",
     "DSV4_HC_POST",
+    "DSV41_INDEXER",
+    "DSV41_ATTN",
 
     "UNARY",
 
@@ -1101,7 +1103,7 @@ static const char * GGML_OP_NAME[GGML_OP_COUNT] = {
     "GLU",
 };
 
-static_assert(GGML_OP_COUNT == 101, "GGML_OP_COUNT != 101");
+static_assert(GGML_OP_COUNT == 103, "GGML_OP_COUNT != 103");
 
 static const char * GGML_OP_SYMBOL[GGML_OP_COUNT] = {
     "none",
@@ -1199,6 +1201,8 @@ static const char * GGML_OP_SYMBOL[GGML_OP_COUNT] = {
     "dsv4_hc_comb(mixes, scale, base)",
     "dsv4_hc_pre(x, weights)",
     "dsv4_hc_post(x, residual, post, comb)",
+    "dsv41_indexer(q, k, weights, n_visible, candidates)",
+    "dsv41_attn(q, raw_k, raw_mask, band_k, band_idx, sinks)",
 
     "unary(x)",
 
@@ -1216,7 +1220,7 @@ static const char * GGML_OP_SYMBOL[GGML_OP_COUNT] = {
     "glu(x)",
 };
 
-static_assert(GGML_OP_COUNT == 101, "GGML_OP_COUNT != 101");
+static_assert(GGML_OP_COUNT == 103, "GGML_OP_COUNT != 103");
 
 static_assert(GGML_OP_POOL_COUNT == 2, "GGML_OP_POOL_COUNT != 2");
 
@@ -6576,6 +6580,101 @@ struct ggml_tensor * ggml_dsv4_hc_post(
     result->src[1] = residual;
     result->src[2] = post;
     result->src[3] = comb;
+
+    return result;
+}
+
+// ggml_dsv41_indexer
+
+struct ggml_tensor * ggml_dsv41_indexer(
+        struct ggml_context * ctx,
+        struct ggml_tensor  * q,
+        struct ggml_tensor  * k,
+        struct ggml_tensor  * weights,
+        struct ggml_tensor  * n_visible,
+        struct ggml_tensor  * candidates,
+        int32_t               n_topk,
+        int32_t               n_cand_blocks,
+        int32_t               block_size) {
+    GGML_ASSERT(q->type == GGML_TYPE_F32);
+    GGML_ASSERT(weights->type == GGML_TYPE_F32);
+    GGML_ASSERT(n_visible->type == GGML_TYPE_I32);
+    GGML_ASSERT(k->type == GGML_TYPE_F16 || k->type == GGML_TYPE_F32);
+    GGML_ASSERT(candidates == NULL || candidates->type == GGML_TYPE_I32);
+    GGML_ASSERT(n_topk > 0);
+    GGML_ASSERT(n_cand_blocks >= 0);
+    GGML_ASSERT(block_size > 0);
+
+    const int64_t n_dim    = q->ne[0];
+    const int64_t n_head   = q->ne[1];
+    const int64_t n_tokens = q->ne[2];
+
+    GGML_ASSERT(q->ne[3] == 1);
+    GGML_ASSERT(k->ne[0] == n_dim);
+    GGML_ASSERT(k->ne[1] >= 1);
+    GGML_ASSERT(weights->ne[0] == n_head);
+    GGML_ASSERT(weights->ne[1] == n_tokens);
+    GGML_ASSERT(n_visible->ne[0] == n_tokens);
+    GGML_ASSERT(n_visible->ne[1] == 1);
+    GGML_ASSERT(candidates == NULL || candidates->ne[1] == n_tokens);
+
+    const int64_t n_out = candidates == NULL ? n_topk + n_cand_blocks : n_topk;
+    struct ggml_tensor * result = ggml_new_tensor_2d(ctx, GGML_TYPE_I32, n_out, n_tokens);
+
+    ggml_set_op_params_i32(result, 0, n_topk);
+    ggml_set_op_params_i32(result, 1, n_cand_blocks);
+    ggml_set_op_params_i32(result, 2, block_size);
+
+    result->op     = GGML_OP_DSV41_INDEXER;
+    result->src[0] = q;
+    result->src[1] = k;
+    result->src[2] = weights;
+    result->src[3] = n_visible;
+    result->src[4] = candidates;
+
+    return result;
+}
+
+// ggml_dsv41_attn
+
+struct ggml_tensor * ggml_dsv41_attn(
+        struct ggml_context * ctx,
+        struct ggml_tensor  * q,
+        struct ggml_tensor  * raw_k,
+        struct ggml_tensor  * raw_mask,
+        struct ggml_tensor  * band_k,
+        struct ggml_tensor  * band_idx,
+        struct ggml_tensor  * sinks,
+        float                 scale) {
+    GGML_ASSERT(q->type == GGML_TYPE_F32);
+    GGML_ASSERT(sinks->type == GGML_TYPE_F32);
+    GGML_ASSERT(raw_k->type == GGML_TYPE_F16 || raw_k->type == GGML_TYPE_F32);
+    GGML_ASSERT(raw_mask->type == GGML_TYPE_F16 || raw_mask->type == GGML_TYPE_F32);
+    GGML_ASSERT(band_k->type == GGML_TYPE_F16 || band_k->type == GGML_TYPE_F32);
+    GGML_ASSERT(band_idx->type == GGML_TYPE_I32);
+
+    const int64_t n_embd_head = q->ne[0];
+    const int64_t n_head      = q->ne[1];
+    const int64_t n_tokens    = q->ne[2];
+
+    GGML_ASSERT(q->ne[3] == 1);
+    GGML_ASSERT(raw_k->ne[0] == n_embd_head);
+    GGML_ASSERT(raw_mask->ne[1] == n_tokens);
+    GGML_ASSERT(band_k->ne[0] == n_embd_head);
+    GGML_ASSERT(band_idx->ne[1] == n_tokens);
+    GGML_ASSERT(sinks->ne[0] == n_head);
+
+    struct ggml_tensor * result = ggml_new_tensor_3d(ctx, GGML_TYPE_F32, n_embd_head, n_head, n_tokens);
+
+    ggml_set_op_params_f32(result, 0, scale);
+
+    result->op     = GGML_OP_DSV41_ATTN;
+    result->src[0] = q;
+    result->src[1] = raw_k;
+    result->src[2] = raw_mask;
+    result->src[3] = band_k;
+    result->src[4] = band_idx;
+    result->src[5] = sinks;
 
     return result;
 }
