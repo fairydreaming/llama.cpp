@@ -1,3 +1,37 @@
+# Day1DeepseekV4.1-CPU
+
+Day1DeepseekV4.1-CPU is a fork of llama.cpp that adds a CPU-only runtime for
+DeepSeek V4.1 Flash, aimed at serving the model from system memory on a
+large-RAM, many-core DDR4 server that has no GPU able to hold it. The V4.1
+architecture is wired into the existing `deepseek4` code path: the n-gram
+engram (PLE) lookup tables are left on SSD and read on demand through lazy
+mmap rather than held resident, the shared-band compressed KV, the sparse
+indexer, and windowed attention are implemented as CPU kernels, and model
+loading and weight repacking are parallelised across all cores so start-up is
+not single-threaded. It is meant to run on roughly half a machine's logical
+cores alongside other work.
+
+This is untested in any serious sense. Correctness has only been spot-checked
+on a handful of short prompts and one long-context retrieval; there is no
+perplexity run, no comparison against a reference implementation, and no
+guarantee that the V4.1 math (engram gating, band compression, indexer top-k)
+matches the model as trained. It was written and tuned against one specific
+machine, a Xeon Gold 6338 with AVX-512 and multi-channel DDR4, and nothing
+here has been validated on other hardware. Throughput is modest: low tens of
+tokens per second for prompt processing and single digits for generation at
+short context, far below what a GPU that fits the model would deliver. Expect
+bugs, and read the code before trusting an output.
+
+It is published only in case it helps someone in the same corner: you have the
+DeepSeek V4.1 Flash weights and a big-memory CPU box, but no GPU that can hold
+a 400-plus-GB model, and you need it to run at all. That is the whole intended
+use, a last resort rather than a recommended path. This fork is not affiliated
+with DeepSeek or the llama.cpp project, and upstream llama.cpp may add a
+proper, reviewed V4.1 runtime that supersedes this entirely; prefer that if it
+exists. The original llama.cpp README follows below.
+
+---
+
 # llama.cpp
 
 ![llama](https://raw.githubusercontent.com/ggml-org/llama.brand/refs/heads/master/cover/llama-cpp/cover-llama-cpp-dark.svg)
