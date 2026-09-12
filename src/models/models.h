@@ -1328,27 +1328,13 @@ struct llama_model_deepseek41 : public llama_model_base {
     // layers that run their own indexer top-k (2, 8, 14, 20, 24, 28, 32, 36)
     std::vector<uint32_t> dsv41_index_sources;
 
-    // n-gram engram hash constants, loaded from the sidecar binary. The
-    // 98 GB embedding tables themselves live in the GGUF and are loaded as
-    // lazy tensors; the sidecar only carries what the CPU hash needs.
-    struct engram_sidecar {
-        bool load(const std::string & path);
-
-        uint32_t vocab = 0;
-        uint32_t n_layers = 0;
-        uint32_t max_ngram = 0;
-        uint32_t n_heads = 0;
-        std::vector<uint32_t> layer_ids;
-        std::vector<uint64_t> n_embeddings;
-        // [layer][shift 0..max_ngram-1]
-        std::vector<int64_t> multipliers;
-        // [layer][col], col = (ngram-2)*n_heads + head
-        std::vector<int64_t> offsets;
-        std::vector<int64_t> primes;
-        // compressed id per vocab token
-        std::vector<int32_t> token_map;
-    };
-    engram_sidecar engram;
+    // [layer][shift 0..max_ngram-1]
+    std::vector<uint64_t> engram_multipliers;
+    // [layer][col], col = (ngram-2)*n_heads + head
+    std::vector<uint64_t> engram_offsets;
+    std::vector<uint64_t> engram_primes;
+    // compressed id per vocab token
+    std::vector<uint32_t> engram_token_map;
 
     // compressed-id history per sequence, pos-indexed, for the n-gram hashes
     mutable std::unordered_map<llama_seq_id, std::vector<int32_t>> engram_history;
@@ -1525,7 +1511,7 @@ struct llama_model_deepseek41 : public llama_model_base {
         ggml_tensor * build_v41_engram(
                 ggml_tensor * x,
                 ggml_tensor * hashes,
-                int li) const;
+                int il, int li) const;
     };
 
     struct graph_mtp : public graph {

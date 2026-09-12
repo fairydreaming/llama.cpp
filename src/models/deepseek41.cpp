@@ -20,66 +20,6 @@ static float dsv4_rope_attn_factor(float freq_scale, float ext_factor) {
     return 1.0f / (1.0f + 0.1f*logf(1.0f/freq_scale));
 }
 
-// read the engram hash constants sidecar produced by engram_sidecar_gen.py:
-// 'DSE1', u32 version, u32 vocab, s32 token_map[vocab], u32 n_layers,
-// u32 max_ngram, u32 n_heads, then per layer: i64 num_embeddings,
-// i64 multipliers[max_ngram], i64 offsets[(max_ngram-1)*n_heads],
-// i64 primes[(max_ngram-1)*n_heads]
-bool llama_model_deepseek41::engram_sidecar::load(const std::string & path) {
-    std::ifstream f(path, std::ios::binary);
-    if (!f) {
-        return false;
-    }
-
-    auto read_u32 = [&f]() {
-        uint32_t v;
-        f.read((char *) &v, sizeof(v));
-        return v;
-    };
-    auto read_i64 = [&f]() {
-        int64_t v;
-        f.read((char *) &v, sizeof(v));
-        return v;
-    };
-
-    char magic[4];
-    f.read(magic, 4);
-    if (f.gcount() != 4 || memcmp(magic, "DSE1", 4) != 0) {
-        return false;
-    }
-    const uint32_t version = read_u32();
-    if (version != 1) {
-        return false;
-    }
-
-    vocab = read_u32();
-    token_map.resize(vocab);
-    f.read((char *) token_map.data(), sizeof(int32_t) * vocab);
-
-    n_layers = read_u32();
-    max_ngram = read_u32();
-    n_heads   = read_u32();
-
-    layer_ids.clear();
-    n_embeddings.assign(n_layers, 0);
-    multipliers.assign((size_t) n_layers * max_ngram, 0);
-    offsets.assign((size_t) n_layers * (max_ngram - 1) * n_heads, 0);
-    primes.assign((size_t) n_layers * (max_ngram - 1) * n_heads, 0);
-
-    for (uint32_t li = 0; li < n_layers; ++li) {
-        n_embeddings[li] = read_i64();
-        f.read((char *) &multipliers[(size_t) li * max_ngram], sizeof(int64_t) * max_ngram);
-        f.read((char *) &offsets[(size_t) li * (max_ngram - 1) * n_heads],
-               sizeof(int64_t) * (max_ngram - 1) * n_heads);
-        f.read((char *) &primes[(size_t) li * (max_ngram - 1) * n_heads],
-               sizeof(int64_t) * (max_ngram - 1) * n_heads);
-    }
-
-    // layer_ids are the engram layers in sidecar order; the caller fills them
-    // from the model so tensor and hash order agree
-    return f.good();
-}
-
 void llama_model_deepseek41::load_arch_hparams(llama_model_loader & ml) {
     if (hparams.n_layer_nextn > 0) {
         const uint32_t n_layer_main = hparams.n_layer_all - hparams.n_layer_nextn;
@@ -113,6 +53,11 @@ void llama_model_deepseek41::load_arch_hparams(llama_model_loader & ml) {
     ml.get_key(LLM_KV_HYPER_CONNECTION_SINKHORN_ITERATIONS, hparams.dsv4_hc_sinkhorn_iters);
     ml.get_key(LLM_KV_HYPER_CONNECTION_EPSILON,             hparams.dsv4_hc_eps);
     ml.get_key(LLM_KV_HASH_LAYER_COUNT,                     hparams.dsv4_hash_layer_count);
+
+    ml.get_arr(LLM_KV_ENGRAM_MULTIPLIERS, engram_multipliers);
+    ml.get_arr(LLM_KV_ENGRAM_PRIMES, engram_primes);
+    ml.get_arr(LLM_KV_ENGRAM_OFFSETS, engram_offsets);
+    ml.get_arr(LLM_KV_ENGRAM_TOKEN_MAP, engram_token_map);
 
     hparams.n_embd_out_impl = hparams.dsv4_hc_mult * hparams.n_embd;
 
@@ -153,35 +98,6 @@ void llama_model_deepseek41::load_arch_hparams(llama_model_loader & ml) {
         // source; index sources additionally run their own top-k
         dsv41_kv_sources    = {2, 8, 14, 20};
         dsv41_index_sources = {2, 8, 14, 20, 24, 28, 32, 36};
-
-        // hash constants come from the sidecar; order must match the table rows
-        const char * sidecar_path = getenv("DS41_ENGRAM_SIDECAR");
-        if (sidecar_path && engram.load(sidecar_path)) {
-            std::vector<uint32_t> model_ids;
-            for (uint32_t il = 0; il < hparams.n_layer_all; ++il) {
-                if (hparams.is_engram(il)) {
-                    model_ids.push_back(il);
-                }
-            }
-            if (!engram.layer_ids.empty() && engram.layer_ids != model_ids) {
-                throw std::runtime_error("engram sidecar layer ids do not match the model's engram tensors");
-            }
-            engram.layer_ids = model_ids;
-            if (engram.layer_ids.size() != engram.n_layers) {
-                throw std::runtime_error(format(
-                    "engram sidecar has %u layers but the model has %zu",
-                    engram.n_layers, engram.layer_ids.size()));
-            }
-            if (engram.n_heads != hparams.dsv41_engram_heads ||
-                engram.max_ngram != hparams.dsv41_engram_max_ngram) {
-                throw std::runtime_error("engram sidecar does not match the model metadata");
-            }
-        } else {
-            throw std::runtime_error(format(
-                "DeepSeek-V4.1 requires the engram sidecar (DS41_ENGRAM_SIDECAR%s%s)",
-                sidecar_path ? ": " : " is not set",
-                sidecar_path ? sidecar_path : ""));
-        }
     }
 
     ml.get_key(LLM_KV_EXPERT_GATING_FUNC, hparams.expert_gating_func);
@@ -466,19 +382,19 @@ public:
 };
 
 void llm_graph_input_engram::set_input(const llama_ubatch * ubatch) {
-    const auto & sc = pmodel.engram;
+    const llama_hparams & hparams = pmodel.hparams;
 
     const int64_t n_tokens = ubatch->n_tokens;
-    const uint32_t max_ngram = sc.max_ngram;
-    const uint32_t n_heads   = sc.n_heads;
+    const uint32_t max_ngram = hparams.dsv41_engram_max_ngram;
+    const uint32_t n_heads   = hparams.dsv41_engram_heads;
     const int64_t n_cols     = (max_ngram - 1) * n_heads;
-    const int64_t n_cols_all = n_cols * sc.n_layers;
+    const int64_t n_cols_all = n_cols * hparams.is_engram_impl.count();
 
     GGML_ASSERT(hashes->ne[0] == n_cols_all);
     GGML_ASSERT(ubatch->token != nullptr && "engram n-gram hashing needs token ids (no image embd support yet)");
 
     // pad is the compressed id of the checkpoint pad token, not the raw id
-    const int32_t pad = sc.token_map[2];
+    const int32_t pad = pmodel.engram_token_map[2];
 
     std::vector<int32_t> out(n_cols_all * n_tokens);
 
@@ -492,13 +408,13 @@ void llm_graph_input_engram::set_input(const llama_ubatch * ubatch) {
         auto & hist = pmodel.engram_history[seq];
         hist.resize((size_t) pos, pad);
 
-        const int32_t cur = sc.token_map[ubatch->token[i]];
+        const int32_t cur = pmodel.engram_token_map[ubatch->token[i]];
         hist.push_back(cur);
 
-        for (uint32_t li = 0; li < sc.n_layers; ++li) {
-            const int64_t * mult = &sc.multipliers[(size_t) li * max_ngram];
-            const int64_t * offs = &sc.offsets[(size_t) li * (max_ngram - 1) * n_heads];
-            const int64_t * prim = &sc.primes[(size_t) li * (max_ngram - 1) * n_heads];
+        for (uint32_t li = 0; li < hparams.is_engram_impl.count(); ++li) {
+            const uint64_t * mult = &pmodel.engram_multipliers[(size_t) li * max_ngram];
+            const uint64_t * offs = &pmodel.engram_offsets[(size_t) li * (max_ngram - 1) * n_heads];
+            const uint64_t * prim = &pmodel.engram_primes[(size_t) li * (max_ngram - 1) * n_heads];
 
             int64_t rolling = (int64_t) cur * mult[0];
             for (uint32_t s = 1; s < max_ngram; ++s) {
@@ -811,8 +727,7 @@ ggml_tensor * llama_model_deepseek41::graph::build_hc_head(
 // engram hash rows for every engram layer at once: [n_cols_total, n_tokens],
 // layer-major column blocks so each layer slices its own 24 columns
 ggml_tensor * llama_model_deepseek41::graph::build_inp_engram() {
-    const auto & sc = pm->engram;
-    const int64_t n_cols_total = (int64_t) sc.n_layers * (sc.max_ngram - 1) * sc.n_heads;
+    const int64_t n_cols_total = (int64_t) hparams.is_engram_impl.count() * (hparams.dsv41_engram_max_ngram - 1) * hparams.dsv41_engram_heads;
 
     auto inp = std::make_unique<llm_graph_input_engram>(*pm);
 
@@ -833,15 +748,12 @@ ggml_tensor * llama_model_deepseek41::graph::build_inp_engram() {
 ggml_tensor * llama_model_deepseek41::graph::build_v41_engram(
         ggml_tensor * x,
         ggml_tensor * hashes,
-        int li) const {
-    const auto & sc = pm->engram;
-
+        int il, int li) const {
     const int64_t hc        = hparams.dsv4_hc_mult;
-    const int64_t n_cols    = (sc.max_ngram - 1) * sc.n_heads;
+    const int64_t n_cols    = (hparams.dsv41_engram_max_ngram - 1) * hparams.dsv41_engram_heads;
     const int64_t head_dim  = hparams.dsv41_engram_head_dim;
     const int64_t flat_dim  = n_cols * head_dim;
 
-    const uint32_t il = sc.layer_ids[li];
     const auto & layer = pm->layers[il];
 
     // slice this layer's columns, flattened token-major: [n_cols*n_tokens]
@@ -1862,6 +1774,8 @@ llama_model_deepseek41::graph::graph(const llama_model & model, const llm_graph_
         cb(pre_mix, "v41_pre_mix_init", -1);
     }
 
+    int li = 0;
+
     for (int il = 0; il < n_layer; ++il) {
         if ((size_t) il < cparams.embeddings_layer_inp.size() && cparams.embeddings_layer_inp[il]) {
             res->t_layer_inp[il] = dsv4_hc_mean(ctx0, inpL);
@@ -1872,11 +1786,9 @@ llama_model_deepseek41::graph::graph(const llama_model & model, const llm_graph_
         // V4.1 engram layers write the n-gram lookup into the stream before
         // the block's own hyper-connection mixes
         if (is_v41 && hparams.is_engram(il)) {
-            const auto & ds41 = static_cast<const llama_model_deepseek41 &>(model);
-            const int li = std::distance(ds41.engram.layer_ids.begin(),
-                    std::find(ds41.engram.layer_ids.begin(), ds41.engram.layer_ids.end(), il));
-            inpL = build_v41_engram(inpL, engram_hashes, li);
+            inpL = build_v41_engram(inpL, engram_hashes, il, li);
             cb(inpL, "engram_out", il);
+            li++;
         }
 
         ggml_tensor * residual = inpL;
