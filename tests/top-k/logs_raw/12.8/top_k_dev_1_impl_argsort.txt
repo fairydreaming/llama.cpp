@@ -1,0 +1,1103 @@
+ggml_cuda_init: found 1 CUDA devices (Total VRAM: 24438 MiB):
+  Device 0: Tesla P40, compute capability 6.1, VMM: yes, VRAM: 24438 MiB
+ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+Testing 2 devices
+
+Backend 1/2: CUDA0
+  Device description: Tesla P40
+  Device memory: 24438 MB (24288 MB free)
+
+  TOP_K(type=f32,ne=[128,1,1,1],k=1,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                  49152 runs -    21.85 us/run -        0 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,1,1,1],k=1,ties=0):                   49152 runs -    22.00 us/run -        1 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=1,ties=0):                   49152 runs -    22.28 us/run -        2 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=1,ties=0):                  49152 runs -    22.83 us/run -        4 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=1,ties=0):                  49152 runs -    23.64 us/run -        8 kB/run - [1;34m   0.32 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=1,ties=0):                  40960 runs -    26.08 us/run -       16 kB/run - [1;34m   0.59 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=1,ties=0):                   8192 runs -   139.03 us/run -       32 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=1,ties=0):                  8192 runs -   139.69 us/run -       64 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=1,ties=0):                  8192 runs -   139.93 us/run -      128 kB/run - [1;34m   0.87 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=1,ties=0):                  8192 runs -   139.36 us/run -      253 kB/run - [1;34m   1.74 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=1,ties=0):                 8192 runs -   176.86 us/run -      781 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[128,2,1,1],k=1,ties=0):                   73728 runs -    14.37 us/run -        1 kB/run - [1;34m   0.07 GB/s[0m
+  TOP_K(type=f32,ne=[256,2,1,1],k=1,ties=0):                   73728 runs -    14.47 us/run -        2 kB/run - [1;34m   0.13 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=1,ties=0):                   49152 runs -    22.86 us/run -        4 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=1,ties=0):                  49152 runs -    23.44 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=1,ties=0):                  49152 runs -    24.29 us/run -       16 kB/run - [1;34m   0.63 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=1,ties=0):                  40960 runs -    26.67 us/run -       32 kB/run - [1;34m   1.14 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=1,ties=0):                   8192 runs -   137.94 us/run -       64 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=1,ties=0):                  8192 runs -   243.11 us/run -      128 kB/run - [1;34m   0.50 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=1,ties=0):                  8192 runs -   432.52 us/run -      256 kB/run - [1;34m   0.56 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=1,ties=0):                  8192 runs -   856.00 us/run -      507 kB/run - [1;34m   0.57 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=1,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                8192 runs -  3137.19 us/run -     1562 kB/run - [1;34m   0.47 GB/s[0m
+  TOP_K(type=f32,ne=[128,4,1,1],k=1,ties=0):                   73728 runs -    14.45 us/run -        2 kB/run - [1;34m   0.13 GB/s[0m
+  TOP_K(type=f32,ne=[256,4,1,1],k=1,ties=0):                   73728 runs -    14.44 us/run -        4 kB/run - [1;34m   0.27 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=1,ties=0):                   49152 runs -    22.93 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=1,ties=0):                  49152 runs -    23.85 us/run -       16 kB/run - [1;34m   0.64 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=1,ties=0):                  49152 runs -    24.28 us/run -       32 kB/run - [1;34m   1.26 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=1,ties=0):                  40960 runs -    26.79 us/run -       64 kB/run - [1;34m   2.28 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=1,ties=0):                   8192 runs -   139.20 us/run -      128 kB/run - [1;34m   0.88 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=1,ties=0):                  8192 runs -   244.02 us/run -      256 kB/run - [1;34m   1.00 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=1,ties=0):                  8192 runs -   450.51 us/run -      512 kB/run - [1;34m   1.08 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=1,ties=0):                  8192 runs -  1022.32 us/run -     1015 kB/run - [1;34m   0.95 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=1,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                8192 runs -  3350.65 us/run -     3125 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[128,8,1,1],k=1,ties=0):                   73728 runs -    14.39 us/run -        4 kB/run - [1;34m   0.27 GB/s[0m
+  TOP_K(type=f32,ne=[256,8,1,1],k=1,ties=0):                   73728 runs -    14.47 us/run -        8 kB/run - [1;34m   0.53 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=1,ties=0):                   49152 runs -    22.88 us/run -       16 kB/run - [1;34m   0.67 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=1,ties=0):                  49152 runs -    23.89 us/run -       32 kB/run - [1;34m   1.28 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=1,ties=0):                  49152 runs -    24.35 us/run -       64 kB/run - [1;34m   2.51 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=1,ties=0):                  40960 runs -    27.11 us/run -      128 kB/run - [1;34m   4.50 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=1,ties=0):                   8192 runs -   139.71 us/run -      256 kB/run - [1;34m   1.75 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=1,ties=0):                  8192 runs -   260.44 us/run -      512 kB/run - [1;34m   1.87 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=1,ties=0):                  8192 runs -   544.22 us/run -     1024 kB/run - [1;34m   1.79 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=1,ties=0):                  8192 runs -  1155.88 us/run -     2031 kB/run - [1;34m   1.68 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=1,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                5369 runs -  3558.12 us/run -     6250 kB/run - [1;34m   1.68 GB/s[0m
+  TOP_K(type=f32,ne=[128,16,1,1],k=1,ties=0):                  73728 runs -    14.40 us/run -        8 kB/run - [1;34m   0.53 GB/s[0m
+  TOP_K(type=f32,ne=[256,16,1,1],k=1,ties=0):                  73728 runs -    14.52 us/run -       16 kB/run - [1;34m   1.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=1,ties=0):                  49152 runs -    23.01 us/run -       32 kB/run - [1;34m   1.33 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=1,ties=0):                 49152 runs -    24.11 us/run -       64 kB/run - [1;34m   2.53 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=1,ties=0):                 40960 runs -    25.23 us/run -      128 kB/run - [1;34m   4.84 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=1,ties=0):                 40960 runs -    28.77 us/run -      256 kB/run - [1;34m   8.49 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=1,ties=0):                  8192 runs -   161.86 us/run -      512 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=1,ties=0):                 8192 runs -   338.16 us/run -     1024 kB/run - [1;34m   2.89 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=1,ties=0):                 8192 runs -   668.47 us/run -     2048 kB/run - [1;34m   2.92 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=1,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                8192 runs -  1361.06 us/run -     4062 kB/run - [1;34m   2.85 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=1,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               2685 runs -  4053.62 us/run -    12500 kB/run - [1;34m   2.94 GB/s[0m
+  TOP_K(type=f32,ne=[128,32,1,1],k=1,ties=0):                  57344 runs -    19.15 us/run -       16 kB/run - [1;34m   0.80 GB/s[0m
+  TOP_K(type=f32,ne=[256,32,1,1],k=1,ties=0):                  49152 runs -    21.56 us/run -       32 kB/run - [1;34m   1.42 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=1,ties=0):                  32768 runs -    39.17 us/run -       64 kB/run - [1;34m   1.56 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=1,ties=0):                 24576 runs -    40.73 us/run -      128 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=1,ties=0):                 24576 runs -    44.32 us/run -      256 kB/run - [1;34m   5.51 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=1,ties=0):                 24576 runs -    52.14 us/run -      512 kB/run - [1;34m   9.37 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=1,ties=0):                  8192 runs -   362.67 us/run -     1024 kB/run - [1;34m   2.69 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=1,ties=0):                 8192 runs -   687.62 us/run -     2048 kB/run - [1;34m   2.84 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=1,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                8192 runs -  1276.40 us/run -     4096 kB/run - [1;34m   3.06 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=1,ties=0):                 4130 runs -  2484.16 us/run -     8125 kB/run - [1;34m   3.12 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=1,ties=0):                1343 runs -  8208.24 us/run -    25000 kB/run - [1;34m   2.90 GB/s[0m
+  TOP_K(type=f32,ne=[128,64,1,1],k=1,ties=0):                  40960 runs -    25.21 us/run -       32 kB/run - [1;34m   1.22 GB/s[0m
+  TOP_K(type=f32,ne=[256,64,1,1],k=1,ties=0):                  40960 runs -    29.05 us/run -       64 kB/run - [1;34m   2.11 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=1,ties=0):                  24576 runs -    55.16 us/run -      128 kB/run - [1;34m   2.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=1,ties=0):                 24576 runs -    57.71 us/run -      256 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=1,ties=0):                 16384 runs -    64.10 us/run -      512 kB/run - [1;34m   7.62 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=1,ties=0):                 16384 runs -    83.86 us/run -     1024 kB/run - [1;34m  11.65 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=1,ties=0):                  8192 runs -   571.87 us/run -     2048 kB/run - [1;34m   3.42 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=1,ties=0):                 8192 runs -  1130.38 us/run -     4096 kB/run - [1;34m   3.46 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=1,ties=0):                 4096 runs -  2110.92 us/run -     8192 kB/run - [1;34m   3.70 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=1,ties=0):                 2065 runs -  4235.54 us/run -    16250 kB/run - [1;34m   3.66 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=1,ties=0):                 672 runs - 13493.95 us/run -    50000 kB/run - [1;34m   3.53 GB/s[0m
+  TOP_K(type=f32,ne=[128,128,1,1],k=1,ties=0):                 32768 runs -    37.59 us/run -       64 kB/run - [1;34m   1.64 GB/s[0m
+  TOP_K(type=f32,ne=[256,128,1,1],k=1,ties=0):                 24576 runs -    43.60 us/run -      128 kB/run - [1;34m   2.81 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=1,ties=0):                 16384 runs -    87.71 us/run -      256 kB/run - [1;34m   2.79 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=1,ties=0):                16384 runs -    92.53 us/run -      512 kB/run - [1;34m   5.28 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=1,ties=0):                16384 runs -   109.51 us/run -     1024 kB/run - [1;34m   8.92 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=1,ties=0):                 8192 runs -   151.41 us/run -     2048 kB/run - [1;34m  12.90 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=1,ties=0):                 8192 runs -   962.38 us/run -     4096 kB/run - [1;34m   4.06 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=1,ties=0):                4096 runs -  2034.36 us/run -     8192 kB/run - [1;34m   3.84 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=1,ties=0):                2048 runs -  3860.42 us/run -    16384 kB/run - [1;34m   4.05 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=1,ties=0):                1033 runs -  7591.16 us/run -    32500 kB/run - [1;34m   4.08 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=1,ties=0):                336 runs - 23623.01 us/run -   100000 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[128,256,1,1],k=1,ties=0):                 16384 runs -    62.32 us/run -      129 kB/run - [1;34m   1.97 GB/s[0m
+  TOP_K(type=f32,ne=[256,256,1,1],k=1,ties=0):                 16384 runs -    73.11 us/run -      257 kB/run - [1;34m   3.35 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=1,ties=0):                  8192 runs -   152.56 us/run -      513 kB/run - [1;34m   3.21 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=1,ties=0):                 8192 runs -   167.61 us/run -     1025 kB/run - [1;34m   5.83 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=1,ties=0):                 8192 runs -   204.49 us/run -     2049 kB/run - [1;34m   9.56 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=1,ties=0):                 8191 runs -   276.79 us/run -     4097 kB/run - [1;34m  14.12 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=1,ties=0):                 4096 runs -  1875.80 us/run -     8193 kB/run - [1;34m   4.17 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=1,ties=0):                2048 runs -  3873.46 us/run -    16385 kB/run - [1;34m   4.03 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=1,ties=0):                1024 runs -  7306.77 us/run -    32769 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=1,ties=0):                 517 runs - 14082.33 us/run -    65001 kB/run - [1;34m   4.40 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=1,ties=0):                168 runs - 47353.20 us/run -   200001 kB/run - [1;34m   4.03 GB/s[0m
+  TOP_K(type=f32,ne=[128,512,1,1],k=1,ties=0):                 24576 runs -    45.48 us/run -      258 kB/run - [1;34m   5.41 GB/s[0m
+  TOP_K(type=f32,ne=[256,512,1,1],k=1,ties=0):                 24576 runs -    60.66 us/run -      514 kB/run - [1;34m   8.08 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=1,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                 8192 runs -   323.66 us/run -     1026 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=1,ties=0):                 8192 runs -   354.68 us/run -     2050 kB/run - [1;34m   5.51 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=1,ties=0):                 8189 runs -   415.05 us/run -     4098 kB/run - [1;34m   9.42 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=1,ties=0):                 4096 runs -   561.70 us/run -     8194 kB/run - [1;34m  13.91 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=1,ties=0):                 2048 runs -  3575.62 us/run -    16386 kB/run - [1;34m   4.37 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=1,ties=0):                1024 runs -  7544.19 us/run -    32770 kB/run - [1;34m   4.14 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=1,ties=0):                 512 runs - 14597.90 us/run -    65538 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=1,ties=0):                 259 runs - 28095.81 us/run -   130002 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=1,ties=0):                 84 runs - 91561.57 us/run -   400002 kB/run - [1;34m   4.17 GB/s[0m
+  TOP_K(type=f32,ne=[128,1024,1,1],k=1,ties=0):                24576 runs -    55.31 us/run -      516 kB/run - [1;34m   8.90 GB/s[0m
+  TOP_K(type=f32,ne=[256,1024,1,1],k=1,ties=0):                16384 runs -    84.36 us/run -     1028 kB/run - [1;34m  11.62 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=1,ties=0):                 8192 runs -   611.47 us/run -     2052 kB/run - [1;34m   3.20 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=1,ties=0):                8185 runs -   665.17 us/run -     4100 kB/run - [1;34m   5.88 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=1,ties=0):                4095 runs -   787.40 us/run -     8196 kB/run - [1;34m   9.93 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=1,ties=0):                2048 runs -  1072.48 us/run -    16388 kB/run - [1;34m  14.57 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=1,ties=0):                1024 runs -  7097.31 us/run -    32772 kB/run - [1;34m   4.40 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=1,ties=0):                512 runs - 14849.52 us/run -    65540 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=1,ties=0):                256 runs - 29195.75 us/run -   131076 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=1,ties=0):                130 runs - 56150.07 us/run -   260004 kB/run - [1;34m   4.42 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=1,ties=0):                42 runs - 180308.29 us/run -   800004 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,2048,1,1],k=1,ties=0):                16384 runs -    87.00 us/run -     1032 kB/run - [1;34m  11.31 GB/s[0m
+  TOP_K(type=f32,ne=[256,2048,1,1],k=1,ties=0):                 8192 runs -   137.07 us/run -     2056 kB/run - [1;34m  14.30 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=1,ties=0):                 8177 runs -  1180.28 us/run -     4104 kB/run - [1;34m   3.32 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=1,ties=0):                4093 runs -  1286.40 us/run -     8200 kB/run - [1;34m   6.08 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=1,ties=0):                2048 runs -  1536.29 us/run -    16392 kB/run - [1;34m  10.18 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=1,ties=0):                1024 runs -  2113.89 us/run -    32776 kB/run - [1;34m  14.79 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=1,ties=0):                 512 runs - 13929.41 us/run -    65544 kB/run - [1;34m   4.49 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=1,ties=0):                256 runs - 29701.33 us/run -   131080 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=1,ties=0):                128 runs - 58400.84 us/run -   262152 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=1,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                65 runs - 112278.23 us/run -   520008 kB/run - [1;34m   4.42 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=1,ties=0):                21 runs - 360373.14 us/run -  1600008 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,4096,1,1],k=1,ties=0):                 8192 runs -   136.93 us/run -     2064 kB/run - [1;34m  14.38 GB/s[0m
+  TOP_K(type=f32,ne=[256,4096,1,1],k=1,ties=0):                 8161 runs -   238.40 us/run -     4112 kB/run - [1;34m  16.45 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=1,ties=0):                 4089 runs -  2320.30 us/run -     8208 kB/run - [1;34m   3.37 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=1,ties=0):                2047 runs -  2528.20 us/run -    16400 kB/run - [1;34m   6.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=1,ties=0):                1024 runs -  3035.70 us/run -    32784 kB/run - [1;34m  10.30 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=1,ties=0):                 512 runs -  4190.78 us/run -    65552 kB/run - [1;34m  14.92 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=1,ties=0):                 256 runs - 27850.59 us/run -   131088 kB/run - [1;34m   4.49 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=1,ties=0):                128 runs - 59426.74 us/run -   262160 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=1,ties=0):                 64 runs - 116742.70 us/run -   524304 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=1,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                33 runs - 223780.39 us/run -  1040016 kB/run - [1;34m   4.43 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=1,ties=0):                11 runs - 720879.00 us/run -  3200016 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,1,1,1],k=3,ties=0):                   49152 runs -    21.91 us/run -        0 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,1,1,1],k=3,ties=0):                   49152 runs -    22.03 us/run -        1 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=3,ties=0):                   49152 runs -    22.26 us/run -        2 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=3,ties=0):                  49152 runs -    22.81 us/run -        4 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=3,ties=0):                  49152 runs -    23.63 us/run -        8 kB/run - [1;34m   0.32 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=3,ties=0):                  40960 runs -    26.08 us/run -       16 kB/run - [1;34m   0.59 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=3,ties=0):                   8192 runs -   139.44 us/run -       32 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=3,ties=0):                  8192 runs -   139.46 us/run -       64 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=3,ties=0):                  8192 runs -   140.23 us/run -      128 kB/run - [1;34m   0.87 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=3,ties=0):                  8192 runs -   139.93 us/run -      253 kB/run - [1;34m   1.73 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=3,ties=0):                 8192 runs -   177.20 us/run -      781 kB/run - [1;34m   4.20 GB/s[0m
+  TOP_K(type=f32,ne=[128,2,1,1],k=3,ties=0):                   73728 runs -    14.37 us/run -        1 kB/run - [1;34m   0.07 GB/s[0m
+  TOP_K(type=f32,ne=[256,2,1,1],k=3,ties=0):                   73728 runs -    14.46 us/run -        2 kB/run - [1;34m   0.13 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=3,ties=0):                   49152 runs -    22.77 us/run -        4 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=3,ties=0):                  49152 runs -    23.33 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=3,ties=0):                  49152 runs -    24.17 us/run -       16 kB/run - [1;34m   0.63 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=3,ties=0):                  40960 runs -    26.56 us/run -       32 kB/run - [1;34m   1.15 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=3,ties=0):                   8192 runs -   137.45 us/run -       64 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=3,ties=0):                  8192 runs -   241.71 us/run -      128 kB/run - [1;34m   0.51 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=3,ties=0):                  8192 runs -   431.18 us/run -      256 kB/run - [1;34m   0.57 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=3,ties=0):                  8192 runs -   851.27 us/run -      507 kB/run - [1;34m   0.57 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=3,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                8192 runs -  3125.23 us/run -     1562 kB/run - [1;34m   0.48 GB/s[0m
+  TOP_K(type=f32,ne=[128,4,1,1],k=3,ties=0):                   73728 runs -    14.39 us/run -        2 kB/run - [1;34m   0.14 GB/s[0m
+  TOP_K(type=f32,ne=[256,4,1,1],k=3,ties=0):                   73728 runs -    14.42 us/run -        4 kB/run - [1;34m   0.27 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=3,ties=0):                   49152 runs -    22.94 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=3,ties=0):                  49152 runs -    23.92 us/run -       16 kB/run - [1;34m   0.64 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=3,ties=0):                  49152 runs -    24.33 us/run -       32 kB/run - [1;34m   1.26 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=3,ties=0):                  40960 runs -    26.92 us/run -       64 kB/run - [1;34m   2.27 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=3,ties=0):                   8192 runs -   139.73 us/run -      128 kB/run - [1;34m   0.87 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=3,ties=0):                  8192 runs -   244.19 us/run -      256 kB/run - [1;34m   1.00 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=3,ties=0):                  8192 runs -   450.93 us/run -      512 kB/run - [1;34m   1.08 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=3,ties=0):                  8192 runs -  1018.05 us/run -     1015 kB/run - [1;34m   0.95 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=3,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                8192 runs -  3350.05 us/run -     3125 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[128,8,1,1],k=3,ties=0):                   73728 runs -    14.41 us/run -        4 kB/run - [1;34m   0.27 GB/s[0m
+  TOP_K(type=f32,ne=[256,8,1,1],k=3,ties=0):                   73728 runs -    14.46 us/run -        8 kB/run - [1;34m   0.53 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=3,ties=0):                   49152 runs -    22.87 us/run -       16 kB/run - [1;34m   0.67 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=3,ties=0):                  49152 runs -    23.90 us/run -       32 kB/run - [1;34m   1.28 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=3,ties=0):                  49152 runs -    24.34 us/run -       64 kB/run - [1;34m   2.51 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=3,ties=0):                  40960 runs -    27.11 us/run -      128 kB/run - [1;34m   4.51 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=3,ties=0):                   8192 runs -   139.76 us/run -      256 kB/run - [1;34m   1.75 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=3,ties=0):                  8192 runs -   259.83 us/run -      512 kB/run - [1;34m   1.88 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=3,ties=0):                  8192 runs -   544.06 us/run -     1024 kB/run - [1;34m   1.80 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=3,ties=0):                  8192 runs -  1156.61 us/run -     2031 kB/run - [1;34m   1.67 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=3,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                5369 runs -  3559.46 us/run -     6250 kB/run - [1;34m   1.67 GB/s[0m
+  TOP_K(type=f32,ne=[128,16,1,1],k=3,ties=0):                  73728 runs -    14.39 us/run -        8 kB/run - [1;34m   0.54 GB/s[0m
+  TOP_K(type=f32,ne=[256,16,1,1],k=3,ties=0):                  73728 runs -    14.49 us/run -       16 kB/run - [1;34m   1.07 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=3,ties=0):                  49152 runs -    23.02 us/run -       32 kB/run - [1;34m   1.33 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=3,ties=0):                 49152 runs -    24.09 us/run -       64 kB/run - [1;34m   2.54 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=3,ties=0):                 40960 runs -    25.26 us/run -      128 kB/run - [1;34m   4.84 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=3,ties=0):                 40960 runs -    28.74 us/run -      256 kB/run - [1;34m   8.50 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=3,ties=0):                  8192 runs -   163.24 us/run -      512 kB/run - [1;34m   2.99 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=3,ties=0):                 8192 runs -   338.39 us/run -     1024 kB/run - [1;34m   2.89 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=3,ties=0):                 8192 runs -   668.33 us/run -     2048 kB/run - [1;34m   2.92 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=3,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                8192 runs -  1361.46 us/run -     4062 kB/run - [1;34m   2.85 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=3,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               2685 runs -  4050.60 us/run -    12500 kB/run - [1;34m   2.94 GB/s[0m
+  TOP_K(type=f32,ne=[128,32,1,1],k=3,ties=0):                  57344 runs -    19.16 us/run -       16 kB/run - [1;34m   0.82 GB/s[0m
+  TOP_K(type=f32,ne=[256,32,1,1],k=3,ties=0):                  49152 runs -    21.46 us/run -       32 kB/run - [1;34m   1.44 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=3,ties=0):                  32768 runs -    39.03 us/run -       64 kB/run - [1;34m   1.57 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=3,ties=0):                 32768 runs -    40.64 us/run -      128 kB/run - [1;34m   3.01 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=3,ties=0):                 24576 runs -    44.16 us/run -      256 kB/run - [1;34m   5.54 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=3,ties=0):                 24576 runs -    52.14 us/run -      512 kB/run - [1;34m   9.37 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=3,ties=0):                  8192 runs -   363.50 us/run -     1024 kB/run - [1;34m   2.69 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=3,ties=0):                 8192 runs -   683.70 us/run -     2048 kB/run - [1;34m   2.86 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=3,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                8192 runs -  1276.79 us/run -     4096 kB/run - [1;34m   3.06 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=3,ties=0):                 4130 runs -  2485.20 us/run -     8125 kB/run - [1;34m   3.12 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=3,ties=0):                1343 runs -  8213.10 us/run -    25000 kB/run - [1;34m   2.90 GB/s[0m
+  TOP_K(type=f32,ne=[128,64,1,1],k=3,ties=0):                  40960 runs -    25.12 us/run -       32 kB/run - [1;34m   1.24 GB/s[0m
+  TOP_K(type=f32,ne=[256,64,1,1],k=3,ties=0):                  40960 runs -    29.13 us/run -       64 kB/run - [1;34m   2.12 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=3,ties=0):                  24576 runs -    55.19 us/run -      128 kB/run - [1;34m   2.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=3,ties=0):                 24576 runs -    57.74 us/run -      256 kB/run - [1;34m   4.24 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=3,ties=0):                 16384 runs -    64.10 us/run -      512 kB/run - [1;34m   7.63 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=3,ties=0):                 16384 runs -    84.19 us/run -     1024 kB/run - [1;34m  11.61 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=3,ties=0):                  8192 runs -   571.57 us/run -     2048 kB/run - [1;34m   3.42 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=3,ties=0):                 8191 runs -  1132.10 us/run -     4096 kB/run - [1;34m   3.45 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=3,ties=0):                 4096 runs -  2111.78 us/run -     8192 kB/run - [1;34m   3.70 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=3,ties=0):                 2065 runs -  4239.26 us/run -    16250 kB/run - [1;34m   3.66 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=3,ties=0):                 672 runs - 13493.58 us/run -    50000 kB/run - [1;34m   3.53 GB/s[0m
+  TOP_K(type=f32,ne=[128,128,1,1],k=3,ties=0):                 32768 runs -    37.66 us/run -       65 kB/run - [1;34m   1.66 GB/s[0m
+  TOP_K(type=f32,ne=[256,128,1,1],k=3,ties=0):                 24576 runs -    43.57 us/run -      129 kB/run - [1;34m   2.83 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=3,ties=0):                 16384 runs -    87.69 us/run -      257 kB/run - [1;34m   2.80 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=3,ties=0):                16384 runs -    92.45 us/run -      513 kB/run - [1;34m   5.30 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=3,ties=0):                16384 runs -   110.66 us/run -     1025 kB/run - [1;34m   8.84 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=3,ties=0):                 8192 runs -   151.52 us/run -     2049 kB/run - [1;34m  12.90 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=3,ties=0):                 8190 runs -   962.25 us/run -     4097 kB/run - [1;34m   4.06 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=3,ties=0):                4096 runs -  2034.91 us/run -     8193 kB/run - [1;34m   3.84 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=3,ties=0):                2048 runs -  3866.91 us/run -    16385 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=3,ties=0):                1033 runs -  7589.91 us/run -    32501 kB/run - [1;34m   4.08 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=3,ties=0):                336 runs - 23624.44 us/run -   100001 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[128,256,1,1],k=3,ties=0):                 16384 runs -    62.25 us/run -      131 kB/run - [1;34m   2.01 GB/s[0m
+  TOP_K(type=f32,ne=[256,256,1,1],k=3,ties=0):                 16384 runs -    73.15 us/run -      259 kB/run - [1;34m   3.38 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=3,ties=0):                  8192 runs -   152.55 us/run -      515 kB/run - [1;34m   3.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=3,ties=0):                 8192 runs -   168.23 us/run -     1027 kB/run - [1;34m   5.82 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=3,ties=0):                 8192 runs -   204.90 us/run -     2051 kB/run - [1;34m   9.55 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=3,ties=0):                 8187 runs -   277.05 us/run -     4099 kB/run - [1;34m  14.11 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=3,ties=0):                 4095 runs -  1873.58 us/run -     8195 kB/run - [1;34m   4.17 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=3,ties=0):                2048 runs -  3866.36 us/run -    16387 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=3,ties=0):                1024 runs -  7299.94 us/run -    32771 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=3,ties=0):                 517 runs - 14081.93 us/run -    65003 kB/run - [1;34m   4.40 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=3,ties=0):                168 runs - 47343.69 us/run -   200003 kB/run - [1;34m   4.03 GB/s[0m
+  TOP_K(type=f32,ne=[128,512,1,1],k=3,ties=0):                 24576 runs -    45.52 us/run -      262 kB/run - [1;34m   5.49 GB/s[0m
+  TOP_K(type=f32,ne=[256,512,1,1],k=3,ties=0):                 24576 runs -    60.71 us/run -      518 kB/run - [1;34m   8.14 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=3,ties=0):                  8192 runs -   323.79 us/run -     1030 kB/run - [1;34m   3.03 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=3,ties=0):                 8192 runs -   355.51 us/run -     2054 kB/run - [1;34m   5.51 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=3,ties=0):                 8181 runs -   414.98 us/run -     4102 kB/run - [1;34m   9.43 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=3,ties=0):                 4094 runs -   564.00 us/run -     8198 kB/run - [1;34m  13.86 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=3,ties=0):                 2048 runs -  3589.94 us/run -    16390 kB/run - [1;34m   4.35 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=3,ties=0):                1024 runs -  7571.65 us/run -    32774 kB/run - [1;34m   4.13 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=3,ties=0):                 512 runs - 14596.28 us/run -    65542 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=3,ties=0):                 259 runs - 28110.76 us/run -   130006 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=3,ties=0):                 84 runs - 91567.89 us/run -   400006 kB/run - [1;34m   4.17 GB/s[0m
+  TOP_K(type=f32,ne=[128,1024,1,1],k=3,ties=0):                24576 runs -    55.58 us/run -      524 kB/run - [1;34m   8.99 GB/s[0m
+  TOP_K(type=f32,ne=[256,1024,1,1],k=3,ties=0):                16384 runs -    84.24 us/run -     1036 kB/run - [1;34m  11.73 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=3,ties=0):                 8192 runs -   611.63 us/run -     2060 kB/run - [1;34m   3.21 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=3,ties=0):                8169 runs -   665.04 us/run -     4108 kB/run - [1;34m   5.89 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=3,ties=0):                4091 runs -   787.61 us/run -     8204 kB/run - [1;34m   9.93 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=3,ties=0):                2047 runs -  1072.89 us/run -    16396 kB/run - [1;34m  14.57 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=3,ties=0):                1024 runs -  7095.78 us/run -    32780 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=3,ties=0):                512 runs - 14855.52 us/run -    65548 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=3,ties=0):                256 runs - 29192.13 us/run -   131084 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=3,ties=0):                130 runs - 56234.60 us/run -   260012 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=3,ties=0):                42 runs - 180244.83 us/run -   800012 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,2048,1,1],k=3,ties=0):                16384 runs -    87.05 us/run -     1048 kB/run - [1;34m  11.48 GB/s[0m
+  TOP_K(type=f32,ne=[256,2048,1,1],k=3,ties=0):                 8192 runs -   137.00 us/run -     2072 kB/run - [1;34m  14.42 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=3,ties=0):                 8145 runs -  1179.90 us/run -     4120 kB/run - [1;34m   3.33 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=3,ties=0):                4085 runs -  1286.63 us/run -     8216 kB/run - [1;34m   6.09 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=3,ties=0):                2046 runs -  1536.10 us/run -    16408 kB/run - [1;34m  10.19 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=3,ties=0):                1024 runs -  2113.60 us/run -    32792 kB/run - [1;34m  14.80 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=3,ties=0):                 512 runs - 13922.66 us/run -    65560 kB/run - [1;34m   4.49 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=3,ties=0):                256 runs - 29694.95 us/run -   131096 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=3,ties=0):                128 runs - 58384.11 us/run -   262168 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=3,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                65 runs - 112464.52 us/run -   520024 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=3,ties=0):                21 runs - 360328.00 us/run -  1600024 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,4096,1,1],k=3,ties=0):                 8192 runs -   137.10 us/run -     2096 kB/run - [1;34m  14.58 GB/s[0m
+  TOP_K(type=f32,ne=[256,4096,1,1],k=3,ties=0):                 8098 runs -   238.30 us/run -     4144 kB/run - [1;34m  16.58 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=3,ties=0):                 4073 runs -  2319.91 us/run -     8240 kB/run - [1;34m   3.39 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=3,ties=0):                2043 runs -  2524.19 us/run -    16432 kB/run - [1;34m   6.21 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=3,ties=0):                1023 runs -  3036.79 us/run -    32816 kB/run - [1;34m  10.31 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=3,ties=0):                 512 runs -  4191.03 us/run -    65584 kB/run - [1;34m  14.92 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=3,ties=0):                 256 runs - 27849.84 us/run -   131120 kB/run - [1;34m   4.49 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=3,ties=0):                128 runs - 59438.28 us/run -   262192 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=3,ties=0):                 64 runs - 116767.62 us/run -   524336 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=3,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                33 runs - 223943.30 us/run -  1040048 kB/run - [1;34m   4.43 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=3,ties=0):                11 runs - 720744.27 us/run -  3200048 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,1,1,1],k=16,ties=0):                  49152 runs -    21.91 us/run -        0 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,1,1,1],k=16,ties=0):                  49152 runs -    22.03 us/run -        1 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=16,ties=0):                  49152 runs -    22.27 us/run -        2 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=16,ties=0):                 49152 runs -    22.78 us/run -        4 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=16,ties=0):                 49152 runs -    23.62 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=16,ties=0):                 40960 runs -    26.11 us/run -       16 kB/run - [1;34m   0.59 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=16,ties=0):                  8192 runs -   138.22 us/run -       32 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=16,ties=0):                 8192 runs -   139.37 us/run -       64 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=16,ties=0):                 8192 runs -   140.17 us/run -      128 kB/run - [1;34m   0.87 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=16,ties=0):                 8192 runs -   140.08 us/run -      253 kB/run - [1;34m   1.73 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=16,ties=0):                8192 runs -   172.71 us/run -      781 kB/run - [1;34m   4.31 GB/s[0m
+  TOP_K(type=f32,ne=[128,2,1,1],k=16,ties=0):                  73728 runs -    14.32 us/run -        1 kB/run - [1;34m   0.07 GB/s[0m
+  TOP_K(type=f32,ne=[256,2,1,1],k=16,ties=0):                  73728 runs -    14.40 us/run -        2 kB/run - [1;34m   0.14 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=16,ties=0):                  49152 runs -    22.88 us/run -        4 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=16,ties=0):                 49152 runs -    23.91 us/run -        8 kB/run - [1;34m   0.32 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=16,ties=0):                 49152 runs -    24.25 us/run -       16 kB/run - [1;34m   0.63 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=16,ties=0):                 40960 runs -    26.81 us/run -       32 kB/run - [1;34m   1.14 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=16,ties=0):                  8192 runs -   139.12 us/run -       64 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=16,ties=0):                 8192 runs -   243.15 us/run -      128 kB/run - [1;34m   0.50 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=16,ties=0):                 8192 runs -   435.45 us/run -      256 kB/run - [1;34m   0.56 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=16,ties=0):                 8192 runs -   853.25 us/run -      507 kB/run - [1;34m   0.57 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=16,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8192 runs -  3125.97 us/run -     1562 kB/run - [1;34m   0.48 GB/s[0m
+  TOP_K(type=f32,ne=[128,4,1,1],k=16,ties=0):                  73728 runs -    14.33 us/run -        2 kB/run - [1;34m   0.15 GB/s[0m
+  TOP_K(type=f32,ne=[256,4,1,1],k=16,ties=0):                  73728 runs -    14.48 us/run -        4 kB/run - [1;34m   0.28 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=16,ties=0):                  49152 runs -    22.95 us/run -        8 kB/run - [1;34m   0.34 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=16,ties=0):                 49152 runs -    23.48 us/run -       16 kB/run - [1;34m   0.66 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=16,ties=0):                 49152 runs -    24.33 us/run -       32 kB/run - [1;34m   1.26 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=16,ties=0):                 40960 runs -    26.78 us/run -       64 kB/run - [1;34m   2.29 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=16,ties=0):                  8192 runs -   138.38 us/run -      128 kB/run - [1;34m   0.88 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=16,ties=0):                 8192 runs -   244.27 us/run -      256 kB/run - [1;34m   1.00 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=16,ties=0):                 8192 runs -   450.20 us/run -      512 kB/run - [1;34m   1.09 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=16,ties=0):                 8192 runs -  1017.96 us/run -     1015 kB/run - [1;34m   0.95 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=16,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8192 runs -  3350.20 us/run -     3125 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[128,8,1,1],k=16,ties=0):                  73728 runs -    14.35 us/run -        4 kB/run - [1;34m   0.30 GB/s[0m
+  TOP_K(type=f32,ne=[256,8,1,1],k=16,ties=0):                  73728 runs -    14.44 us/run -        8 kB/run - [1;34m   0.56 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=16,ties=0):                  49152 runs -    22.88 us/run -       16 kB/run - [1;34m   0.69 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=16,ties=0):                 49152 runs -    23.83 us/run -       32 kB/run - [1;34m   1.30 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=16,ties=0):                 49152 runs -    24.39 us/run -       64 kB/run - [1;34m   2.52 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=16,ties=0):                 40960 runs -    27.05 us/run -      128 kB/run - [1;34m   4.53 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=16,ties=0):                  8192 runs -   139.87 us/run -      256 kB/run - [1;34m   1.75 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=16,ties=0):                 8192 runs -   260.16 us/run -      512 kB/run - [1;34m   1.88 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=16,ties=0):                 8192 runs -   544.11 us/run -     1024 kB/run - [1;34m   1.80 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=16,ties=0):                 8192 runs -  1156.18 us/run -     2031 kB/run - [1;34m   1.68 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=16,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               5369 runs -  3559.45 us/run -     6250 kB/run - [1;34m   1.67 GB/s[0m
+  TOP_K(type=f32,ne=[128,16,1,1],k=16,ties=0):                 73728 runs -    14.41 us/run -        9 kB/run - [1;34m   0.60 GB/s[0m
+  TOP_K(type=f32,ne=[256,16,1,1],k=16,ties=0):                 73728 runs -    14.50 us/run -       17 kB/run - [1;34m   1.12 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=16,ties=0):                 49152 runs -    23.02 us/run -       33 kB/run - [1;34m   1.37 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=16,ties=0):                49152 runs -    24.22 us/run -       65 kB/run - [1;34m   2.56 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=16,ties=0):                40960 runs -    25.23 us/run -      129 kB/run - [1;34m   4.88 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=16,ties=0):                40960 runs -    28.80 us/run -      257 kB/run - [1;34m   8.51 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=16,ties=0):                 8192 runs -   163.09 us/run -      513 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=16,ties=0):                8192 runs -   337.88 us/run -     1025 kB/run - [1;34m   2.89 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=16,ties=0):                8192 runs -   668.51 us/run -     2049 kB/run - [1;34m   2.92 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=16,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8192 runs -  1361.25 us/run -     4063 kB/run - [1;34m   2.85 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=16,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+              2685 runs -  4053.70 us/run -    12501 kB/run - [1;34m   2.94 GB/s[0m
+  TOP_K(type=f32,ne=[128,32,1,1],k=16,ties=0):                 57344 runs -    19.02 us/run -       18 kB/run - [1;34m   0.90 GB/s[0m
+  TOP_K(type=f32,ne=[256,32,1,1],k=16,ties=0):                 49152 runs -    21.56 us/run -       34 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=16,ties=0):                 32768 runs -    39.01 us/run -       66 kB/run - [1;34m   1.61 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=16,ties=0):                32768 runs -    40.64 us/run -      130 kB/run - [1;34m   3.05 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=16,ties=0):                24576 runs -    44.17 us/run -      258 kB/run - [1;34m   5.57 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=16,ties=0):                24576 runs -    52.08 us/run -      514 kB/run - [1;34m   9.41 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=16,ties=0):                 8192 runs -   362.87 us/run -     1026 kB/run - [1;34m   2.70 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=16,ties=0):                8192 runs -   686.44 us/run -     2050 kB/run - [1;34m   2.85 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=16,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8189 runs -  1275.15 us/run -     4098 kB/run - [1;34m   3.06 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=16,ties=0):                4129 runs -  2484.07 us/run -     8127 kB/run - [1;34m   3.12 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=16,ties=0):               1343 runs -  8212.25 us/run -    25002 kB/run - [1;34m   2.90 GB/s[0m
+  TOP_K(type=f32,ne=[128,64,1,1],k=16,ties=0):                 40960 runs -    25.17 us/run -       36 kB/run - [1;34m   1.36 GB/s[0m
+  TOP_K(type=f32,ne=[256,64,1,1],k=16,ties=0):                 40960 runs -    28.92 us/run -       68 kB/run - [1;34m   2.24 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=16,ties=0):                 24576 runs -    55.11 us/run -      132 kB/run - [1;34m   2.28 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=16,ties=0):                24576 runs -    57.62 us/run -      260 kB/run - [1;34m   4.30 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=16,ties=0):                16384 runs -    64.02 us/run -      516 kB/run - [1;34m   7.69 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=16,ties=0):                16384 runs -    84.25 us/run -     1028 kB/run - [1;34m  11.64 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=16,ties=0):                 8192 runs -   572.21 us/run -     2052 kB/run - [1;34m   3.42 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=16,ties=0):                8185 runs -  1131.09 us/run -     4100 kB/run - [1;34m   3.46 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=16,ties=0):                4095 runs -  2110.55 us/run -     8196 kB/run - [1;34m   3.70 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=16,ties=0):                2065 runs -  4241.18 us/run -    16254 kB/run - [1;34m   3.65 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=16,ties=0):                672 runs - 13489.37 us/run -    50004 kB/run - [1;34m   3.54 GB/s[0m
+  TOP_K(type=f32,ne=[128,128,1,1],k=16,ties=0):                32768 runs -    37.59 us/run -       72 kB/run - [1;34m   1.83 GB/s[0m
+  TOP_K(type=f32,ne=[256,128,1,1],k=16,ties=0):                24576 runs -    43.84 us/run -      136 kB/run - [1;34m   2.96 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=16,ties=0):                16384 runs -    87.68 us/run -      264 kB/run - [1;34m   2.87 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=16,ties=0):               16384 runs -    92.45 us/run -      520 kB/run - [1;34m   5.36 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=16,ties=0):               16384 runs -   110.64 us/run -     1032 kB/run - [1;34m   8.90 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=16,ties=0):                8192 runs -   151.52 us/run -     2056 kB/run - [1;34m  12.94 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=16,ties=0):                8177 runs -   961.82 us/run -     4104 kB/run - [1;34m   4.07 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=16,ties=0):               4093 runs -  2036.19 us/run -     8200 kB/run - [1;34m   3.84 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=16,ties=0):               2048 runs -  3863.67 us/run -    16392 kB/run - [1;34m   4.05 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=16,ties=0):               1033 runs -  7588.12 us/run -    32508 kB/run - [1;34m   4.09 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=16,ties=0):               336 runs - 23623.96 us/run -   100008 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[128,256,1,1],k=16,ties=0):                16384 runs -    62.21 us/run -      144 kB/run - [1;34m   2.21 GB/s[0m
+  TOP_K(type=f32,ne=[256,256,1,1],k=16,ties=0):                16384 runs -    73.28 us/run -      272 kB/run - [1;34m   3.54 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=16,ties=0):                 8192 runs -   152.60 us/run -      528 kB/run - [1;34m   3.30 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=16,ties=0):                8192 runs -   168.24 us/run -     1040 kB/run - [1;34m   5.90 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=16,ties=0):                8192 runs -   204.81 us/run -     2064 kB/run - [1;34m   9.61 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=16,ties=0):                8161 runs -   276.99 us/run -     4112 kB/run - [1;34m  14.16 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=16,ties=0):                4089 runs -  1875.22 us/run -     8208 kB/run - [1;34m   4.17 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=16,ties=0):               2047 runs -  3872.33 us/run -    16400 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=16,ties=0):               1024 runs -  7305.13 us/run -    32784 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=16,ties=0):                517 runs - 14078.91 us/run -    65016 kB/run - [1;34m   4.40 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=16,ties=0):               168 runs - 47347.43 us/run -   200016 kB/run - [1;34m   4.03 GB/s[0m
+  TOP_K(type=f32,ne=[128,512,1,1],k=16,ties=0):                24576 runs -    45.49 us/run -      288 kB/run - [1;34m   6.04 GB/s[0m
+  TOP_K(type=f32,ne=[256,512,1,1],k=16,ties=0):                24576 runs -    60.73 us/run -      544 kB/run - [1;34m   8.54 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=16,ties=0):                 8192 runs -   323.55 us/run -     1056 kB/run - [1;34m   3.11 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=16,ties=0):                8192 runs -   355.67 us/run -     2080 kB/run - [1;34m   5.58 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=16,ties=0):                8129 runs -   415.36 us/run -     4128 kB/run - [1;34m   9.48 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=16,ties=0):                4081 runs -   563.46 us/run -     8224 kB/run - [1;34m  13.92 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=16,ties=0):                2045 runs -  3587.36 us/run -    16416 kB/run - [1;34m   4.36 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=16,ties=0):               1024 runs -  7563.44 us/run -    32800 kB/run - [1;34m   4.14 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=16,ties=0):                512 runs - 14601.33 us/run -    65568 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=16,ties=0):                259 runs - 28103.69 us/run -   130032 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=16,ties=0):                84 runs - 91571.74 us/run -   400032 kB/run - [1;34m   4.17 GB/s[0m
+  TOP_K(type=f32,ne=[128,1024,1,1],k=16,ties=0):               24576 runs -    55.52 us/run -      576 kB/run - [1;34m   9.89 GB/s[0m
+  TOP_K(type=f32,ne=[256,1024,1,1],k=16,ties=0):               16384 runs -    83.27 us/run -     1088 kB/run - [1;34m  12.46 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=16,ties=0):                8192 runs -   611.54 us/run -     2112 kB/run - [1;34m   3.29 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=16,ties=0):               8066 runs -   665.44 us/run -     4160 kB/run - [1;34m   5.96 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=16,ties=0):               4065 runs -   787.29 us/run -     8256 kB/run - [1;34m  10.00 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=16,ties=0):               2041 runs -  1072.72 us/run -    16448 kB/run - [1;34m  14.62 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=16,ties=0):               1023 runs -  7087.69 us/run -    32832 kB/run - [1;34m   4.42 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=16,ties=0):               512 runs - 14852.71 us/run -    65600 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=16,ties=0):               256 runs - 29199.08 us/run -   131136 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=16,ties=0):               130 runs - 56191.62 us/run -   260064 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=16,ties=0):                       42 runs - 180269.19 us/run -   800064 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,2048,1,1],k=16,ties=0):               16384 runs -    86.92 us/run -     1152 kB/run - [1;34m  12.64 GB/s[0m
+  TOP_K(type=f32,ne=[256,2048,1,1],k=16,ties=0):                8192 runs -   137.01 us/run -     2176 kB/run - [1;34m  15.15 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=16,ties=0):                7944 runs -  1180.06 us/run -     4224 kB/run - [1;34m   3.41 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=16,ties=0):               4033 runs -  1286.40 us/run -     8320 kB/run - [1;34m   6.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=16,ties=0):               2033 runs -  1537.88 us/run -    16512 kB/run - [1;34m  10.24 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=16,ties=0):               1021 runs -  2118.19 us/run -    32896 kB/run - [1;34m  14.81 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=16,ties=0):                512 runs - 13925.19 us/run -    65664 kB/run - [1;34m   4.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=16,ties=0):               256 runs - 29722.79 us/run -   131200 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=16,ties=0):               128 runs - 58398.18 us/run -   262272 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=16,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               65 runs - 112249.09 us/run -   520128 kB/run - [1;34m   4.42 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=16,ties=0):                       21 runs - 360357.29 us/run -  1600128 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,4096,1,1],k=16,ties=0):                8192 runs -   136.99 us/run -     2304 kB/run - [1;34m  16.04 GB/s[0m
+  TOP_K(type=f32,ne=[256,4096,1,1],k=16,ties=0):                7711 runs -   238.28 us/run -     4352 kB/run - [1;34m  17.42 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=16,ties=0):                3972 runs -  2319.67 us/run -     8448 kB/run - [1;34m   3.47 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=16,ties=0):               2017 runs -  2524.73 us/run -    16640 kB/run - [1;34m   6.29 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=16,ties=0):               1017 runs -  3036.21 us/run -    33024 kB/run - [1;34m  10.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=16,ties=0):                511 runs -  4190.99 us/run -    65792 kB/run - [1;34m  14.97 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=16,ties=0):                256 runs - 27847.57 us/run -   131328 kB/run - [1;34m   4.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=16,ties=0):               128 runs - 59432.81 us/run -   262400 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=16,ties=0):                64 runs - 116788.47 us/run -   524544 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=16,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               33 runs - 223753.33 us/run -  1040256 kB/run - [1;34m   4.43 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=16,ties=0):                       11 runs - 720755.00 us/run -  3200256 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,1,1,1],k=20,ties=0):                  49152 runs -    21.84 us/run -        0 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,1,1,1],k=20,ties=0):                  49152 runs -    22.01 us/run -        1 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=20,ties=0):                  49152 runs -    22.24 us/run -        2 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=20,ties=0):                 49152 runs -    22.80 us/run -        4 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=20,ties=0):                 49152 runs -    23.64 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=20,ties=0):                 40960 runs -    26.07 us/run -       16 kB/run - [1;34m   0.59 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=20,ties=0):                  8192 runs -   137.34 us/run -       32 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=20,ties=0):                 8192 runs -   139.64 us/run -       64 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=20,ties=0):                 8192 runs -   139.61 us/run -      128 kB/run - [1;34m   0.87 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=20,ties=0):                 8192 runs -   138.40 us/run -      253 kB/run - [1;34m   1.75 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=20,ties=0):                8192 runs -   172.49 us/run -      781 kB/run - [1;34m   4.32 GB/s[0m
+  TOP_K(type=f32,ne=[128,2,1,1],k=20,ties=0):                  73728 runs -    14.37 us/run -        1 kB/run - [1;34m   0.08 GB/s[0m
+  TOP_K(type=f32,ne=[256,2,1,1],k=20,ties=0):                  73728 runs -    14.40 us/run -        2 kB/run - [1;34m   0.14 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=20,ties=0):                  49152 runs -    22.84 us/run -        4 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=20,ties=0):                 49152 runs -    23.90 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=20,ties=0):                 49152 runs -    24.24 us/run -       16 kB/run - [1;34m   0.64 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=20,ties=0):                 40960 runs -    26.81 us/run -       32 kB/run - [1;34m   1.14 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=20,ties=0):                  8192 runs -   138.91 us/run -       64 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=20,ties=0):                 8192 runs -   243.28 us/run -      128 kB/run - [1;34m   0.50 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=20,ties=0):                 8192 runs -   433.60 us/run -      256 kB/run - [1;34m   0.56 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=20,ties=0):                 8192 runs -   850.98 us/run -      507 kB/run - [1;34m   0.57 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=20,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8192 runs -  3125.27 us/run -     1562 kB/run - [1;34m   0.48 GB/s[0m
+  TOP_K(type=f32,ne=[128,4,1,1],k=20,ties=0):                  73728 runs -    14.45 us/run -        2 kB/run - [1;34m   0.15 GB/s[0m
+  TOP_K(type=f32,ne=[256,4,1,1],k=20,ties=0):                  73728 runs -    14.47 us/run -        4 kB/run - [1;34m   0.28 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=20,ties=0):                  49152 runs -    22.81 us/run -        8 kB/run - [1;34m   0.35 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=20,ties=0):                 49152 runs -    23.84 us/run -       16 kB/run - [1;34m   0.65 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=20,ties=0):                 49152 runs -    24.18 us/run -       32 kB/run - [1;34m   1.27 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=20,ties=0):                 40960 runs -    26.80 us/run -       64 kB/run - [1;34m   2.29 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=20,ties=0):                  8192 runs -   139.12 us/run -      128 kB/run - [1;34m   0.88 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=20,ties=0):                 8192 runs -   243.06 us/run -      256 kB/run - [1;34m   1.01 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=20,ties=0):                 8192 runs -   448.92 us/run -      512 kB/run - [1;34m   1.09 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=20,ties=0):                 8192 runs -  1018.84 us/run -     1015 kB/run - [1;34m   0.95 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=20,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8192 runs -  3349.43 us/run -     3125 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[128,8,1,1],k=20,ties=0):                  73728 runs -    14.45 us/run -        4 kB/run - [1;34m   0.31 GB/s[0m
+  TOP_K(type=f32,ne=[256,8,1,1],k=20,ties=0):                  73728 runs -    14.48 us/run -        8 kB/run - [1;34m   0.57 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=20,ties=0):                  49152 runs -    22.87 us/run -       16 kB/run - [1;34m   0.69 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=20,ties=0):                 49152 runs -    23.89 us/run -       32 kB/run - [1;34m   1.30 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=20,ties=0):                 49152 runs -    24.34 us/run -       64 kB/run - [1;34m   2.53 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=20,ties=0):                 40960 runs -    27.10 us/run -      128 kB/run - [1;34m   4.53 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=20,ties=0):                  8192 runs -   139.74 us/run -      256 kB/run - [1;34m   1.75 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=20,ties=0):                 8192 runs -   260.14 us/run -      512 kB/run - [1;34m   1.88 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=20,ties=0):                 8192 runs -   544.14 us/run -     1024 kB/run - [1;34m   1.80 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=20,ties=0):                 8192 runs -  1155.91 us/run -     2031 kB/run - [1;34m   1.68 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=20,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               5369 runs -  3558.72 us/run -     6250 kB/run - [1;34m   1.68 GB/s[0m
+  TOP_K(type=f32,ne=[128,16,1,1],k=20,ties=0):                 73728 runs -    14.40 us/run -        9 kB/run - [1;34m   0.61 GB/s[0m
+  TOP_K(type=f32,ne=[256,16,1,1],k=20,ties=0):                 73728 runs -    14.47 us/run -       17 kB/run - [1;34m   1.14 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=20,ties=0):                 49152 runs -    23.02 us/run -       33 kB/run - [1;34m   1.38 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=20,ties=0):                49152 runs -    24.23 us/run -       65 kB/run - [1;34m   2.57 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=20,ties=0):                40960 runs -    25.18 us/run -      129 kB/run - [1;34m   4.90 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=20,ties=0):                40960 runs -    28.75 us/run -      257 kB/run - [1;34m   8.53 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=20,ties=0):                 8192 runs -   163.11 us/run -      513 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=20,ties=0):                8192 runs -   337.49 us/run -     1025 kB/run - [1;34m   2.90 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=20,ties=0):                8192 runs -   668.21 us/run -     2049 kB/run - [1;34m   2.92 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=20,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8192 runs -  1360.52 us/run -     4063 kB/run - [1;34m   2.85 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=20,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+              2685 runs -  4052.17 us/run -    12501 kB/run - [1;34m   2.94 GB/s[0m
+  TOP_K(type=f32,ne=[128,32,1,1],k=20,ties=0):                 57344 runs -    19.16 us/run -       18 kB/run - [1;34m   0.92 GB/s[0m
+  TOP_K(type=f32,ne=[256,32,1,1],k=20,ties=0):                 49152 runs -    21.55 us/run -       34 kB/run - [1;34m   1.53 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=20,ties=0):                 32768 runs -    39.01 us/run -       66 kB/run - [1;34m   1.63 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=20,ties=0):                32768 runs -    40.65 us/run -      130 kB/run - [1;34m   3.06 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=20,ties=0):                24576 runs -    44.16 us/run -      258 kB/run - [1;34m   5.58 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=20,ties=0):                24576 runs -    52.10 us/run -      514 kB/run - [1;34m   9.42 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=20,ties=0):                 8192 runs -   362.21 us/run -     1026 kB/run - [1;34m   2.70 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=20,ties=0):                8192 runs -   686.36 us/run -     2050 kB/run - [1;34m   2.85 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=20,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8188 runs -  1275.95 us/run -     4098 kB/run - [1;34m   3.06 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=20,ties=0):                4129 runs -  2485.36 us/run -     8127 kB/run - [1;34m   3.12 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=20,ties=0):               1343 runs -  8214.81 us/run -    25002 kB/run - [1;34m   2.90 GB/s[0m
+  TOP_K(type=f32,ne=[128,64,1,1],k=20,ties=0):                 40960 runs -    25.02 us/run -       37 kB/run - [1;34m   1.41 GB/s[0m
+  TOP_K(type=f32,ne=[256,64,1,1],k=20,ties=0):                 40960 runs -    29.00 us/run -       69 kB/run - [1;34m   2.27 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=20,ties=0):                 24576 runs -    55.11 us/run -      133 kB/run - [1;34m   2.30 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=20,ties=0):                24576 runs -    57.64 us/run -      261 kB/run - [1;34m   4.32 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=20,ties=0):                16384 runs -    64.02 us/run -      517 kB/run - [1;34m   7.70 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=20,ties=0):                16384 runs -    84.23 us/run -     1029 kB/run - [1;34m  11.65 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=20,ties=0):                 8192 runs -   572.21 us/run -     2053 kB/run - [1;34m   3.42 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=20,ties=0):                8183 runs -  1129.60 us/run -     4101 kB/run - [1;34m   3.46 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=20,ties=0):                4094 runs -  2109.92 us/run -     8197 kB/run - [1;34m   3.71 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=20,ties=0):                2065 runs -  4234.00 us/run -    16255 kB/run - [1;34m   3.66 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=20,ties=0):                672 runs - 13491.68 us/run -    50005 kB/run - [1;34m   3.53 GB/s[0m
+  TOP_K(type=f32,ne=[128,128,1,1],k=20,ties=0):                32768 runs -    37.66 us/run -       74 kB/run - [1;34m   1.87 GB/s[0m
+  TOP_K(type=f32,ne=[256,128,1,1],k=20,ties=0):                24576 runs -    43.67 us/run -      138 kB/run - [1;34m   3.01 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=20,ties=0):                16384 runs -    87.70 us/run -      266 kB/run - [1;34m   2.89 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=20,ties=0):               16384 runs -    92.33 us/run -      522 kB/run - [1;34m   5.39 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=20,ties=0):               16384 runs -   110.58 us/run -     1034 kB/run - [1;34m   8.92 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=20,ties=0):                8192 runs -   151.51 us/run -     2058 kB/run - [1;34m  12.95 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=20,ties=0):                8173 runs -   962.75 us/run -     4106 kB/run - [1;34m   4.07 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=20,ties=0):               4092 runs -  2031.71 us/run -     8202 kB/run - [1;34m   3.85 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=20,ties=0):               2047 runs -  3866.24 us/run -    16394 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=20,ties=0):               1033 runs -  7595.58 us/run -    32510 kB/run - [1;34m   4.08 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=20,ties=0):               336 runs - 23616.88 us/run -   100010 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[128,256,1,1],k=20,ties=0):                16384 runs -    62.10 us/run -      148 kB/run - [1;34m   2.27 GB/s[0m
+  TOP_K(type=f32,ne=[256,256,1,1],k=20,ties=0):                16384 runs -    73.11 us/run -      276 kB/run - [1;34m   3.60 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=20,ties=0):                 8192 runs -   152.45 us/run -      532 kB/run - [1;34m   3.33 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=20,ties=0):                8192 runs -   168.23 us/run -     1044 kB/run - [1;34m   5.92 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=20,ties=0):                8192 runs -   204.77 us/run -     2068 kB/run - [1;34m   9.63 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=20,ties=0):                8153 runs -   276.96 us/run -     4116 kB/run - [1;34m  14.17 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=20,ties=0):                4087 runs -  1875.62 us/run -     8212 kB/run - [1;34m   4.18 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=20,ties=0):               2046 runs -  3869.87 us/run -    16404 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=20,ties=0):               1024 runs -  7310.27 us/run -    32788 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=20,ties=0):                517 runs - 14075.87 us/run -    65020 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=20,ties=0):               168 runs - 47335.38 us/run -   200020 kB/run - [1;34m   4.03 GB/s[0m
+  TOP_K(type=f32,ne=[128,512,1,1],k=20,ties=0):                24576 runs -    45.58 us/run -      296 kB/run - [1;34m   6.19 GB/s[0m
+  TOP_K(type=f32,ne=[256,512,1,1],k=20,ties=0):                24576 runs -    60.31 us/run -      552 kB/run - [1;34m   8.73 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=20,ties=0):                 8192 runs -   323.71 us/run -     1064 kB/run - [1;34m   3.13 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=20,ties=0):                8192 runs -   355.56 us/run -     2088 kB/run - [1;34m   5.60 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=20,ties=0):                8113 runs -   415.51 us/run -     4136 kB/run - [1;34m   9.49 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=20,ties=0):                4077 runs -   563.47 us/run -     8232 kB/run - [1;34m  13.93 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=20,ties=0):                2044 runs -  3581.10 us/run -    16424 kB/run - [1;34m   4.37 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=20,ties=0):               1023 runs -  7561.97 us/run -    32808 kB/run - [1;34m   4.14 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=20,ties=0):                512 runs - 14602.96 us/run -    65576 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=20,ties=0):                259 runs - 28096.29 us/run -   130040 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=20,ties=0):                84 runs - 91588.52 us/run -   400040 kB/run - [1;34m   4.17 GB/s[0m
+  TOP_K(type=f32,ne=[128,1024,1,1],k=20,ties=0):               24576 runs -    55.95 us/run -      592 kB/run - [1;34m  10.09 GB/s[0m
+  TOP_K(type=f32,ne=[256,1024,1,1],k=20,ties=0):               16384 runs -    83.73 us/run -     1104 kB/run - [1;34m  12.57 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=20,ties=0):                8192 runs -   611.22 us/run -     2128 kB/run - [1;34m   3.32 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=20,ties=0):               8036 runs -   665.30 us/run -     4176 kB/run - [1;34m   5.99 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=20,ties=0):               4057 runs -   786.36 us/run -     8272 kB/run - [1;34m  10.03 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=20,ties=0):               2039 runs -  1071.59 us/run -    16464 kB/run - [1;34m  14.65 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=20,ties=0):               1022 runs -  7091.49 us/run -    32848 kB/run - [1;34m   4.42 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=20,ties=0):               512 runs - 14852.57 us/run -    65616 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=20,ties=0):               256 runs - 29184.91 us/run -   131152 kB/run - [1;34m   4.29 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=20,ties=0):               130 runs - 56196.48 us/run -   260080 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=20,ties=0):                       42 runs - 180275.07 us/run -   800080 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,2048,1,1],k=20,ties=0):               16384 runs -    86.58 us/run -     1184 kB/run - [1;34m  13.04 GB/s[0m
+  TOP_K(type=f32,ne=[256,2048,1,1],k=20,ties=0):                8192 runs -   136.89 us/run -     2208 kB/run - [1;34m  15.38 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=20,ties=0):                7885 runs -  1179.69 us/run -     4256 kB/run - [1;34m   3.44 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=20,ties=0):               4018 runs -  1286.95 us/run -     8352 kB/run - [1;34m   6.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=20,ties=0):               2029 runs -  1537.77 us/run -    16544 kB/run - [1;34m  10.26 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=20,ties=0):               1020 runs -  2117.95 us/run -    32928 kB/run - [1;34m  14.83 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=20,ties=0):                511 runs - 13924.59 us/run -    65696 kB/run - [1;34m   4.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=20,ties=0):               256 runs - 29713.10 us/run -   131232 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=20,ties=0):               128 runs - 58406.25 us/run -   262304 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=20,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               65 runs - 112323.15 us/run -   520160 kB/run - [1;34m   4.42 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=20,ties=0):                       21 runs - 360411.48 us/run -  1600160 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,4096,1,1],k=20,ties=0):                8192 runs -   136.78 us/run -     2368 kB/run - [1;34m  16.51 GB/s[0m
+  TOP_K(type=f32,ne=[256,4096,1,1],k=20,ties=0):                7599 runs -   238.27 us/run -     4416 kB/run - [1;34m  17.68 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=20,ties=0):                3943 runs -  2319.66 us/run -     8512 kB/run - [1;34m   3.50 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=20,ties=0):               2009 runs -  2524.08 us/run -    16704 kB/run - [1;34m   6.31 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=20,ties=0):               1015 runs -  3036.50 us/run -    33088 kB/run - [1;34m  10.39 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=20,ties=0):                510 runs -  4191.67 us/run -    65856 kB/run - [1;34m  14.98 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=20,ties=0):                256 runs - 27854.17 us/run -   131392 kB/run - [1;34m   4.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=20,ties=0):               128 runs - 59436.09 us/run -   262464 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=20,ties=0):                64 runs - 116763.30 us/run -   524608 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=20,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               33 runs - 223685.79 us/run -  1040320 kB/run - [1;34m   4.44 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=20,ties=0):                       11 runs - 720785.82 us/run -  3200320 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,1,1,1],k=40,ties=0):                  49152 runs -    21.92 us/run -        0 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,1,1,1],k=40,ties=0):                  49152 runs -    22.04 us/run -        1 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=40,ties=0):                  49152 runs -    22.30 us/run -        2 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=40,ties=0):                 49152 runs -    22.86 us/run -        4 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=40,ties=0):                 49152 runs -    23.66 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=40,ties=0):                 40960 runs -    26.06 us/run -       16 kB/run - [1;34m   0.59 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=40,ties=0):                  8192 runs -   137.86 us/run -       32 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=40,ties=0):                 8192 runs -   140.05 us/run -       64 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=40,ties=0):                 8192 runs -   140.52 us/run -      128 kB/run - [1;34m   0.87 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=40,ties=0):                 8192 runs -   137.30 us/run -      254 kB/run - [1;34m   1.76 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=40,ties=0):                8192 runs -   173.39 us/run -      781 kB/run - [1;34m   4.30 GB/s[0m
+  TOP_K(type=f32,ne=[128,2,1,1],k=40,ties=0):                  73728 runs -    14.24 us/run -        1 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[256,2,1,1],k=40,ties=0):                  73728 runs -    14.36 us/run -        2 kB/run - [1;34m   0.15 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=40,ties=0):                  49152 runs -    22.90 us/run -        4 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=40,ties=0):                 49152 runs -    23.85 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=40,ties=0):                 49152 runs -    24.23 us/run -       16 kB/run - [1;34m   0.64 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=40,ties=0):                 40960 runs -    26.77 us/run -       32 kB/run - [1;34m   1.15 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=40,ties=0):                  8192 runs -   138.46 us/run -       64 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=40,ties=0):                 8192 runs -   242.16 us/run -      128 kB/run - [1;34m   0.51 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=40,ties=0):                 8192 runs -   433.12 us/run -      256 kB/run - [1;34m   0.56 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=40,ties=0):                 8192 runs -   851.29 us/run -      508 kB/run - [1;34m   0.57 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=40,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8192 runs -  3125.11 us/run -     1562 kB/run - [1;34m   0.48 GB/s[0m
+  TOP_K(type=f32,ne=[128,4,1,1],k=40,ties=0):                  73728 runs -    14.09 us/run -        2 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[256,4,1,1],k=40,ties=0):                  73728 runs -    14.37 us/run -        4 kB/run - [1;34m   0.31 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=40,ties=0):                  49152 runs -    22.84 us/run -        8 kB/run - [1;34m   0.36 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=40,ties=0):                 49152 runs -    23.36 us/run -       16 kB/run - [1;34m   0.68 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=40,ties=0):                 49152 runs -    24.18 us/run -       32 kB/run - [1;34m   1.29 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=40,ties=0):                 40960 runs -    26.67 us/run -       64 kB/run - [1;34m   2.31 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=40,ties=0):                  8192 runs -   137.80 us/run -      128 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=40,ties=0):                 8192 runs -   243.24 us/run -      256 kB/run - [1;34m   1.01 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=40,ties=0):                 8192 runs -   448.88 us/run -      512 kB/run - [1;34m   1.09 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=40,ties=0):                 8192 runs -  1018.18 us/run -     1016 kB/run - [1;34m   0.95 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=40,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8192 runs -  3349.32 us/run -     3125 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[128,8,1,1],k=40,ties=0):                  73728 runs -    14.06 us/run -        5 kB/run - [1;34m   0.36 GB/s[0m
+  TOP_K(type=f32,ne=[256,8,1,1],k=40,ties=0):                  73728 runs -    14.43 us/run -        9 kB/run - [1;34m   0.61 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=40,ties=0):                  49152 runs -    22.87 us/run -       17 kB/run - [1;34m   0.72 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=40,ties=0):                 49152 runs -    23.91 us/run -       33 kB/run - [1;34m   1.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=40,ties=0):                 49152 runs -    24.34 us/run -       65 kB/run - [1;34m   2.56 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=40,ties=0):                 40960 runs -    27.13 us/run -      129 kB/run - [1;34m   4.54 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=40,ties=0):                  8192 runs -   139.53 us/run -      257 kB/run - [1;34m   1.76 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=40,ties=0):                 8192 runs -   260.48 us/run -      513 kB/run - [1;34m   1.88 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=40,ties=0):                 8192 runs -   544.49 us/run -     1025 kB/run - [1;34m   1.80 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=40,ties=0):                 8192 runs -  1156.61 us/run -     2032 kB/run - [1;34m   1.68 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=40,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               5368 runs -  3559.14 us/run -     6251 kB/run - [1;34m   1.68 GB/s[0m
+  TOP_K(type=f32,ne=[128,16,1,1],k=40,ties=0):                 73728 runs -    14.10 us/run -       10 kB/run - [1;34m   0.71 GB/s[0m
+  TOP_K(type=f32,ne=[256,16,1,1],k=40,ties=0):                 73728 runs -    14.52 us/run -       18 kB/run - [1;34m   1.22 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=40,ties=0):                 49152 runs -    23.01 us/run -       34 kB/run - [1;34m   1.43 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=40,ties=0):                49152 runs -    24.26 us/run -       66 kB/run - [1;34m   2.61 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=40,ties=0):                40960 runs -    25.31 us/run -      130 kB/run - [1;34m   4.92 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=40,ties=0):                40960 runs -    28.76 us/run -      258 kB/run - [1;34m   8.57 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=40,ties=0):                 8192 runs -   163.17 us/run -      514 kB/run - [1;34m   3.01 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=40,ties=0):                8192 runs -   338.11 us/run -     1026 kB/run - [1;34m   2.90 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=40,ties=0):                8192 runs -   668.53 us/run -     2050 kB/run - [1;34m   2.93 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=40,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8192 runs -  1361.24 us/run -     4065 kB/run - [1;34m   2.85 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=40,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+              2684 runs -  4050.18 us/run -    12502 kB/run - [1;34m   2.94 GB/s[0m
+  TOP_K(type=f32,ne=[128,32,1,1],k=40,ties=0):                 57344 runs -    19.01 us/run -       21 kB/run - [1;34m   1.05 GB/s[0m
+  TOP_K(type=f32,ne=[256,32,1,1],k=40,ties=0):                 49152 runs -    21.57 us/run -       37 kB/run - [1;34m   1.64 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=40,ties=0):                 32768 runs -    39.01 us/run -       69 kB/run - [1;34m   1.69 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=40,ties=0):                32768 runs -    40.66 us/run -      133 kB/run - [1;34m   3.12 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=40,ties=0):                24576 runs -    44.17 us/run -      261 kB/run - [1;34m   5.64 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=40,ties=0):                24576 runs -    52.08 us/run -      517 kB/run - [1;34m   9.47 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=40,ties=0):                 8192 runs -   362.13 us/run -     1029 kB/run - [1;34m   2.71 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=40,ties=0):                8192 runs -   685.11 us/run -     2053 kB/run - [1;34m   2.86 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=40,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               8183 runs -  1276.99 us/run -     4101 kB/run - [1;34m   3.06 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=40,ties=0):                4128 runs -  2483.70 us/run -     8130 kB/run - [1;34m   3.12 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=40,ties=0):               1342 runs -  8207.84 us/run -    25005 kB/run - [1;34m   2.91 GB/s[0m
+  TOP_K(type=f32,ne=[128,64,1,1],k=40,ties=0):                 40960 runs -    25.14 us/run -       42 kB/run - [1;34m   1.59 GB/s[0m
+  TOP_K(type=f32,ne=[256,64,1,1],k=40,ties=0):                 40960 runs -    28.91 us/run -       74 kB/run - [1;34m   2.44 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=40,ties=0):                 24576 runs -    55.07 us/run -      138 kB/run - [1;34m   2.39 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=40,ties=0):                24576 runs -    57.60 us/run -      266 kB/run - [1;34m   4.40 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=40,ties=0):                16384 runs -    63.97 us/run -      522 kB/run - [1;34m   7.78 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=40,ties=0):                16384 runs -    84.28 us/run -     1034 kB/run - [1;34m  11.70 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=40,ties=0):                 8192 runs -   571.78 us/run -     2058 kB/run - [1;34m   3.43 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=40,ties=0):                8173 runs -  1127.13 us/run -     4106 kB/run - [1;34m   3.47 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=40,ties=0):                4092 runs -  2111.19 us/run -     8202 kB/run - [1;34m   3.71 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=40,ties=0):                2064 runs -  4239.95 us/run -    16260 kB/run - [1;34m   3.66 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=40,ties=0):                671 runs - 13493.76 us/run -    50010 kB/run - [1;34m   3.53 GB/s[0m
+  TOP_K(type=f32,ne=[128,128,1,1],k=40,ties=0):                32768 runs -    37.56 us/run -       84 kB/run - [1;34m   2.13 GB/s[0m
+  TOP_K(type=f32,ne=[256,128,1,1],k=40,ties=0):                24576 runs -    43.59 us/run -      148 kB/run - [1;34m   3.24 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=40,ties=0):                16384 runs -    87.68 us/run -      276 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=40,ties=0):               16384 runs -    92.43 us/run -      532 kB/run - [1;34m   5.49 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=40,ties=0):               16384 runs -   110.63 us/run -     1044 kB/run - [1;34m   9.00 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=40,ties=0):                8192 runs -   151.51 us/run -     2068 kB/run - [1;34m  13.02 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=40,ties=0):                8153 runs -   961.94 us/run -     4116 kB/run - [1;34m   4.08 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=40,ties=0):               4087 runs -  2041.17 us/run -     8212 kB/run - [1;34m   3.84 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=40,ties=0):               2046 runs -  3866.37 us/run -    16404 kB/run - [1;34m   4.05 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=40,ties=0):               1032 runs -  7593.15 us/run -    32520 kB/run - [1;34m   4.08 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=40,ties=0):               336 runs - 23621.40 us/run -   100020 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[128,256,1,1],k=40,ties=0):                16384 runs -    62.14 us/run -      168 kB/run - [1;34m   2.58 GB/s[0m
+  TOP_K(type=f32,ne=[256,256,1,1],k=40,ties=0):                16384 runs -    73.20 us/run -      296 kB/run - [1;34m   3.86 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=40,ties=0):                 8192 runs -   152.62 us/run -      552 kB/run - [1;34m   3.45 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=40,ties=0):                8192 runs -   168.26 us/run -     1064 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=40,ties=0):                8192 runs -   204.77 us/run -     2088 kB/run - [1;34m   9.72 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=40,ties=0):                8113 runs -   277.01 us/run -     4136 kB/run - [1;34m  14.24 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=40,ties=0):                4077 runs -  1875.71 us/run -     8232 kB/run - [1;34m   4.19 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=40,ties=0):               2044 runs -  3867.32 us/run -    16424 kB/run - [1;34m   4.05 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=40,ties=0):               1023 runs -  7305.11 us/run -    32808 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=40,ties=0):                516 runs - 14085.26 us/run -    65040 kB/run - [1;34m   4.40 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=40,ties=0):               168 runs - 47342.11 us/run -   200040 kB/run - [1;34m   4.03 GB/s[0m
+  TOP_K(type=f32,ne=[128,512,1,1],k=40,ties=0):                24576 runs -    44.95 us/run -      336 kB/run - [1;34m   7.13 GB/s[0m
+  TOP_K(type=f32,ne=[256,512,1,1],k=40,ties=0):                24576 runs -    60.63 us/run -      592 kB/run - [1;34m   9.31 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=40,ties=0):                 8192 runs -   323.33 us/run -     1104 kB/run - [1;34m   3.26 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=40,ties=0):                8192 runs -   355.36 us/run -     2128 kB/run - [1;34m   5.71 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=40,ties=0):                8036 runs -   415.57 us/run -     4176 kB/run - [1;34m   9.58 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=40,ties=0):                4057 runs -   563.54 us/run -     8272 kB/run - [1;34m  14.00 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=40,ties=0):                2039 runs -  3583.24 us/run -    16464 kB/run - [1;34m   4.38 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=40,ties=0):               1022 runs -  7565.34 us/run -    32848 kB/run - [1;34m   4.14 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=40,ties=0):                512 runs - 14592.72 us/run -    65616 kB/run - [1;34m   4.29 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=40,ties=0):                258 runs - 28105.59 us/run -   130080 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=40,ties=0):                84 runs - 91561.33 us/run -   400080 kB/run - [1;34m   4.17 GB/s[0m
+  TOP_K(type=f32,ne=[128,1024,1,1],k=40,ties=0):               24576 runs -    56.88 us/run -      672 kB/run - [1;34m  11.27 GB/s[0m
+  TOP_K(type=f32,ne=[256,1024,1,1],k=40,ties=0):               16384 runs -    84.24 us/run -     1184 kB/run - [1;34m  13.40 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=40,ties=0):                8192 runs -   611.11 us/run -     2208 kB/run - [1;34m   3.45 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=40,ties=0):               7885 runs -   665.25 us/run -     4256 kB/run - [1;34m   6.10 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=40,ties=0):               4018 runs -   786.61 us/run -     8352 kB/run - [1;34m  10.13 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=40,ties=0):               2029 runs -  1071.71 us/run -    16544 kB/run - [1;34m  14.72 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=40,ties=0):               1020 runs -  7090.54 us/run -    32928 kB/run - [1;34m   4.43 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=40,ties=0):               511 runs - 14867.35 us/run -    65696 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=40,ties=0):               256 runs - 29194.98 us/run -   131232 kB/run - [1;34m   4.29 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=40,ties=0):               129 runs - 56220.45 us/run -   260160 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=40,ties=0):                       42 runs - 180350.00 us/run -   800160 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[128,2048,1,1],k=40,ties=0):               16384 runs -    86.59 us/run -     1344 kB/run - [1;34m  14.80 GB/s[0m
+  TOP_K(type=f32,ne=[256,2048,1,1],k=40,ties=0):                8192 runs -   137.02 us/run -     2368 kB/run - [1;34m  16.48 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=40,ties=0):                7599 runs -  1179.87 us/run -     4416 kB/run - [1;34m   3.57 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=40,ties=0):               3943 runs -  1287.07 us/run -     8512 kB/run - [1;34m   6.31 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=40,ties=0):               2009 runs -  1537.64 us/run -    16704 kB/run - [1;34m  10.36 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=40,ties=0):               1015 runs -  2118.70 us/run -    33088 kB/run - [1;34m  14.89 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=40,ties=0):                510 runs - 13934.28 us/run -    65856 kB/run - [1;34m   4.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=40,ties=0):               256 runs - 29717.95 us/run -   131392 kB/run - [1;34m   4.22 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=40,ties=0):               128 runs - 58404.15 us/run -   262464 kB/run - [1;34m   4.29 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=40,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               65 runs - 112283.20 us/run -   520320 kB/run - [1;34m   4.42 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=40,ties=0):                       21 runs - 360351.14 us/run -  1600320 kB/run - [1;34m   4.24 GB/s[0m
+  TOP_K(type=f32,ne=[128,4096,1,1],k=40,ties=0):                8192 runs -   136.95 us/run -     2688 kB/run - [1;34m  18.72 GB/s[0m
+  TOP_K(type=f32,ne=[256,4096,1,1],k=40,ties=0):                7085 runs -   238.44 us/run -     4736 kB/run - [1;34m  18.94 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=40,ties=0):                3800 runs -  2319.39 us/run -     8832 kB/run - [1;34m   3.63 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=40,ties=0):               1972 runs -  2524.02 us/run -    17024 kB/run - [1;34m   6.43 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=40,ties=0):               1005 runs -  3036.36 us/run -    33408 kB/run - [1;34m  10.49 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=40,ties=0):                508 runs -  4190.33 us/run -    66176 kB/run - [1;34m  15.06 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=40,ties=0):                255 runs - 27858.15 us/run -   131712 kB/run - [1;34m   4.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=40,ties=0):               128 runs - 59446.14 us/run -   262784 kB/run - [1;34m   4.22 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=40,ties=0):                64 runs - 116804.06 us/run -   524928 kB/run - [1;34m   4.29 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=40,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+               33 runs - 223726.52 us/run -  1040640 kB/run - [1;34m   4.44 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=40,ties=0):                       11 runs - 720772.09 us/run -  3200640 kB/run - [1;34m   4.23 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=512,ties=0):                 49152 runs -    22.31 us/run -        4 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=512,ties=0):                49152 runs -    22.82 us/run -        6 kB/run - [1;34m   0.25 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=512,ties=0):                49152 runs -    23.67 us/run -       10 kB/run - [1;34m   0.40 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=512,ties=0):                40960 runs -    26.07 us/run -       18 kB/run - [1;34m   0.66 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=512,ties=0):                 8192 runs -   137.82 us/run -       34 kB/run - [1;34m   0.24 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=512,ties=0):                8192 runs -   140.18 us/run -       66 kB/run - [1;34m   0.45 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=512,ties=0):                8192 runs -   140.77 us/run -      130 kB/run - [1;34m   0.88 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=512,ties=0):                8192 runs -   140.64 us/run -      255 kB/run - [1;34m   1.74 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=512,ties=0):               8192 runs -   173.76 us/run -      783 kB/run - [1;34m   4.30 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=512,ties=0):                 49152 runs -    22.92 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=512,ties=0):                49152 runs -    23.38 us/run -       12 kB/run - [1;34m   0.49 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=512,ties=0):                49152 runs -    24.16 us/run -       20 kB/run - [1;34m   0.79 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=512,ties=0):                40960 runs -    26.60 us/run -       36 kB/run - [1;34m   1.29 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=512,ties=0):                 8192 runs -   137.95 us/run -       68 kB/run - [1;34m   0.47 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=512,ties=0):                8192 runs -   242.07 us/run -      132 kB/run - [1;34m   0.52 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=512,ties=0):                8192 runs -   431.07 us/run -      260 kB/run - [1;34m   0.58 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=512,ties=0):                8192 runs -   851.20 us/run -      511 kB/run - [1;34m   0.57 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=512,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+              8192 runs -  3126.22 us/run -     1566 kB/run - [1;34m   0.48 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=512,ties=0):                 49152 runs -    22.85 us/run -       16 kB/run - [1;34m   0.67 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=512,ties=0):                49152 runs -    23.85 us/run -       24 kB/run - [1;34m   0.96 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=512,ties=0):                49152 runs -    24.20 us/run -       40 kB/run - [1;34m   1.58 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=512,ties=0):                40960 runs -    26.80 us/run -       72 kB/run - [1;34m   2.56 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=512,ties=0):                 8192 runs -   138.89 us/run -      136 kB/run - [1;34m   0.93 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=512,ties=0):                8192 runs -   242.98 us/run -      264 kB/run - [1;34m   1.04 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=512,ties=0):                8192 runs -   448.85 us/run -      520 kB/run - [1;34m   1.10 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=512,ties=0):                8192 runs -  1018.55 us/run -     1023 kB/run - [1;34m   0.96 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=512,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+              8192 runs -  3350.24 us/run -     3133 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=512,ties=0):                 49152 runs -    22.93 us/run -       32 kB/run - [1;34m   1.33 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=512,ties=0):                49152 runs -    23.86 us/run -       48 kB/run - [1;34m   1.92 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=512,ties=0):                49152 runs -    24.36 us/run -       80 kB/run - [1;34m   3.13 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=512,ties=0):                40960 runs -    27.11 us/run -      144 kB/run - [1;34m   5.07 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=512,ties=0):                 8192 runs -   139.67 us/run -      272 kB/run - [1;34m   1.86 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=512,ties=0):                8192 runs -   261.79 us/run -      528 kB/run - [1;34m   1.92 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=512,ties=0):                8192 runs -   544.24 us/run -     1040 kB/run - [1;34m   1.82 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=512,ties=0):                8192 runs -  1156.87 us/run -     2047 kB/run - [1;34m   1.69 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=512,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+              5356 runs -  3559.82 us/run -     6266 kB/run - [1;34m   1.68 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=512,ties=0):                49152 runs -    23.05 us/run -       64 kB/run - [1;34m   2.65 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=512,ties=0):               49152 runs -    24.29 us/run -       96 kB/run - [1;34m   3.77 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=512,ties=0):               40960 runs -    25.27 us/run -      160 kB/run - [1;34m   6.04 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=512,ties=0):               40960 runs -    28.76 us/run -      288 kB/run - [1;34m   9.55 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=512,ties=0):                8192 runs -   163.77 us/run -      544 kB/run - [1;34m   3.17 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=512,ties=0):               8192 runs -   338.13 us/run -     1056 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=512,ties=0):               8192 runs -   668.21 us/run -     2080 kB/run - [1;34m   2.97 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=512,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+              8192 runs -  1360.93 us/run -     4094 kB/run - [1;34m   2.87 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=512,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+             2678 runs -  4053.55 us/run -    12532 kB/run - [1;34m   2.95 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=512,ties=0):                32768 runs -    39.36 us/run -      128 kB/run - [1;34m   3.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=512,ties=0):               24576 runs -    40.82 us/run -      192 kB/run - [1;34m   4.49 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=512,ties=0):               24576 runs -    44.34 us/run -      320 kB/run - [1;34m   6.88 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=512,ties=0):               24576 runs -    52.29 us/run -      576 kB/run - [1;34m  10.50 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=512,ties=0):                8192 runs -   362.13 us/run -     1088 kB/run - [1;34m   2.87 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=512,ties=0):               8192 runs -   689.36 us/run -     2112 kB/run - [1;34m   2.92 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=512,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+              8066 runs -  1276.97 us/run -     4160 kB/run - [1;34m   3.11 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=512,ties=0):               4098 runs -  2483.64 us/run -     8189 kB/run - [1;34m   3.14 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=512,ties=0):              1339 runs -  8207.28 us/run -    25064 kB/run - [1;34m   2.91 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=512,ties=0):                24576 runs -    55.68 us/run -      256 kB/run - [1;34m   4.38 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=512,ties=0):               24576 runs -    58.09 us/run -      384 kB/run - [1;34m   6.30 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=512,ties=0):               16384 runs -    64.36 us/run -      640 kB/run - [1;34m   9.48 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=512,ties=0):               16384 runs -    84.67 us/run -     1152 kB/run - [1;34m  12.98 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=512,ties=0):                8192 runs -   571.42 us/run -     2176 kB/run - [1;34m   3.63 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=512,ties=0):               7944 runs -  1133.40 us/run -     4224 kB/run - [1;34m   3.55 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=512,ties=0):               4033 runs -  2112.59 us/run -     8320 kB/run - [1;34m   3.76 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=512,ties=0):               2049 runs -  4237.01 us/run -    16378 kB/run - [1;34m   3.69 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=512,ties=0):               670 runs - 13493.86 us/run -    50128 kB/run - [1;34m   3.54 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=512,ties=0):               16384 runs -    88.44 us/run -      512 kB/run - [1;34m   5.52 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=512,ties=0):              16384 runs -    93.05 us/run -      768 kB/run - [1;34m   7.87 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=512,ties=0):              16384 runs -   111.38 us/run -     1280 kB/run - [1;34m  10.96 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=512,ties=0):               8192 runs -   152.64 us/run -     2304 kB/run - [1;34m  14.40 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=512,ties=0):               7711 runs -   963.90 us/run -     4352 kB/run - [1;34m   4.31 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=512,ties=0):              3972 runs -  2033.48 us/run -     8448 kB/run - [1;34m   3.96 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=512,ties=0):              2017 runs -  3866.43 us/run -    16640 kB/run - [1;34m   4.10 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=512,ties=0):              1025 runs -  7601.08 us/run -    32756 kB/run - [1;34m   4.11 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=512,ties=0):                      335 runs - 23618.51 us/run -   100256 kB/run - [1;34m   4.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=512,ties=0):                8192 runs -   153.77 us/run -     1024 kB/run - [1;34m   6.35 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=512,ties=0):               8192 runs -   169.73 us/run -     1536 kB/run - [1;34m   8.63 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=512,ties=0):               8192 runs -   206.91 us/run -     2560 kB/run - [1;34m  11.80 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=512,ties=0):               7282 runs -   279.59 us/run -     4608 kB/run - [1;34m  15.72 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=512,ties=0):               3856 runs -  1876.39 us/run -     8704 kB/run - [1;34m   4.42 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=512,ties=0):              1986 runs -  3867.79 us/run -    16896 kB/run - [1;34m   4.17 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=512,ties=0):              1009 runs -  7305.84 us/run -    33280 kB/run - [1;34m   4.34 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=512,ties=0):               513 runs - 14099.33 us/run -    65512 kB/run - [1;34m   4.43 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=512,ties=0):                      168 runs - 47352.85 us/run -   200512 kB/run - [1;34m   4.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=512,ties=0):                8192 runs -   323.82 us/run -     2048 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=512,ties=0):               8192 runs -   360.07 us/run -     3072 kB/run - [1;34m   8.14 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=512,ties=0):               6554 runs -   422.31 us/run -     5120 kB/run - [1;34m  11.56 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=512,ties=0):               3641 runs -   569.67 us/run -     9216 kB/run - [1;34m  15.43 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=512,ties=0):               1928 runs -  3589.23 us/run -    17408 kB/run - [1;34m   4.63 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=512,ties=0):               993 runs -  7566.54 us/run -    33792 kB/run - [1;34m   4.26 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=512,ties=0):               505 runs - 14598.61 us/run -    66560 kB/run - [1;34m   4.35 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=512,ties=0):               257 runs - 28111.46 us/run -   131024 kB/run - [1;34m   4.44 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=512,ties=0):                       84 runs - 91591.63 us/run -   401024 kB/run - [1;34m   4.18 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=512,ties=0):               8192 runs -   624.25 us/run -     4096 kB/run - [1;34m   6.26 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=512,ties=0):              5462 runs -   679.50 us/run -     6144 kB/run - [1;34m   8.62 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=512,ties=0):              3277 runs -   801.91 us/run -    10240 kB/run - [1;34m  12.18 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=512,ties=0):              1821 runs -  1088.82 us/run -    18432 kB/run - [1;34m  16.14 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=512,ties=0):               964 runs -  7110.13 us/run -    34816 kB/run - [1;34m   4.67 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=512,ties=0):                      497 runs - 14865.09 us/run -    67584 kB/run - [1;34m   4.34 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=512,ties=0):                      253 runs - 29204.00 us/run -   133120 kB/run - [1;34m   4.35 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=512,ties=0):                      129 runs - 56223.90 us/run -   262048 kB/run - [1;34m   4.44 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=512,ties=0):                      42 runs - 180252.29 us/run -   802048 kB/run - [1;34m   4.24 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=512,ties=0):               4097 runs -  1208.32 us/run -     8192 kB/run - [1;34m   6.47 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=512,ties=0):              2731 runs -  1314.38 us/run -    12288 kB/run - [1;34m   8.92 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=512,ties=0):              1639 runs -  1565.86 us/run -    20480 kB/run - [1;34m  12.47 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=512,ties=0):               911 runs -  2145.29 us/run -    36864 kB/run - [1;34m  16.39 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=512,ties=0):               482 runs - 13954.05 us/run -    69632 kB/run - [1;34m   4.76 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=512,ties=0):                      249 runs - 29748.50 us/run -   135168 kB/run - [1;34m   4.33 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=512,ties=0):                      127 runs - 58412.20 us/run -   266240 kB/run - [1;34m   4.35 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=512,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                      65 runs - 112312.71 us/run -   524096 kB/run - [1;34m   4.45 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=512,ties=0):                      21 runs - 360324.71 us/run -  1604096 kB/run - [1;34m   4.25 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=512,ties=0):               2049 runs -  2374.47 us/run -    16384 kB/run - [1;34m   6.58 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=512,ties=0):              1366 runs -  2579.31 us/run -    24576 kB/run - [1;34m   9.09 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=512,ties=0):               820 runs -  3088.16 us/run -    40960 kB/run - [1;34m  12.65 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=512,ties=0):               456 runs -  4244.52 us/run -    73728 kB/run - [1;34m  16.57 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=512,ties=0):               241 runs - 27904.82 us/run -   139264 kB/run - [1;34m   4.76 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=512,ties=0):                      125 runs - 59451.84 us/run -   270336 kB/run - [1;34m   4.34 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=512,ties=0):                       64 runs - 116832.25 us/run -   532480 kB/run - [1;34m   4.35 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=512,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                      33 runs - 223823.73 us/run -  1048192 kB/run - [1;34m   4.47 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=512,ties=0):                      11 runs - 720587.09 us/run -  3208192 kB/run - [1;34m   4.25 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=1024,ties=0):               49152 runs -    22.79 us/run -        8 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=1024,ties=0):               49152 runs -    23.60 us/run -       12 kB/run - [1;34m   0.48 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=1024,ties=0):               40960 runs -    26.06 us/run -       20 kB/run - [1;34m   0.73 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=1024,ties=0):                8192 runs -   137.82 us/run -       36 kB/run - [1;34m   0.25 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=1024,ties=0):               8192 runs -   139.92 us/run -       68 kB/run - [1;34m   0.46 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=1024,ties=0):               8192 runs -   140.41 us/run -      132 kB/run - [1;34m   0.90 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=1024,ties=0):               8192 runs -   137.65 us/run -      257 kB/run - [1;34m   1.79 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=1024,ties=0):              8192 runs -   173.38 us/run -      785 kB/run - [1;34m   4.32 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=1024,ties=0):               49152 runs -    23.34 us/run -       16 kB/run - [1;34m   0.65 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=1024,ties=0):               49152 runs -    24.12 us/run -       24 kB/run - [1;34m   0.95 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=1024,ties=0):               40960 runs -    26.52 us/run -       40 kB/run - [1;34m   1.44 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=1024,ties=0):                8192 runs -   137.36 us/run -       72 kB/run - [1;34m   0.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=1024,ties=0):               8192 runs -   242.05 us/run -      136 kB/run - [1;34m   0.54 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=1024,ties=0):               8192 runs -   431.21 us/run -      264 kB/run - [1;34m   0.58 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=1024,ties=0):               8192 runs -   851.16 us/run -      515 kB/run - [1;34m   0.58 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=1024,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+             8192 runs -  3126.31 us/run -     1570 kB/run - [1;34m   0.48 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=1024,ties=0):               49152 runs -    23.80 us/run -       32 kB/run - [1;34m   1.28 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=1024,ties=0):               49152 runs -    24.17 us/run -       48 kB/run - [1;34m   1.89 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=1024,ties=0):               40960 runs -    26.70 us/run -       80 kB/run - [1;34m   2.86 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=1024,ties=0):                8192 runs -   138.74 us/run -      144 kB/run - [1;34m   0.99 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=1024,ties=0):               8192 runs -   242.83 us/run -      272 kB/run - [1;34m   1.07 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=1024,ties=0):               8192 runs -   449.35 us/run -      528 kB/run - [1;34m   1.12 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=1024,ties=0):               8192 runs -  1019.23 us/run -     1031 kB/run - [1;34m   0.97 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=1024,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+             8192 runs -  3350.28 us/run -     3141 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=1024,ties=0):               49152 runs -    23.92 us/run -       64 kB/run - [1;34m   2.55 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=1024,ties=0):               49152 runs -    24.34 us/run -       96 kB/run - [1;34m   3.76 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=1024,ties=0):               40960 runs -    27.05 us/run -      160 kB/run - [1;34m   5.64 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=1024,ties=0):                8192 runs -   139.47 us/run -      288 kB/run - [1;34m   1.97 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=1024,ties=0):               8192 runs -   261.34 us/run -      544 kB/run - [1;34m   1.99 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=1024,ties=0):               8192 runs -   544.18 us/run -     1056 kB/run - [1;34m   1.85 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=1024,ties=0):               8192 runs -  1157.25 us/run -     2063 kB/run - [1;34m   1.70 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=1024,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+             5342 runs -  3559.15 us/run -     6282 kB/run - [1;34m   1.68 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=1024,ties=0):              49152 runs -    24.28 us/run -      128 kB/run - [1;34m   5.03 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=1024,ties=0):              40960 runs -    25.29 us/run -      192 kB/run - [1;34m   7.24 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=1024,ties=0):              40960 runs -    28.87 us/run -      320 kB/run - [1;34m  10.57 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=1024,ties=0):               8192 runs -   164.04 us/run -      576 kB/run - [1;34m   3.35 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=1024,ties=0):              8192 runs -   338.40 us/run -     1088 kB/run - [1;34m   3.07 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=1024,ties=0):              8192 runs -   668.65 us/run -     2112 kB/run - [1;34m   3.01 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=1024,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+             8132 runs -  1362.56 us/run -     4126 kB/run - [1;34m   2.89 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=1024,ties=0):                     2671 runs -  4047.46 us/run -    12564 kB/run - [1;34m   2.96 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=1024,ties=0):              24576 runs -    41.30 us/run -      256 kB/run - [1;34m   5.91 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=1024,ties=0):              24576 runs -    44.61 us/run -      384 kB/run - [1;34m   8.21 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=1024,ties=0):              24576 runs -    52.51 us/run -      640 kB/run - [1;34m  11.62 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=1024,ties=0):               8192 runs -   363.22 us/run -     1152 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=1024,ties=0):              8192 runs -   688.57 us/run -     2176 kB/run - [1;34m   3.01 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=1024,ties=0):              7944 runs -  1277.63 us/run -     4224 kB/run - [1;34m   3.15 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=1024,ties=0):              4066 runs -  2485.01 us/run -     8253 kB/run - [1;34m   3.17 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=1024,ties=0):                     1336 runs -  8215.72 us/run -    25128 kB/run - [1;34m   2.92 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=1024,ties=0):              24576 runs -    58.49 us/run -      512 kB/run - [1;34m   8.35 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=1024,ties=0):              16384 runs -    64.67 us/run -      768 kB/run - [1;34m  11.33 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=1024,ties=0):              16384 runs -    85.13 us/run -     1280 kB/run - [1;34m  14.34 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=1024,ties=0):               8192 runs -   573.60 us/run -     2304 kB/run - [1;34m   3.83 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=1024,ties=0):              7711 runs -  1129.49 us/run -     4352 kB/run - [1;34m   3.67 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=1024,ties=0):              3972 runs -  2113.81 us/run -     8448 kB/run - [1;34m   3.81 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=1024,ties=0):              2033 runs -  4241.07 us/run -    16506 kB/run - [1;34m   3.71 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=1024,ties=0):                      668 runs - 13497.45 us/run -    50256 kB/run - [1;34m   3.55 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=1024,ties=0):             16384 runs -    93.88 us/run -     1024 kB/run - [1;34m  10.40 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=1024,ties=0):             16384 runs -   111.20 us/run -     1536 kB/run - [1;34m  13.17 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=1024,ties=0):              8192 runs -   153.41 us/run -     2560 kB/run - [1;34m  15.91 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=1024,ties=0):              7282 runs -   965.30 us/run -     4608 kB/run - [1;34m   4.55 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=1024,ties=0):                     3856 runs -  2039.87 us/run -     8704 kB/run - [1;34m   4.07 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=1024,ties=0):                     1986 runs -  3865.41 us/run -    16896 kB/run - [1;34m   4.17 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=1024,ties=0):                     1017 runs -  7592.42 us/run -    33012 kB/run - [1;34m   4.15 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=1024,ties=0):                     334 runs - 23625.23 us/run -   100512 kB/run - [1;34m   4.06 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=1024,ties=0):              8192 runs -   171.40 us/run -     2048 kB/run - [1;34m  11.40 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=1024,ties=0):              8192 runs -   209.75 us/run -     3072 kB/run - [1;34m  13.97 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=1024,ties=0):              6554 runs -   282.67 us/run -     5120 kB/run - [1;34m  17.27 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=1024,ties=0):              3641 runs -  1884.70 us/run -     9216 kB/run - [1;34m   4.66 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=1024,ties=0):                     1928 runs -  3883.00 us/run -    17408 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=1024,ties=0):                      993 runs -  7308.34 us/run -    33792 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=1024,ties=0):                      509 runs - 14091.95 us/run -    66024 kB/run - [1;34m   4.47 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=1024,ties=0):                     167 runs - 47347.65 us/run -   201024 kB/run - [1;34m   4.05 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=1024,ties=0):              8192 runs -   370.37 us/run -     4096 kB/run - [1;34m  10.55 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=1024,ties=0):              5462 runs -   430.39 us/run -     6144 kB/run - [1;34m  13.61 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=1024,ties=0):              3277 runs -   576.80 us/run -    10240 kB/run - [1;34m  16.93 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=1024,ties=0):              1821 runs -  3595.63 us/run -    18432 kB/run - [1;34m   4.89 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=1024,ties=0):                      964 runs -  7576.30 us/run -    34816 kB/run - [1;34m   4.38 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=1024,ties=0):                      497 runs - 14606.98 us/run -    67584 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=1024,ties=0):                      255 runs - 28095.62 us/run -   132048 kB/run - [1;34m   4.48 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=1024,ties=0):                      84 runs - 91603.80 us/run -   402048 kB/run - [1;34m   4.19 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=1024,ties=0):                     4097 runs -   695.54 us/run -     8192 kB/run - [1;34m  11.23 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=1024,ties=0):                     2731 runs -   816.43 us/run -    12288 kB/run - [1;34m  14.35 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=1024,ties=0):                     1639 runs -  1102.80 us/run -    20480 kB/run - [1;34m  17.71 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=1024,ties=0):                      911 runs -  7141.11 us/run -    36864 kB/run - [1;34m   4.92 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=1024,ties=0):                     482 runs - 14872.83 us/run -    69632 kB/run - [1;34m   4.46 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=1024,ties=0):                     249 runs - 29220.38 us/run -   135168 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=1024,ties=0):                     128 runs - 56201.91 us/run -   264096 kB/run - [1;34m   4.48 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=1024,ties=0):                     42 runs - 180311.57 us/run -   804096 kB/run - [1;34m   4.25 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=1024,ties=0):                     2049 runs -  1344.46 us/run -    16384 kB/run - [1;34m  11.62 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=1024,ties=0):                     1366 runs -  1594.86 us/run -    24576 kB/run - [1;34m  14.70 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=1024,ties=0):                      820 runs -  2172.94 us/run -    40960 kB/run - [1;34m  17.98 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=1024,ties=0):                      456 runs - 13986.16 us/run -    73728 kB/run - [1;34m   5.03 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=1024,ties=0):                     241 runs - 29764.80 us/run -   139264 kB/run - [1;34m   4.46 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=1024,ties=0):                     125 runs - 58441.42 us/run -   270336 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=1024,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                     64 runs - 112383.55 us/run -   528192 kB/run - [1;34m   4.48 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=1024,ties=0):                     21 runs - 360293.14 us/run -  1608192 kB/run - [1;34m   4.26 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=1024,ties=0):                     1025 runs -  2638.44 us/run -    32768 kB/run - [1;34m  11.84 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=1024,ties=0):                      683 runs -  3144.59 us/run -    49152 kB/run - [1;34m  14.91 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=1024,ties=0):                      410 runs -  4301.16 us/run -    81920 kB/run - [1;34m  18.16 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=1024,ties=0):                      228 runs - 27955.25 us/run -   147456 kB/run - [1;34m   5.03 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=1024,ties=0):                     121 runs - 59501.65 us/run -   278528 kB/run - [1;34m   4.46 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=1024,ties=0):                      63 runs - 116837.95 us/run -   540672 kB/run - [1;34m   4.41 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=1024,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                     32 runs - 223714.75 us/run -  1056384 kB/run - [1;34m   4.50 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=1024,ties=0):                     11 runs - 720768.64 us/run -  3216384 kB/run - [1;34m   4.26 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=2048,ties=0):               49152 runs -    23.62 us/run -       16 kB/run - [1;34m   0.65 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=2048,ties=0):               40960 runs -    26.09 us/run -       24 kB/run - [1;34m   0.88 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=2048,ties=0):                8192 runs -   139.03 us/run -       40 kB/run - [1;34m   0.27 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=2048,ties=0):               8192 runs -   139.96 us/run -       72 kB/run - [1;34m   0.49 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=2048,ties=0):               8192 runs -   139.98 us/run -      136 kB/run - [1;34m   0.93 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=2048,ties=0):               8192 runs -   140.99 us/run -      261 kB/run - [1;34m   1.77 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=2048,ties=0):              8192 runs -   180.04 us/run -      789 kB/run - [1;34m   4.18 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=2048,ties=0):               49152 runs -    24.12 us/run -       32 kB/run - [1;34m   1.27 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=2048,ties=0):               40960 runs -    26.55 us/run -       48 kB/run - [1;34m   1.72 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=2048,ties=0):                8192 runs -   137.19 us/run -       80 kB/run - [1;34m   0.56 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=2048,ties=0):               8192 runs -   241.57 us/run -      144 kB/run - [1;34m   0.57 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=2048,ties=0):               8192 runs -   432.37 us/run -      272 kB/run - [1;34m   0.60 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=2048,ties=0):               8192 runs -   851.21 us/run -      523 kB/run - [1;34m   0.59 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=2048,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+             8192 runs -  3126.24 us/run -     1578 kB/run - [1;34m   0.48 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=2048,ties=0):               49152 runs -    24.20 us/run -       64 kB/run - [1;34m   2.52 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=2048,ties=0):               40960 runs -    26.76 us/run -       96 kB/run - [1;34m   3.42 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=2048,ties=0):                8192 runs -   138.49 us/run -      160 kB/run - [1;34m   1.10 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=2048,ties=0):               8192 runs -   243.09 us/run -      288 kB/run - [1;34m   1.13 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=2048,ties=0):               8192 runs -   448.89 us/run -      544 kB/run - [1;34m   1.16 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=2048,ties=0):               8192 runs -  1019.24 us/run -     1047 kB/run - [1;34m   0.98 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=2048,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+             8192 runs -  3351.02 us/run -     3157 kB/run - [1;34m   0.90 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=2048,ties=0):               40960 runs -    24.50 us/run -      128 kB/run - [1;34m   4.98 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=2048,ties=0):               40960 runs -    27.20 us/run -      192 kB/run - [1;34m   6.73 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=2048,ties=0):                8192 runs -   139.76 us/run -      320 kB/run - [1;34m   2.18 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=2048,ties=0):               8192 runs -   261.85 us/run -      576 kB/run - [1;34m   2.10 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=2048,ties=0):               8192 runs -   544.67 us/run -     1088 kB/run - [1;34m   1.90 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=2048,ties=0):               8192 runs -  1157.50 us/run -     2095 kB/run - [1;34m   1.73 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=2048,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+             5315 runs -  3560.23 us/run -     6314 kB/run - [1;34m   1.69 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=2048,ties=0):              40960 runs -    25.58 us/run -      256 kB/run - [1;34m   9.54 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=2048,ties=0):              40960 runs -    29.16 us/run -      384 kB/run - [1;34m  12.56 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=2048,ties=0):               8192 runs -   164.07 us/run -      640 kB/run - [1;34m   3.72 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=2048,ties=0):              8192 runs -   338.86 us/run -     1152 kB/run - [1;34m   3.24 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=2048,ties=0):              8192 runs -   668.93 us/run -     2176 kB/run - [1;34m   3.10 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=2048,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+             8008 runs -  1362.24 us/run -     4190 kB/run - [1;34m   2.93 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=2048,ties=0):                     2658 runs -  4051.74 us/run -    12628 kB/run - [1;34m   2.97 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=2048,ties=0):              24576 runs -    45.10 us/run -      512 kB/run - [1;34m  10.83 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=2048,ties=0):              24576 runs -    52.85 us/run -      768 kB/run - [1;34m  13.86 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=2048,ties=0):               8192 runs -   363.61 us/run -     1280 kB/run - [1;34m   3.36 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=2048,ties=0):              8192 runs -   687.92 us/run -     2304 kB/run - [1;34m   3.19 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=2048,ties=0):              7711 runs -  1278.32 us/run -     4352 kB/run - [1;34m   3.25 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=2048,ties=0):              4004 runs -  2485.38 us/run -     8381 kB/run - [1;34m   3.22 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=2048,ties=0):                     1329 runs -  8214.95 us/run -    25256 kB/run - [1;34m   2.93 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=2048,ties=0):              16384 runs -    65.60 us/run -     1024 kB/run - [1;34m  14.89 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=2048,ties=0):              16384 runs -    85.84 us/run -     1536 kB/run - [1;34m  17.06 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=2048,ties=0):               8192 runs -   574.48 us/run -     2560 kB/run - [1;34m   4.25 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=2048,ties=0):              7282 runs -  1131.29 us/run -     4608 kB/run - [1;34m   3.88 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=2048,ties=0):              3856 runs -  2113.88 us/run -     8704 kB/run - [1;34m   3.93 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=2048,ties=0):              2002 runs -  4241.10 us/run -    16762 kB/run - [1;34m   3.77 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=2048,ties=0):                      665 runs - 13498.33 us/run -    50512 kB/run - [1;34m   3.57 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=2048,ties=0):             16384 runs -   113.95 us/run -     2048 kB/run - [1;34m  17.14 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=2048,ties=0):              8192 runs -   156.18 us/run -     3072 kB/run - [1;34m  18.76 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=2048,ties=0):              6554 runs -   968.92 us/run -     5120 kB/run - [1;34m   5.04 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=2048,ties=0):                     3641 runs -  2041.80 us/run -     9216 kB/run - [1;34m   4.30 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=2048,ties=0):                     1928 runs -  3872.03 us/run -    17408 kB/run - [1;34m   4.29 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=2048,ties=0):                     1001 runs -  7599.85 us/run -    33524 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=2048,ties=0):                     333 runs - 23619.30 us/run -   101024 kB/run - [1;34m   4.08 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=2048,ties=0):              8192 runs -   218.35 us/run -     4096 kB/run - [1;34m  17.89 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=2048,ties=0):              5462 runs -   290.70 us/run -     6144 kB/run - [1;34m  20.16 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=2048,ties=0):              3277 runs -  1891.91 us/run -    10240 kB/run - [1;34m   5.16 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=2048,ties=0):                     1821 runs -  3890.28 us/run -    18432 kB/run - [1;34m   4.52 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=2048,ties=0):                      964 runs -  7320.22 us/run -    34816 kB/run - [1;34m   4.54 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=2048,ties=0):                      501 runs - 14095.92 us/run -    67048 kB/run - [1;34m   4.54 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=2048,ties=0):                     167 runs - 47359.59 us/run -   202048 kB/run - [1;34m   4.07 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=2048,ties=0):              4097 runs -   444.59 us/run -     8192 kB/run - [1;34m  17.57 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=2048,ties=0):              2731 runs -   589.96 us/run -    12288 kB/run - [1;34m  19.86 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=2048,ties=0):              1639 runs -  3615.27 us/run -    20480 kB/run - [1;34m   5.40 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=2048,ties=0):                      911 runs -  7595.95 us/run -    36864 kB/run - [1;34m   4.63 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=2048,ties=0):                      482 runs - 14625.65 us/run -    69632 kB/run - [1;34m   4.54 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=2048,ties=0):                      251 runs - 28124.11 us/run -   134096 kB/run - [1;34m   4.55 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=2048,ties=0):                      84 runs - 91590.02 us/run -   404096 kB/run - [1;34m   4.21 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=2048,ties=0):                     2049 runs -   846.19 us/run -    16384 kB/run - [1;34m  18.47 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=2048,ties=0):                     1366 runs -  1131.49 us/run -    24576 kB/run - [1;34m  20.71 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=2048,ties=0):                      820 runs -  7162.23 us/run -    40960 kB/run - [1;34m   5.45 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=2048,ties=0):                     456 runs - 14909.35 us/run -    73728 kB/run - [1;34m   4.72 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=2048,ties=0):                     241 runs - 29254.46 us/run -   139264 kB/run - [1;34m   4.54 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=2048,ties=0):                     126 runs - 56222.87 us/run -   268192 kB/run - [1;34m   4.55 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=2048,ties=0):                     42 runs - 180312.50 us/run -   808192 kB/run - [1;34m   4.27 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=2048,ties=0):                     1025 runs -  1652.85 us/run -    32768 kB/run - [1;34m  18.91 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=2048,ties=0):                      683 runs -  2230.57 us/run -    49152 kB/run - [1;34m  21.01 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=2048,ties=0):                      410 runs - 14039.59 us/run -    81920 kB/run - [1;34m   5.56 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=2048,ties=0):                     228 runs - 29819.85 us/run -   147456 kB/run - [1;34m   4.72 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=2048,ties=0):                     121 runs - 58513.10 us/run -   278528 kB/run - [1;34m   4.54 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=2048,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                     63 runs - 112259.33 us/run -   536384 kB/run - [1;34m   4.56 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=2048,ties=0):                     21 runs - 360433.62 us/run -  1616384 kB/run - [1;34m   4.28 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=2048,ties=0):                      513 runs -  3260.10 us/run -    65536 kB/run - [1;34m  19.17 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=2048,ties=0):                      342 runs -  4414.24 us/run -    98304 kB/run - [1;34m  21.24 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=2048,ties=0):                      205 runs - 28072.49 us/run -   163840 kB/run - [1;34m   5.57 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=2048,ties=0):                     114 runs - 59653.61 us/run -   294912 kB/run - [1;34m   4.71 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=2048,ties=0):                      61 runs - 117000.51 us/run -   557056 kB/run - [1;34m   4.54 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=2048,ties=0): ggml_cuda_graph_set_enabled: disabling CUDA graphs due to GPU architecture
+                     32 runs - 223997.25 us/run -  1072768 kB/run - [1;34m   4.57 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=2048,ties=0):                     11 runs - 720838.64 us/run -  3232768 kB/run - [1;34m   4.28 GB/s[0m
+  Backend CUDA0: [1;32mOK[0m
+Backend 2/2: CPU
+  Skipping CPU backend
+2/2 backends passed
+[1;32mOK[0m

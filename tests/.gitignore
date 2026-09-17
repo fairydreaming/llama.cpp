@@ -6,3 +6,5 @@
 ggml-common.h
 **/*.swp
 !peg-parser
+!top-k/
+!top-k/**

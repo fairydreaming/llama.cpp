@@ -11342,6 +11342,21 @@ static std::vector<std::unique_ptr<test_case>> make_test_cases_perf() {
     test_cases.emplace_back(new test_argsort(GGML_TYPE_F32, {200000, 1,  1, 1}));
     test_cases.emplace_back(new test_argsort(GGML_TYPE_F32, {200000, 16, 1, 1}));
 
+    for (auto k : {1, 3, 16, 20, 40, 512, 1024, 2048}) {
+        for (auto nrows : {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096 }) {
+            for (auto cols : {128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65000, 200000}) {
+                if (k > cols) {
+                    continue;
+                }
+                char * top_k_impl = getenv("GGML_CUDA_TOP_K_IMPL");
+                if (top_k_impl != NULL && strcmp(top_k_impl, "bitonic") == 0 && cols > 1024) {
+                    continue;
+                }
+                test_cases.emplace_back(new test_top_k(GGML_TYPE_F32, {cols, nrows, 1, 1}, k));
+            }
+        }
+    }
+/*
     test_cases.emplace_back(new test_top_k(GGML_TYPE_F32, {2, 1, 1, 1}, 1));
     // widths around the tiling threshold
     for (auto cols : {4096, 8192, 12288, 16384, 24576, 32768, 65536, 131072}) {
@@ -11380,7 +11395,7 @@ static std::vector<std::unique_ptr<test_case>> make_test_cases_perf() {
             }
         }
     }
-
+*/
     for (auto nrows : {1, 4, 8, 16}) {
         for (auto cols : {128, 1024, 4096, 8192, 16384, 32768, 65536, 131072, 200000, 2000000}) {
             test_cases.emplace_back(new test_cumsum(GGML_TYPE_F32, {cols, nrows, 1, 1}));

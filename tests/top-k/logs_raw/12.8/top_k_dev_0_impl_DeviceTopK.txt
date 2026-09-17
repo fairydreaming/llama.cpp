@@ -1,0 +1,1776 @@
+ggml_cuda_init: found 1 CUDA devices (Total VRAM: 32494 MiB):
+  Device 0: Tesla V100-PCIE-32GB, compute capability 7.0, VMM: yes, VRAM: 32494 MiB
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+Testing 2 devices
+
+Backend 1/2: CUDA0
+  Device description: Tesla V100-PCIE-32GB
+  Device memory: 32494 MB (32182 MB free)
+
+  TOP_K(type=f32,ne=[128,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  52224 runs -    19.46 us/run -        0 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  55296 runs -    18.23 us/run -        1 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  55296 runs -    18.18 us/run -        2 kB/run - [1;34m   0.11 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 53248 runs -    18.90 us/run -        4 kB/run - [1;34m   0.20 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 53248 runs -    18.99 us/run -        8 kB/run - [1;34m   0.40 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 54272 runs -    18.63 us/run -       16 kB/run - [1;34m   0.82 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 54272 runs -    18.55 us/run -       32 kB/run - [1;34m   1.65 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                54272 runs -    18.54 us/run -       64 kB/run - [1;34m   3.29 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                49152 runs -    20.36 us/run -      128 kB/run - [1;34m   5.99 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                49152 runs -    20.64 us/run -      253 kB/run - [1;34m  11.73 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               44032 runs -    22.96 us/run -      781 kB/run - [1;34m  32.44 GB/s[0m
+  TOP_K(type=f32,ne=[128,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  24576 runs -    41.34 us/run -        1 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  24576 runs -    41.12 us/run -        2 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  24576 runs -    41.11 us/run -        4 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 23552 runs -    43.15 us/run -        8 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 25600 runs -    40.37 us/run -       16 kB/run - [1;34m   0.38 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 25600 runs -    40.13 us/run -       32 kB/run - [1;34m   0.76 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    41.25 us/run -       64 kB/run - [1;34m   1.48 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    41.44 us/run -      128 kB/run - [1;34m   2.95 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                21504 runs -    46.83 us/run -      256 kB/run - [1;34m   5.21 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                22528 runs -    44.41 us/run -      507 kB/run - [1;34m  10.90 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               20480 runs -    49.25 us/run -     1562 kB/run - [1;34m  30.26 GB/s[0m
+  TOP_K(type=f32,ne=[128,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  11264 runs -    90.83 us/run -        2 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  11264 runs -    91.67 us/run -        4 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  10240 runs -    99.96 us/run -        8 kB/run - [1;34m   0.08 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 12288 runs -    87.10 us/run -       16 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 12288 runs -    87.22 us/run -       32 kB/run - [1;34m   0.35 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 11264 runs -    92.71 us/run -       64 kB/run - [1;34m   0.66 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 11264 runs -    92.77 us/run -      128 kB/run - [1;34m   1.32 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                10240 runs -   101.13 us/run -      256 kB/run - [1;34m   2.41 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                11264 runs -    93.47 us/run -      512 kB/run - [1;34m   5.22 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                11264 runs -    94.81 us/run -     1015 kB/run - [1;34m  10.22 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                9216 runs -   109.39 us/run -     3125 kB/run - [1;34m  27.24 GB/s[0m
+  TOP_K(type=f32,ne=[128,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                   5120 runs -   225.45 us/run -        4 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                   5120 runs -   218.48 us/run -        8 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                   5120 runs -   208.26 us/run -       16 kB/run - [1;34m   0.07 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  4096 runs -   246.46 us/run -       32 kB/run - [1;34m   0.12 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  4096 runs -   246.67 us/run -       64 kB/run - [1;34m   0.25 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  4096 runs -   245.26 us/run -      128 kB/run - [1;34m   0.50 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  5120 runs -   201.16 us/run -      256 kB/run - [1;34m   1.21 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 5120 runs -   204.04 us/run -      512 kB/run - [1;34m   2.39 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 5120 runs -   226.72 us/run -     1024 kB/run - [1;34m   4.31 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 4096 runs -   260.27 us/run -     2031 kB/run - [1;34m   7.44 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   365.63 us/run -     6250 kB/run - [1;34m  16.30 GB/s[0m
+  TOP_K(type=f32,ne=[128,16,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -   568.42 us/run -        8 kB/run - [1;34m   0.01 GB/s[0m
+  TOP_K(type=f32,ne=[256,16,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -   621.96 us/run -       16 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -   682.77 us/run -       32 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   827.59 us/run -       64 kB/run - [1;34m   0.07 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   573.28 us/run -      128 kB/run - [1;34m   0.21 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   568.12 us/run -      256 kB/run - [1;34m   0.43 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   618.03 us/run -      512 kB/run - [1;34m   0.79 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -   821.03 us/run -     1024 kB/run - [1;34m   1.19 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -   594.16 us/run -     2048 kB/run - [1;34m   3.29 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -   598.83 us/run -     4062 kB/run - [1;34m   6.47 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=1,ties=0):                2048 runs -   696.29 us/run -    12500 kB/run - [1;34m  17.12 GB/s[0m
+  TOP_K(type=f32,ne=[128,32,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  1024 runs -  1080.25 us/run -       16 kB/run - [1;34m   0.01 GB/s[0m
+  TOP_K(type=f32,ne=[256,32,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -  1137.63 us/run -       32 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -  1147.96 us/run -       64 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1154.02 us/run -      128 kB/run - [1;34m   0.11 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1157.84 us/run -      256 kB/run - [1;34m   0.21 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1154.96 us/run -      512 kB/run - [1;34m   0.42 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1240.57 us/run -     1024 kB/run - [1;34m   0.79 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1145.19 us/run -     2048 kB/run - [1;34m   1.71 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1199.33 us/run -     4096 kB/run - [1;34m   3.26 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1223.84 us/run -     8125 kB/run - [1;34m   6.33 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=1,ties=0):                2048 runs -  1301.75 us/run -    25000 kB/run - [1;34m  18.32 GB/s[0m
+  TOP_K(type=f32,ne=[128,64,1,1],k=1,ties=0):                   1024 runs -  1270.35 us/run -       32 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,64,1,1],k=1,ties=0):                   1024 runs -  1263.12 us/run -       64 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=1,ties=0):                   1024 runs -  1270.54 us/run -      128 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=1,ties=0):                  1024 runs -  1738.86 us/run -      256 kB/run - [1;34m   0.14 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=1,ties=0):                  1024 runs -  1288.78 us/run -      512 kB/run - [1;34m   0.38 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=1,ties=0):                  1024 runs -  1284.64 us/run -     1024 kB/run - [1;34m   0.76 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=1,ties=0):                  1024 runs -  1271.59 us/run -     2048 kB/run - [1;34m   1.54 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=1,ties=0):                 1024 runs -  1726.94 us/run -     4096 kB/run - [1;34m   2.26 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=1,ties=0):                 1024 runs -  1389.20 us/run -     8192 kB/run - [1;34m   5.62 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=1,ties=0):                 1024 runs -  1423.37 us/run -    16250 kB/run - [1;34m  10.89 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=1,ties=0):                 672 runs -  1589.41 us/run -    50000 kB/run - [1;34m  30.00 GB/s[0m
+  TOP_K(type=f32,ne=[128,128,1,1],k=1,ties=0):                  1024 runs -  2539.98 us/run -       64 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,128,1,1],k=1,ties=0):                  1024 runs -  2523.45 us/run -      128 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=1,ties=0):                  1024 runs -  2540.68 us/run -      256 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=1,ties=0):                 1024 runs -  2578.48 us/run -      512 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=1,ties=0):                 1024 runs -  2576.92 us/run -     1024 kB/run - [1;34m   0.38 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=1,ties=0):                 1024 runs -  2567.81 us/run -     2048 kB/run - [1;34m   0.76 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=1,ties=0):                 1024 runs -  2543.17 us/run -     4096 kB/run - [1;34m   1.54 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=1,ties=0):                1024 runs -  2584.02 us/run -     8192 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=1,ties=0):                1024 runs -  2775.71 us/run -    16384 kB/run - [1;34m   5.63 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=1,ties=0):                1024 runs -  2848.34 us/run -    32500 kB/run - [1;34m  10.88 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=1,ties=0):                336 runs -  3178.46 us/run -   100000 kB/run - [1;34m  30.00 GB/s[0m
+  TOP_K(type=f32,ne=[128,256,1,1],k=1,ties=0):                  1024 runs -  5078.97 us/run -      129 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,256,1,1],k=1,ties=0):                  1024 runs -  5047.06 us/run -      257 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=1,ties=0):                  1024 runs -  5087.25 us/run -      513 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=1,ties=0):                 1024 runs -  5152.43 us/run -     1025 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=1,ties=0):                 1024 runs -  5159.71 us/run -     2049 kB/run - [1;34m   0.38 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=1,ties=0):                 1024 runs -  5139.56 us/run -     4097 kB/run - [1;34m   0.76 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=1,ties=0):                 1024 runs -  5153.33 us/run -     8193 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=1,ties=0):                1024 runs -  5173.09 us/run -    16385 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=1,ties=0):                1024 runs -  5553.28 us/run -    32769 kB/run - [1;34m   5.63 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=1,ties=0):                 517 runs -  5693.08 us/run -    65001 kB/run - [1;34m  10.89 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=1,ties=0):                168 runs -  6355.71 us/run -   200001 kB/run - [1;34m  30.01 GB/s[0m
+  TOP_K(type=f32,ne=[128,512,1,1],k=1,ties=0):                  1024 runs - 10161.51 us/run -      258 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,512,1,1],k=1,ties=0):                  1024 runs - 10100.64 us/run -      514 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=1,ties=0):                  1024 runs - 10164.21 us/run -     1026 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=1,ties=0):                 1024 runs - 10306.01 us/run -     2050 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=1,ties=0):                 1024 runs - 10319.68 us/run -     4098 kB/run - [1;34m   0.38 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=1,ties=0):                 1024 runs - 10392.47 us/run -     8194 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=1,ties=0):                 1024 runs - 10297.38 us/run -    16386 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=1,ties=0):                1024 runs - 10343.34 us/run -    32770 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=1,ties=0):                 512 runs - 11104.75 us/run -    65538 kB/run - [1;34m   5.63 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=1,ties=0):                 259 runs - 11382.94 us/run -   130002 kB/run - [1;34m  10.89 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=1,ties=0):                 84 runs - 12714.18 us/run -   400002 kB/run - [1;34m  30.00 GB/s[0m
+  TOP_K(type=f32,ne=[128,1024,1,1],k=1,ties=0):                 1024 runs - 20313.04 us/run -      516 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,1024,1,1],k=1,ties=0):                 1024 runs - 20191.97 us/run -     1028 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=1,ties=0):                 1024 runs - 20332.10 us/run -     2052 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=1,ties=0):                1024 runs - 20615.55 us/run -     4100 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=1,ties=0):                1024 runs - 20868.63 us/run -     8196 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=1,ties=0):                1024 runs - 20799.30 us/run -    16388 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=1,ties=0):                1024 runs - 20600.31 us/run -    32772 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=1,ties=0):                512 runs - 20684.89 us/run -    65540 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=1,ties=0):                256 runs - 22210.94 us/run -   131076 kB/run - [1;34m   5.63 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=1,ties=0):                130 runs - 22774.20 us/run -   260004 kB/run - [1;34m  10.89 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=1,ties=0):                42 runs - 25897.81 us/run -   800004 kB/run - [1;34m  29.46 GB/s[0m
+  TOP_K(type=f32,ne=[128,2048,1,1],k=1,ties=0):                 1024 runs - 40621.04 us/run -     1032 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,2048,1,1],k=1,ties=0):                 1024 runs - 40373.30 us/run -     2056 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=1,ties=0):                 1024 runs - 40669.58 us/run -     4104 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=1,ties=0):                1024 runs - 41587.79 us/run -     8200 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=1,ties=0):                1024 runs - 41714.49 us/run -    16392 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=1,ties=0):                1024 runs - 41597.57 us/run -    32776 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=1,ties=0):                 512 runs - 41196.59 us/run -    65544 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=1,ties=0):                256 runs - 41356.07 us/run -   131080 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=1,ties=0):                128 runs - 44412.77 us/run -   262152 kB/run - [1;34m   5.63 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=1,ties=0):                 65 runs - 45986.89 us/run -   520008 kB/run - [1;34m  10.78 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=1,ties=0):                21 runs - 50838.57 us/run -  1600008 kB/run - [1;34m  30.01 GB/s[0m
+  TOP_K(type=f32,ne=[128,4096,1,1],k=1,ties=0):                 1024 runs - 81262.01 us/run -     2064 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,4096,1,1],k=1,ties=0):                 1024 runs - 80761.78 us/run -     4112 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=1,ties=0):                 1024 runs - 82101.24 us/run -     8208 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=1,ties=0):                1024 runs - 83219.54 us/run -    16400 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=1,ties=0):                1024 runs - 83444.65 us/run -    32784 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=1,ties=0):                 512 runs - 83155.86 us/run -    65552 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=1,ties=0):                 256 runs - 82373.09 us/run -   131088 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=1,ties=0):                128 runs - 82712.87 us/run -   262160 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=1,ties=0):                 64 runs - 88819.56 us/run -   524304 kB/run - [1;34m   5.63 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=1,ties=0):                 33 runs - 91089.73 us/run -  1040016 kB/run - [1;34m  10.89 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=1,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               11 runs - 101646.64 us/run -  3200016 kB/run - [1;34m  30.02 GB/s[0m
+  TOP_K(type=f32,ne=[128,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  54272 runs -    18.48 us/run -        0 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  55296 runs -    18.22 us/run -        1 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  56320 runs -    17.95 us/run -        2 kB/run - [1;34m   0.11 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 55296 runs -    18.15 us/run -        4 kB/run - [1;34m   0.21 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 55296 runs -    18.33 us/run -        8 kB/run - [1;34m   0.42 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 55296 runs -    18.11 us/run -       16 kB/run - [1;34m   0.84 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 55296 runs -    18.13 us/run -       32 kB/run - [1;34m   1.68 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                55296 runs -    18.29 us/run -       64 kB/run - [1;34m   3.34 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                51200 runs -    19.74 us/run -      128 kB/run - [1;34m   6.18 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                49152 runs -    20.45 us/run -      253 kB/run - [1;34m  11.84 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               44032 runs -    22.85 us/run -      781 kB/run - [1;34m  32.60 GB/s[0m
+  TOP_K(type=f32,ne=[128,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  24576 runs -    40.98 us/run -        1 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  25600 runs -    39.54 us/run -        2 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  25600 runs -    39.85 us/run -        4 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    40.76 us/run -        8 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    40.81 us/run -       16 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 25600 runs -    40.31 us/run -       32 kB/run - [1;34m   0.76 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 25600 runs -    40.10 us/run -       64 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                25600 runs -    40.23 us/run -      128 kB/run - [1;34m   3.03 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                23552 runs -    43.53 us/run -      256 kB/run - [1;34m   5.61 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                22528 runs -    44.75 us/run -      507 kB/run - [1;34m  10.82 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               20480 runs -    49.69 us/run -     1562 kB/run - [1;34m  29.99 GB/s[0m
+  TOP_K(type=f32,ne=[128,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  12288 runs -    87.31 us/run -        2 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  12288 runs -    86.00 us/run -        4 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  12288 runs -    85.74 us/run -        8 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 12288 runs -    84.09 us/run -       16 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 12288 runs -    83.79 us/run -       32 kB/run - [1;34m   0.36 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 12288 runs -    83.27 us/run -       64 kB/run - [1;34m   0.73 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 11264 runs -    89.62 us/run -      128 kB/run - [1;34m   1.36 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                12288 runs -    85.71 us/run -      256 kB/run - [1;34m   2.85 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                11264 runs -    92.90 us/run -      512 kB/run - [1;34m   5.26 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                11264 runs -    96.43 us/run -     1015 kB/run - [1;34m  10.04 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               10240 runs -   102.41 us/run -     3125 kB/run - [1;34m  29.10 GB/s[0m
+  TOP_K(type=f32,ne=[128,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                   5120 runs -   212.96 us/run -        4 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                   6144 runs -   176.45 us/run -        8 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                   6144 runs -   175.74 us/run -       16 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  6144 runs -   176.79 us/run -       32 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  6144 runs -   182.22 us/run -       64 kB/run - [1;34m   0.34 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  5120 runs -   204.01 us/run -      128 kB/run - [1;34m   0.60 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  6144 runs -   177.83 us/run -      256 kB/run - [1;34m   1.37 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   177.44 us/run -      512 kB/run - [1;34m   2.75 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   190.08 us/run -     1024 kB/run - [1;34m   5.14 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 5120 runs -   218.54 us/run -     2031 kB/run - [1;34m   8.86 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                5120 runs -   220.26 us/run -     6250 kB/run - [1;34m  27.06 GB/s[0m
+  TOP_K(type=f32,ne=[128,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -   577.77 us/run -        8 kB/run - [1;34m   0.01 GB/s[0m
+  TOP_K(type=f32,ne=[256,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -   557.99 us/run -       16 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -   570.47 us/run -       32 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 3072 runs -   404.30 us/run -       64 kB/run - [1;34m   0.15 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   571.82 us/run -      128 kB/run - [1;34m   0.21 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 3072 runs -   404.83 us/run -      256 kB/run - [1;34m   0.60 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 3072 runs -   402.25 us/run -      512 kB/run - [1;34m   1.21 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   400.98 us/run -     1024 kB/run - [1;34m   2.44 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   429.44 us/run -     2048 kB/run - [1;34m   4.55 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   440.02 us/run -     4062 kB/run - [1;34m   8.81 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   533.96 us/run -    12500 kB/run - [1;34m  22.33 GB/s[0m
+  TOP_K(type=f32,ne=[128,32,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -  1274.23 us/run -       16 kB/run - [1;34m   0.01 GB/s[0m
+  TOP_K(type=f32,ne=[256,32,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -  1150.61 us/run -       32 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  2048 runs -  1201.74 us/run -       64 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1161.59 us/run -      128 kB/run - [1;34m   0.11 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1253.50 us/run -      256 kB/run - [1;34m   0.20 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1152.21 us/run -      512 kB/run - [1;34m   0.42 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   917.09 us/run -     1024 kB/run - [1;34m   1.07 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1151.88 us/run -     2048 kB/run - [1;34m   1.70 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+                2048 runs -   971.24 us/run -     4096 kB/run - [1;34m   4.02 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                1024 runs -  1397.14 us/run -     8125 kB/run - [1;34m   5.55 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=3,ties=0):                2048 runs -  1294.80 us/run -    25000 kB/run - [1;34m  18.41 GB/s[0m
+  TOP_K(type=f32,ne=[128,64,1,1],k=3,ties=0):                   1024 runs -  1295.54 us/run -       32 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,64,1,1],k=3,ties=0):                   1024 runs -  1468.98 us/run -       64 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=3,ties=0):                   1024 runs -  1287.22 us/run -      128 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=3,ties=0):                  1024 runs -  1292.71 us/run -      256 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=3,ties=0):                  1024 runs -  1297.91 us/run -      512 kB/run - [1;34m   0.38 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=3,ties=0):                  1024 runs -  1482.17 us/run -     1024 kB/run - [1;34m   0.66 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=3,ties=0):                  1024 runs -  1274.76 us/run -     2048 kB/run - [1;34m   1.53 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=3,ties=0):                 1024 runs -  1279.31 us/run -     4096 kB/run - [1;34m   3.05 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=3,ties=0):                 1024 runs -  1390.83 us/run -     8192 kB/run - [1;34m   5.62 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=3,ties=0):                 1024 runs -  1671.79 us/run -    16250 kB/run - [1;34m   9.27 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=3,ties=0):                 672 runs -  1617.18 us/run -    50000 kB/run - [1;34m  29.49 GB/s[0m
+  TOP_K(type=f32,ne=[128,128,1,1],k=3,ties=0):                  1024 runs -  2599.22 us/run -       65 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,128,1,1],k=3,ties=0):                  1024 runs -  2559.06 us/run -      129 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=3,ties=0):                  1024 runs -  2567.09 us/run -      257 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=3,ties=0):                 1024 runs -  2590.62 us/run -      513 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=3,ties=0):                 1024 runs -  2594.60 us/run -     1025 kB/run - [1;34m   0.38 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=3,ties=0):                 1024 runs -  2587.21 us/run -     2049 kB/run - [1;34m   0.76 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=3,ties=0):                 1024 runs -  2548.00 us/run -     4097 kB/run - [1;34m   1.53 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=3,ties=0):                1024 runs -  2586.11 us/run -     8193 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=3,ties=0):                1024 runs -  2779.43 us/run -    16385 kB/run - [1;34m   5.62 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=3,ties=0):                1024 runs -  2912.32 us/run -    32501 kB/run - [1;34m  10.64 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=3,ties=0):                336 runs -  3236.15 us/run -   100001 kB/run - [1;34m  29.47 GB/s[0m
+  TOP_K(type=f32,ne=[128,256,1,1],k=3,ties=0):                  1024 runs -  5189.37 us/run -      131 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,256,1,1],k=3,ties=0):                  1024 runs -  5116.61 us/run -      259 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=3,ties=0):                  1024 runs -  5137.08 us/run -      515 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=3,ties=0):                 1024 runs -  5181.42 us/run -     1027 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=3,ties=0):                 1024 runs -  5187.65 us/run -     2051 kB/run - [1;34m   0.38 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=3,ties=0):                 1024 runs -  5167.54 us/run -     4099 kB/run - [1;34m   0.76 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=3,ties=0):                 1024 runs -  5162.41 us/run -     8195 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=3,ties=0):                1024 runs -  5177.24 us/run -    16387 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=3,ties=0):                1024 runs -  5562.32 us/run -    32771 kB/run - [1;34m   5.62 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=3,ties=0):                 517 runs -  5824.08 us/run -    65003 kB/run - [1;34m  10.64 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=3,ties=0):                168 runs -  6469.72 us/run -   200003 kB/run - [1;34m  29.48 GB/s[0m
+  TOP_K(type=f32,ne=[128,512,1,1],k=3,ties=0):                  1024 runs - 10382.25 us/run -      262 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,512,1,1],k=3,ties=0):                  1024 runs - 10251.17 us/run -      518 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=3,ties=0):                  1024 runs - 10270.51 us/run -     1030 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=3,ties=0):                 1024 runs - 10365.12 us/run -     2054 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=3,ties=0):                 1024 runs - 10376.09 us/run -     4102 kB/run - [1;34m   0.38 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=3,ties=0):                 1024 runs - 10446.45 us/run -     8198 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=3,ties=0):                 1024 runs - 10315.13 us/run -    16390 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=3,ties=0):                1024 runs - 10361.47 us/run -    32774 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=3,ties=0):                 512 runs - 11122.30 us/run -    65542 kB/run - [1;34m   5.62 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=3,ties=0):                 259 runs - 11647.60 us/run -   130006 kB/run - [1;34m  10.64 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=3,ties=0):                 84 runs - 12936.18 us/run -   400006 kB/run - [1;34m  29.49 GB/s[0m
+  TOP_K(type=f32,ne=[128,1024,1,1],k=3,ties=0):                 1024 runs - 20745.67 us/run -      524 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,1024,1,1],k=3,ties=0):                 1024 runs - 20477.95 us/run -     1036 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=3,ties=0):                 1024 runs - 20534.88 us/run -     2060 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=3,ties=0):                1024 runs - 20722.35 us/run -     4108 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=3,ties=0):                1024 runs - 20960.79 us/run -     8204 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=3,ties=0):                1024 runs - 20898.90 us/run -    16396 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=3,ties=0):                1024 runs - 20641.60 us/run -    32780 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=3,ties=0):                512 runs - 20710.16 us/run -    65548 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=3,ties=0):                256 runs - 22247.07 us/run -   131084 kB/run - [1;34m   5.62 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=3,ties=0):                130 runs - 23296.45 us/run -   260012 kB/run - [1;34m  10.64 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=3,ties=0):                42 runs - 26345.55 us/run -   800012 kB/run - [1;34m  28.96 GB/s[0m
+  TOP_K(type=f32,ne=[128,2048,1,1],k=3,ties=0):                 1024 runs - 41509.25 us/run -     1048 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,2048,1,1],k=3,ties=0):                 1024 runs - 40997.70 us/run -     2072 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=3,ties=0):                 1024 runs - 41060.61 us/run -     4120 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=3,ties=0):                1024 runs - 41837.87 us/run -     8216 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=3,ties=0):                1024 runs - 41930.81 us/run -    16408 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=3,ties=0):                1024 runs - 41822.22 us/run -    32792 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=3,ties=0):                 512 runs - 41289.77 us/run -    65560 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=3,ties=0):                256 runs - 41439.20 us/run -   131096 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=3,ties=0):                128 runs - 44486.20 us/run -   262168 kB/run - [1;34m   5.62 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=3,ties=0):                 65 runs - 46887.57 us/run -   520024 kB/run - [1;34m  10.58 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=3,ties=0):                21 runs - 51767.14 us/run -  1600024 kB/run - [1;34m  29.48 GB/s[0m
+  TOP_K(type=f32,ne=[128,4096,1,1],k=3,ties=0):                 1024 runs - 83043.13 us/run -     2096 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,4096,1,1],k=3,ties=0):                 1024 runs - 81977.05 us/run -     4144 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=3,ties=0):                 1024 runs - 82920.14 us/run -     8240 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=3,ties=0):                1024 runs - 83649.75 us/run -    16432 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=3,ties=0):                1023 runs - 83883.38 us/run -    32816 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=3,ties=0):                 512 runs - 83612.79 us/run -    65584 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=3,ties=0):                 256 runs - 82569.94 us/run -   131120 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=3,ties=0):                128 runs - 82859.35 us/run -   262192 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=3,ties=0):                 64 runs - 88974.47 us/run -   524336 kB/run - [1;34m   5.62 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=3,ties=0):                 33 runs - 93596.79 us/run -  1040048 kB/run - [1;34m  10.60 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=3,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               11 runs - 103505.09 us/run -  3200048 kB/run - [1;34m  29.48 GB/s[0m
+  TOP_K(type=f32,ne=[128,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 65536 runs -    15.29 us/run -        0 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[256,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 53248 runs -    18.87 us/run -        1 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 54272 runs -    18.47 us/run -        2 kB/run - [1;34m   0.11 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                53248 runs -    19.06 us/run -        4 kB/run - [1;34m   0.20 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                54272 runs -    18.77 us/run -        8 kB/run - [1;34m   0.41 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                53248 runs -    18.94 us/run -       16 kB/run - [1;34m   0.81 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                55296 runs -    18.34 us/run -       32 kB/run - [1;34m   1.67 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               55296 runs -    18.17 us/run -       64 kB/run - [1;34m   3.36 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               55296 runs -    18.11 us/run -      128 kB/run - [1;34m   6.74 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               55296 runs -    18.25 us/run -      253 kB/run - [1;34m  13.27 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              49152 runs -    20.58 us/run -      781 kB/run - [1;34m  36.20 GB/s[0m
+  TOP_K(type=f32,ne=[128,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 29696 runs -    34.14 us/run -        1 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    41.40 us/run -        2 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    41.50 us/run -        4 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    41.20 us/run -        8 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    41.59 us/run -       16 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    41.02 us/run -       32 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                25600 runs -    40.20 us/run -       64 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               24576 runs -    41.00 us/run -      128 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               25600 runs -    40.29 us/run -      256 kB/run - [1;34m   6.06 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               25600 runs -    40.07 us/run -      507 kB/run - [1;34m  12.09 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              22528 runs -    44.65 us/run -     1562 kB/run - [1;34m  33.38 GB/s[0m
+  TOP_K(type=f32,ne=[128,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 14336 runs -    72.88 us/run -        2 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 11264 runs -    89.86 us/run -        4 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 11264 runs -    88.79 us/run -        8 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                12288 runs -    85.58 us/run -       16 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                12288 runs -    84.56 us/run -       32 kB/run - [1;34m   0.36 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                12288 runs -    84.90 us/run -       64 kB/run - [1;34m   0.72 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                12288 runs -    87.71 us/run -      128 kB/run - [1;34m   1.39 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               12288 runs -    85.95 us/run -      256 kB/run - [1;34m   2.84 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               12288 runs -    85.59 us/run -      512 kB/run - [1;34m   5.71 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               12288 runs -    86.09 us/run -     1015 kB/run - [1;34m  11.25 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              11264 runs -    92.31 us/run -     3125 kB/run - [1;34m  32.29 GB/s[0m
+  TOP_K(type=f32,ne=[128,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  6144 runs -   170.81 us/run -        4 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  5120 runs -   204.80 us/run -        8 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  5120 runs -   205.01 us/run -       16 kB/run - [1;34m   0.08 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   183.14 us/run -       32 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   183.70 us/run -       64 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   181.97 us/run -      128 kB/run - [1;34m   0.67 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   178.06 us/run -      256 kB/run - [1;34m   1.37 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                6144 runs -   178.97 us/run -      512 kB/run - [1;34m   2.73 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                6144 runs -   177.03 us/run -     1024 kB/run - [1;34m   5.52 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                5120 runs -   199.14 us/run -     2031 kB/run - [1;34m   9.73 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               5120 runs -   200.92 us/run -     6250 kB/run - [1;34m  29.67 GB/s[0m
+  TOP_K(type=f32,ne=[128,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   518.95 us/run -        9 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 3072 runs -   406.83 us/run -       17 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 3072 runs -   435.63 us/run -       33 kB/run - [1;34m   0.07 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -   568.83 us/run -       65 kB/run - [1;34m   0.11 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -   569.39 us/run -      129 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -   575.31 us/run -      257 kB/run - [1;34m   0.43 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -   558.98 us/run -      513 kB/run - [1;34m   0.88 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   560.82 us/run -     1025 kB/run - [1;34m   1.74 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   557.79 us/run -     2049 kB/run - [1;34m   3.50 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   557.67 us/run -     4063 kB/run - [1;34m   6.95 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   602.96 us/run -    12501 kB/run - [1;34m  19.77 GB/s[0m
+  TOP_K(type=f32,ne=[128,32,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1081.11 us/run -       18 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,32,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1189.85 us/run -       34 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1440.60 us/run -       66 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1168.94 us/run -      130 kB/run - [1;34m   0.11 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1372.53 us/run -      258 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1144.54 us/run -      514 kB/run - [1;34m   0.43 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1354.95 us/run -     1026 kB/run - [1;34m   0.72 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -  1135.91 us/run -     2050 kB/run - [1;34m   1.72 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -  1353.37 us/run -     4098 kB/run - [1;34m   2.89 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+               2048 runs -  1144.62 us/run -     8127 kB/run - [1;34m   6.77 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=16,ties=0):               1024 runs -  1168.35 us/run -    25002 kB/run - [1;34m  20.41 GB/s[0m
+  TOP_K(type=f32,ne=[128,64,1,1],k=16,ties=0):                  1024 runs -  1084.26 us/run -       36 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,64,1,1],k=16,ties=0):                  1024 runs -  1315.01 us/run -       68 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=16,ties=0):                  1024 runs -  1315.35 us/run -      132 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=16,ties=0):                 1024 runs -  1764.76 us/run -      260 kB/run - [1;34m   0.14 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=16,ties=0):                 1024 runs -  1319.04 us/run -      516 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=16,ties=0):                 1024 runs -  1309.77 us/run -     1028 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=16,ties=0):                 1024 runs -  1283.53 us/run -     2052 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=16,ties=0):                1024 runs -  1730.06 us/run -     4100 kB/run - [1;34m   2.26 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=16,ties=0):                1024 runs -  1294.95 us/run -     8196 kB/run - [1;34m   6.04 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               1024 runs -  1314.89 us/run -    16254 kB/run - [1;34m  11.79 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=16,ties=0):               1344 runs -  2444.81 us/run -    50004 kB/run - [1;34m  19.51 GB/s[0m
+  TOP_K(type=f32,ne=[128,128,1,1],k=16,ties=0):                 1024 runs -  2168.02 us/run -       72 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,128,1,1],k=16,ties=0):                 1024 runs -  2627.14 us/run -      136 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=16,ties=0):                 1024 runs -  2621.46 us/run -      264 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=16,ties=0):                1024 runs -  2940.10 us/run -      520 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=16,ties=0):                1024 runs -  2635.66 us/run -     1032 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=16,ties=0):                1024 runs -  2612.65 us/run -     2056 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=16,ties=0):                1024 runs -  2569.59 us/run -     4104 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=16,ties=0):               1024 runs -  2605.05 us/run -     8200 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=16,ties=0):               1024 runs -  2590.85 us/run -    16392 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              1024 runs -  2629.11 us/run -    32508 kB/run - [1;34m  11.79 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=16,ties=0):               672 runs -  4882.16 us/run -   100008 kB/run - [1;34m  19.54 GB/s[0m
+  TOP_K(type=f32,ne=[128,256,1,1],k=16,ties=0):                 1024 runs -  4335.98 us/run -      144 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,256,1,1],k=16,ties=0):                 1024 runs -  5543.94 us/run -      272 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=16,ties=0):                 1024 runs -  5246.73 us/run -      528 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=16,ties=0):                1024 runs -  5314.71 us/run -     1040 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=16,ties=0):                1024 runs -  5277.56 us/run -     2064 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=16,ties=0):                1024 runs -  5228.87 us/run -     4112 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=16,ties=0):                1024 runs -  5200.09 us/run -     8208 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=16,ties=0):               1024 runs -  5218.50 us/run -    16400 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=16,ties=0):               1024 runs -  5178.71 us/run -    32784 kB/run - [1;34m   6.04 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               517 runs -  5256.56 us/run -    65016 kB/run - [1;34m  11.80 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=16,ties=0):               336 runs -  9762.51 us/run -   200016 kB/run - [1;34m  19.54 GB/s[0m
+  TOP_K(type=f32,ne=[128,512,1,1],k=16,ties=0):                 1024 runs -  8670.04 us/run -      288 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,512,1,1],k=16,ties=0):                 1024 runs - 10803.52 us/run -      544 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=16,ties=0):                 1024 runs - 10486.68 us/run -     1056 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=16,ties=0):                1024 runs - 10619.70 us/run -     2080 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=16,ties=0):                1024 runs - 10548.57 us/run -     4128 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=16,ties=0):                1024 runs - 10573.77 us/run -     8224 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=16,ties=0):                1024 runs - 10401.51 us/run -    16416 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=16,ties=0):               1024 runs - 10435.70 us/run -    32800 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=16,ties=0):                512 runs - 10359.93 us/run -    65568 kB/run - [1;34m   6.04 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               259 runs - 10517.10 us/run -   130032 kB/run - [1;34m  11.79 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=16,ties=0):               168 runs - 19506.82 us/run -   400032 kB/run - [1;34m  19.56 GB/s[0m
+  TOP_K(type=f32,ne=[128,1024,1,1],k=16,ties=0):                1024 runs - 17630.28 us/run -      576 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,1024,1,1],k=16,ties=0):                1024 runs - 21043.05 us/run -     1088 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=16,ties=0):                1024 runs - 20977.25 us/run -     2112 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=16,ties=0):               1024 runs - 21250.35 us/run -     4160 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=16,ties=0):               1024 runs - 21346.79 us/run -     8256 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=16,ties=0):               1024 runs - 21147.58 us/run -    16448 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=16,ties=0):               1023 runs - 20797.06 us/run -    32832 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=16,ties=0):               512 runs - 20868.04 us/run -    65600 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=16,ties=0):               256 runs - 20730.84 us/run -   131136 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              130 runs - 21049.94 us/run -   260064 kB/run - [1;34m  11.78 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=16,ties=0):                       84 runs - 39271.73 us/run -   800064 kB/run - [1;34m  19.43 GB/s[0m
+  TOP_K(type=f32,ne=[128,2048,1,1],k=16,ties=0):                1024 runs - 34978.69 us/run -     1152 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,2048,1,1],k=16,ties=0):                1024 runs - 42087.38 us/run -     2176 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=16,ties=0):                1024 runs - 41962.32 us/run -     4224 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=16,ties=0):               1024 runs - 42891.50 us/run -     8320 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=16,ties=0):               1024 runs - 42669.07 us/run -    16512 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=16,ties=0):               1021 runs - 42272.21 us/run -    32896 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=16,ties=0):                512 runs - 41588.52 us/run -    65664 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=16,ties=0):               256 runs - 41752.85 us/run -   131200 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=16,ties=0):               128 runs - 41440.64 us/run -   262272 kB/run - [1;34m   6.04 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               65 runs - 42499.12 us/run -   520128 kB/run - [1;34m  11.67 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=16,ties=0):                       42 runs - 78228.21 us/run -  1600128 kB/run - [1;34m  19.51 GB/s[0m
+  TOP_K(type=f32,ne=[128,4096,1,1],k=16,ties=0):                1024 runs - 69664.24 us/run -     2304 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,4096,1,1],k=16,ties=0):                1024 runs - 84183.12 us/run -     4352 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=16,ties=0):                1024 runs - 84747.56 us/run -     8448 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=16,ties=0):               1024 runs - 85752.27 us/run -    16640 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=16,ties=0):               1017 runs - 85335.40 us/run -    33024 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=16,ties=0):                511 runs - 84597.17 us/run -    65792 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=16,ties=0):                256 runs - 83165.17 us/run -   131328 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=16,ties=0):               128 runs - 83488.17 us/run -   262400 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=16,ties=0):                64 runs - 82852.42 us/run -   524544 kB/run - [1;34m   6.04 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=16,ties=0):                33 runs - 84521.33 us/run -  1040256 kB/run - [1;34m  11.74 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=16,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                      11 runs - 93815.45 us/run -  3200256 kB/run - [1;34m  32.53 GB/s[0m
+  TOP_K(type=f32,ne=[128,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 53248 runs -    18.97 us/run -        0 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 53248 runs -    19.01 us/run -        1 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 54272 runs -    18.72 us/run -        2 kB/run - [1;34m   0.11 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                52224 runs -    19.21 us/run -        4 kB/run - [1;34m   0.20 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                53248 runs -    19.04 us/run -        8 kB/run - [1;34m   0.40 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                54272 runs -    18.44 us/run -       16 kB/run - [1;34m   0.83 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                55296 runs -    18.39 us/run -       32 kB/run - [1;34m   1.66 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               54272 runs -    18.63 us/run -       64 kB/run - [1;34m   3.28 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               55296 runs -    18.11 us/run -      128 kB/run - [1;34m   6.74 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               55296 runs -    18.21 us/run -      253 kB/run - [1;34m  13.30 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              44032 runs -    23.06 us/run -      781 kB/run - [1;34m  32.32 GB/s[0m
+  TOP_K(type=f32,ne=[128,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    41.58 us/run -        1 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    40.70 us/run -        2 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    41.88 us/run -        4 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    41.73 us/run -        8 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    41.57 us/run -       16 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    40.86 us/run -       32 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    40.83 us/run -       64 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               24576 runs -    41.04 us/run -      128 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               25600 runs -    40.12 us/run -      256 kB/run - [1;34m   6.09 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               25600 runs -    39.99 us/run -      507 kB/run - [1;34m  12.11 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              20480 runs -    49.67 us/run -     1562 kB/run - [1;34m  30.00 GB/s[0m
+  TOP_K(type=f32,ne=[128,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 11264 runs -    89.53 us/run -        2 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 12288 runs -    87.86 us/run -        4 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 12288 runs -    84.85 us/run -        8 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                12288 runs -    85.66 us/run -       16 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                12288 runs -    84.83 us/run -       32 kB/run - [1;34m   0.36 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                12288 runs -    84.62 us/run -       64 kB/run - [1;34m   0.72 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                11264 runs -    89.91 us/run -      128 kB/run - [1;34m   1.36 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               12288 runs -    85.83 us/run -      256 kB/run - [1;34m   2.85 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               12288 runs -    85.74 us/run -      512 kB/run - [1;34m   5.70 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               12288 runs -    86.31 us/run -     1015 kB/run - [1;34m  11.23 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              10240 runs -   103.36 us/run -     3125 kB/run - [1;34m  28.84 GB/s[0m
+  TOP_K(type=f32,ne=[128,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  5120 runs -   209.42 us/run -        4 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  6144 runs -   181.29 us/run -        8 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  6144 runs -   179.05 us/run -       16 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   180.91 us/run -       32 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   184.49 us/run -       64 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   181.06 us/run -      128 kB/run - [1;34m   0.68 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   178.16 us/run -      256 kB/run - [1;34m   1.37 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                6144 runs -   178.65 us/run -      512 kB/run - [1;34m   2.74 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                6144 runs -   177.57 us/run -     1024 kB/run - [1;34m   5.50 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                5120 runs -   199.65 us/run -     2031 kB/run - [1;34m   9.71 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               4096 runs -   250.84 us/run -     6250 kB/run - [1;34m  23.76 GB/s[0m
+  TOP_K(type=f32,ne=[128,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   570.25 us/run -        9 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   570.90 us/run -       17 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   578.05 us/run -       33 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   413.65 us/run -       65 kB/run - [1;34m   0.15 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   403.59 us/run -      129 kB/run - [1;34m   0.31 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   410.21 us/run -      257 kB/run - [1;34m   0.60 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   405.11 us/run -      513 kB/run - [1;34m   1.21 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               3072 runs -   405.12 us/run -     1025 kB/run - [1;34m   2.41 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               3072 runs -   404.23 us/run -     2049 kB/run - [1;34m   4.83 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               3072 runs -   404.71 us/run -     4063 kB/run - [1;34m   9.58 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   538.46 us/run -    12501 kB/run - [1;34m  22.14 GB/s[0m
+  TOP_K(type=f32,ne=[128,32,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1301.41 us/run -       18 kB/run - [1;34m   0.01 GB/s[0m
+  TOP_K(type=f32,ne=[256,32,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1163.94 us/run -       34 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1146.14 us/run -       66 kB/run - [1;34m   0.06 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1149.44 us/run -      130 kB/run - [1;34m   0.11 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1154.78 us/run -      258 kB/run - [1;34m   0.21 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1140.23 us/run -      514 kB/run - [1;34m   0.43 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1558.19 us/run -     1026 kB/run - [1;34m   0.63 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -  1136.40 us/run -     2050 kB/run - [1;34m   1.72 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   918.42 us/run -     4098 kB/run - [1;34m   4.26 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   914.56 us/run -     8127 kB/run - [1;34m   8.48 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=20,ties=0):               2048 runs -  1303.00 us/run -    25002 kB/run - [1;34m  18.30 GB/s[0m
+  TOP_K(type=f32,ne=[128,64,1,1],k=20,ties=0):                  1024 runs -  1322.90 us/run -       37 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,64,1,1],k=20,ties=0):                  1024 runs -  1317.69 us/run -       69 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=20,ties=0):                  1024 runs -  1322.06 us/run -      133 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=20,ties=0):                 1024 runs -  1331.06 us/run -      261 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=20,ties=0):                 1024 runs -  1325.39 us/run -      517 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=20,ties=0):                 1024 runs -  1309.02 us/run -     1029 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=20,ties=0):                 1024 runs -  1286.71 us/run -     2053 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=20,ties=0):                1024 runs -  1691.45 us/run -     4101 kB/run - [1;34m   2.31 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=20,ties=0):                1024 runs -  1295.95 us/run -     8197 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=20,ties=0):                1024 runs -  1314.73 us/run -    16255 kB/run - [1;34m  11.79 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=20,ties=0):                672 runs -  1630.91 us/run -    50005 kB/run - [1;34m  29.24 GB/s[0m
+  TOP_K(type=f32,ne=[128,128,1,1],k=20,ties=0):                 1024 runs -  2645.89 us/run -       74 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,128,1,1],k=20,ties=0):                 1024 runs -  2635.29 us/run -      138 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=20,ties=0):                 1024 runs -  2643.18 us/run -      266 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=20,ties=0):                1024 runs -  2667.23 us/run -      522 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=20,ties=0):                1024 runs -  2650.00 us/run -     1034 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=20,ties=0):                1024 runs -  2624.53 us/run -     2058 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=20,ties=0):                1024 runs -  2574.29 us/run -     4106 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=20,ties=0):               1024 runs -  2613.10 us/run -     8202 kB/run - [1;34m   2.99 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=20,ties=0):               1024 runs -  2592.58 us/run -    16394 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=20,ties=0):               1024 runs -  2630.40 us/run -    32510 kB/run - [1;34m  11.79 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=20,ties=0):               336 runs -  3259.81 us/run -   100010 kB/run - [1;34m  29.26 GB/s[0m
+  TOP_K(type=f32,ne=[128,256,1,1],k=20,ties=0):                 1024 runs -  5291.47 us/run -      148 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,256,1,1],k=20,ties=0):                 1024 runs -  5270.76 us/run -      276 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=20,ties=0):                 1024 runs -  5282.47 us/run -      532 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=20,ties=0):                1024 runs -  5330.25 us/run -     1044 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=20,ties=0):                1024 runs -  5292.43 us/run -     2068 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=20,ties=0):                1024 runs -  5246.23 us/run -     4116 kB/run - [1;34m   0.75 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=20,ties=0):                1024 runs -  5208.97 us/run -     8212 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=20,ties=0):               1024 runs -  5220.17 us/run -    16404 kB/run - [1;34m   3.00 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=20,ties=0):               1024 runs -  5181.50 us/run -    32788 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=20,ties=0):                517 runs -  5261.46 us/run -    65020 kB/run - [1;34m  11.79 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=20,ties=0):               168 runs -  6519.71 us/run -   200020 kB/run - [1;34m  29.26 GB/s[0m
+  TOP_K(type=f32,ne=[128,512,1,1],k=20,ties=0):                 1024 runs - 10580.89 us/run -      296 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,512,1,1],k=20,ties=0):                 1024 runs - 10541.82 us/run -      552 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=20,ties=0):                 1024 runs - 10565.24 us/run -     1064 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=20,ties=0):                1024 runs - 10655.13 us/run -     2088 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=20,ties=0):                1024 runs - 10593.17 us/run -     4136 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=20,ties=0):                1024 runs - 10604.89 us/run -     8232 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=20,ties=0):                1024 runs - 10415.11 us/run -    16424 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=20,ties=0):               1023 runs - 10453.15 us/run -    32808 kB/run - [1;34m   2.99 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=20,ties=0):                512 runs - 10366.94 us/run -    65576 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=20,ties=0):                259 runs - 10516.63 us/run -   130040 kB/run - [1;34m  11.79 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=20,ties=0):                84 runs - 13036.45 us/run -   400040 kB/run - [1;34m  29.26 GB/s[0m
+  TOP_K(type=f32,ne=[128,1024,1,1],k=20,ties=0):                1024 runs - 21160.57 us/run -      592 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,1024,1,1],k=20,ties=0):                1024 runs - 21085.10 us/run -     1104 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=20,ties=0):                1024 runs - 21150.09 us/run -     2128 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=20,ties=0):               1024 runs - 21329.88 us/run -     4176 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=20,ties=0):               1024 runs - 21407.79 us/run -     8272 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=20,ties=0):               1024 runs - 21198.10 us/run -    16464 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=20,ties=0):               1022 runs - 20819.41 us/run -    32848 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=20,ties=0):               512 runs - 20899.62 us/run -    65616 kB/run - [1;34m   2.99 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=20,ties=0):               256 runs - 20728.95 us/run -   131152 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=20,ties=0):               130 runs - 21045.48 us/run -   260080 kB/run - [1;34m  11.79 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=20,ties=0):                       42 runs - 26355.69 us/run -   800080 kB/run - [1;34m  28.95 GB/s[0m
+  TOP_K(type=f32,ne=[128,2048,1,1],k=20,ties=0):                1024 runs - 42336.34 us/run -     1184 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,2048,1,1],k=20,ties=0):                1024 runs - 42186.53 us/run -     2208 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=20,ties=0):                1024 runs - 42313.28 us/run -     4256 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=20,ties=0):               1024 runs - 43019.65 us/run -     8352 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=20,ties=0):               1024 runs - 42835.11 us/run -    16544 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=20,ties=0):               1020 runs - 42410.71 us/run -    32928 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=20,ties=0):                511 runs - 41654.43 us/run -    65696 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=20,ties=0):               256 runs - 41811.61 us/run -   131232 kB/run - [1;34m   2.99 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=20,ties=0):               128 runs - 41470.91 us/run -   262304 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=20,ties=0):                65 runs - 42085.23 us/run -   520160 kB/run - [1;34m  11.79 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=20,ties=0):                       21 runs - 53071.43 us/run -  1600160 kB/run - [1;34m  28.75 GB/s[0m
+  TOP_K(type=f32,ne=[128,4096,1,1],k=20,ties=0):                1024 runs - 84669.12 us/run -     2368 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,4096,1,1],k=20,ties=0):                1024 runs - 84363.08 us/run -     4416 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=20,ties=0):                1024 runs - 85376.00 us/run -     8512 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=20,ties=0):               1024 runs - 86014.95 us/run -    16704 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=20,ties=0):               1015 runs - 85604.60 us/run -    33088 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=20,ties=0):                510 runs - 84799.85 us/run -    65856 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=20,ties=0):                256 runs - 83307.95 us/run -   131392 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=20,ties=0):               128 runs - 83589.38 us/run -   262464 kB/run - [1;34m   2.99 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=20,ties=0):                64 runs - 82917.22 us/run -   524608 kB/run - [1;34m   6.03 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=20,ties=0):                33 runs - 84535.88 us/run -  1040320 kB/run - [1;34m  11.74 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=20,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                      11 runs - 104349.64 us/run -  3200320 kB/run - [1;34m  29.25 GB/s[0m
+  TOP_K(type=f32,ne=[128,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 53248 runs -    19.06 us/run -        0 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 53248 runs -    18.82 us/run -        1 kB/run - [1;34m   0.06 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 53248 runs -    18.90 us/run -        2 kB/run - [1;34m   0.11 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                52224 runs -    19.26 us/run -        4 kB/run - [1;34m   0.21 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                53248 runs -    18.98 us/run -        8 kB/run - [1;34m   0.41 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                54272 runs -    18.61 us/run -       16 kB/run - [1;34m   0.83 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                55296 runs -    18.33 us/run -       32 kB/run - [1;34m   1.67 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               55296 runs -    18.30 us/run -       64 kB/run - [1;34m   3.34 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               55296 runs -    18.30 us/run -      128 kB/run - [1;34m   6.68 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               55296 runs -    18.29 us/run -      254 kB/run - [1;34m  13.24 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              43008 runs -    23.56 us/run -      781 kB/run - [1;34m  31.63 GB/s[0m
+  TOP_K(type=f32,ne=[128,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    41.56 us/run -        1 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    40.80 us/run -        2 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 24576 runs -    41.62 us/run -        4 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    42.19 us/run -        8 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    42.31 us/run -       16 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                24576 runs -    41.54 us/run -       32 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                25600 runs -    40.36 us/run -       64 kB/run - [1;34m   1.52 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               25600 runs -    40.31 us/run -      128 kB/run - [1;34m   3.04 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               25600 runs -    39.96 us/run -      256 kB/run - [1;34m   6.12 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               25600 runs -    40.07 us/run -      508 kB/run - [1;34m  12.09 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              20480 runs -    50.48 us/run -     1562 kB/run - [1;34m  29.52 GB/s[0m
+  TOP_K(type=f32,ne=[128,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 11264 runs -    89.71 us/run -        2 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 11264 runs -    89.74 us/run -        4 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 11264 runs -    89.54 us/run -        8 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                11264 runs -    89.97 us/run -       16 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                11264 runs -    90.14 us/run -       32 kB/run - [1;34m   0.35 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                12288 runs -    85.53 us/run -       64 kB/run - [1;34m   0.72 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                12288 runs -    86.43 us/run -      128 kB/run - [1;34m   1.42 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               12288 runs -    86.12 us/run -      256 kB/run - [1;34m   2.84 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               12288 runs -    86.09 us/run -      512 kB/run - [1;34m   5.68 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               12288 runs -    83.73 us/run -     1016 kB/run - [1;34m  11.57 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              10240 runs -   104.62 us/run -     3125 kB/run - [1;34m  28.49 GB/s[0m
+  TOP_K(type=f32,ne=[128,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  5120 runs -   212.94 us/run -        5 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  6144 runs -   181.74 us/run -        9 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                  6144 runs -   181.27 us/run -       17 kB/run - [1;34m   0.09 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   182.82 us/run -       33 kB/run - [1;34m   0.17 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 5120 runs -   202.94 us/run -       65 kB/run - [1;34m   0.31 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 5120 runs -   206.51 us/run -      129 kB/run - [1;34m   0.60 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   180.61 us/run -      257 kB/run - [1;34m   1.36 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                6144 runs -   179.94 us/run -      513 kB/run - [1;34m   2.72 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                6144 runs -   177.95 us/run -     1025 kB/run - [1;34m   5.49 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                6144 runs -   187.14 us/run -     2032 kB/run - [1;34m  10.36 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               5120 runs -   224.73 us/run -     6251 kB/run - [1;34m  26.53 GB/s[0m
+  TOP_K(type=f32,ne=[128,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   578.22 us/run -       10 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   568.13 us/run -       18 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 3072 runs -   413.23 us/run -       34 kB/run - [1;34m   0.08 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   407.51 us/run -       66 kB/run - [1;34m   0.16 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   406.52 us/run -      130 kB/run - [1;34m   0.31 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   413.91 us/run -      258 kB/run - [1;34m   0.60 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                3072 runs -   424.94 us/run -      514 kB/run - [1;34m   1.15 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   557.61 us/run -     1026 kB/run - [1;34m   1.76 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   558.15 us/run -     2050 kB/run - [1;34m   3.50 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               3072 runs -   403.22 us/run -     4065 kB/run - [1;34m   9.61 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   540.66 us/run -    12502 kB/run - [1;34m  22.05 GB/s[0m
+  TOP_K(type=f32,ne=[128,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1164.86 us/run -       21 kB/run - [1;34m   0.02 GB/s[0m
+  TOP_K(type=f32,ne=[256,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -  1147.20 us/run -       37 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 2048 runs -   918.21 us/run -       69 kB/run - [1;34m   0.07 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -   899.94 us/run -      133 kB/run - [1;34m   0.14 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -   898.06 us/run -      261 kB/run - [1;34m   0.28 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1029.64 us/run -      517 kB/run - [1;34m   0.48 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1134.70 us/run -     1029 kB/run - [1;34m   0.86 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -  1242.00 us/run -     2053 kB/run - [1;34m   1.58 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -  1120.85 us/run -     4101 kB/run - [1;34m   3.49 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -  1139.21 us/run -     8130 kB/run - [1;34m   6.81 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+              2048 runs -  1309.45 us/run -    25005 kB/run - [1;34m  18.21 GB/s[0m
+  TOP_K(type=f32,ne=[128,64,1,1],k=40,ties=0):                  1024 runs -  1327.03 us/run -       42 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,64,1,1],k=40,ties=0):                  1024 runs -  1752.54 us/run -       74 kB/run - [1;34m   0.04 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=40,ties=0):                  1024 runs -  1332.33 us/run -      138 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=40,ties=0):                 1024 runs -  1344.78 us/run -      266 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=40,ties=0):                 1024 runs -  1338.79 us/run -      522 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=40,ties=0):                 1024 runs -  1755.46 us/run -     1034 kB/run - [1;34m   0.56 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=40,ties=0):                 1024 runs -  1296.71 us/run -     2058 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=40,ties=0):                1024 runs -  1294.93 us/run -     4106 kB/run - [1;34m   3.02 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=40,ties=0):                1024 runs -  1301.25 us/run -     8202 kB/run - [1;34m   6.01 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=40,ties=0):                1024 runs -  1318.90 us/run -    16260 kB/run - [1;34m  11.76 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=40,ties=0):                671 runs -  1652.08 us/run -    50010 kB/run - [1;34m  28.87 GB/s[0m
+  TOP_K(type=f32,ne=[128,128,1,1],k=40,ties=0):                 1024 runs -  2654.46 us/run -       84 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,128,1,1],k=40,ties=0):                 1024 runs -  2854.54 us/run -      148 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=40,ties=0):                 1024 runs -  2665.32 us/run -      276 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=40,ties=0):                1024 runs -  2684.15 us/run -      532 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=40,ties=0):                1024 runs -  2673.12 us/run -     1044 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=40,ties=0):                1024 runs -  2648.75 us/run -     2068 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=40,ties=0):                1024 runs -  2593.19 us/run -     4116 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=40,ties=0):               1024 runs -  2624.71 us/run -     8212 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=40,ties=0):               1024 runs -  2601.02 us/run -    16404 kB/run - [1;34m   6.01 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=40,ties=0):               1024 runs -  2635.04 us/run -    32520 kB/run - [1;34m  11.77 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=40,ties=0):               336 runs -  3302.85 us/run -   100020 kB/run - [1;34m  28.88 GB/s[0m
+  TOP_K(type=f32,ne=[128,256,1,1],k=40,ties=0):                 1024 runs -  5307.98 us/run -      168 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,256,1,1],k=40,ties=0):                 1024 runs -  5278.79 us/run -      296 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=40,ties=0):                 1024 runs -  5328.87 us/run -      552 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=40,ties=0):                1024 runs -  5373.92 us/run -     1064 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=40,ties=0):                1024 runs -  5345.25 us/run -     2088 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=40,ties=0):                1024 runs -  5300.21 us/run -     4136 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=40,ties=0):                1024 runs -  5245.86 us/run -     8232 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=40,ties=0):               1024 runs -  5256.85 us/run -    16424 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=40,ties=0):               1023 runs -  5201.16 us/run -    32808 kB/run - [1;34m   6.02 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=40,ties=0):                516 runs -  5269.53 us/run -    65040 kB/run - [1;34m  11.77 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=40,ties=0):               168 runs -  6604.90 us/run -   200040 kB/run - [1;34m  28.88 GB/s[0m
+  TOP_K(type=f32,ne=[128,512,1,1],k=40,ties=0):                 1024 runs - 10616.52 us/run -      336 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,512,1,1],k=40,ties=0):                 1024 runs - 10560.67 us/run -      592 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=40,ties=0):                 1024 runs - 10658.96 us/run -     1104 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=40,ties=0):                1024 runs - 10751.05 us/run -     2128 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=40,ties=0):                1024 runs - 10694.77 us/run -     4176 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=40,ties=0):                1024 runs - 10702.04 us/run -     8272 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=40,ties=0):                1024 runs - 10492.75 us/run -    16464 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=40,ties=0):               1022 runs - 10500.38 us/run -    32848 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=40,ties=0):                512 runs - 10409.02 us/run -    65616 kB/run - [1;34m   6.01 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=40,ties=0):                258 runs - 10542.71 us/run -   130080 kB/run - [1;34m  11.77 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=40,ties=0):                84 runs - 13207.52 us/run -   400080 kB/run - [1;34m  28.89 GB/s[0m
+  TOP_K(type=f32,ne=[128,1024,1,1],k=40,ties=0):                1024 runs - 21235.80 us/run -      672 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,1024,1,1],k=40,ties=0):                1024 runs - 21124.98 us/run -     1184 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=40,ties=0):                1024 runs - 21326.25 us/run -     2208 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=40,ties=0):               1024 runs - 21493.42 us/run -     4256 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=40,ties=0):               1024 runs - 21623.93 us/run -     8352 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=40,ties=0):               1024 runs - 21408.75 us/run -    16544 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=40,ties=0):               1020 runs - 20990.52 us/run -    32928 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=40,ties=0):               511 runs - 20991.31 us/run -    65696 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=40,ties=0):               256 runs - 20806.57 us/run -   131232 kB/run - [1;34m   6.02 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=40,ties=0):               129 runs - 21085.39 us/run -   260160 kB/run - [1;34m  11.77 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=40,ties=0):                       42 runs - 26842.55 us/run -   800160 kB/run - [1;34m  28.43 GB/s[0m
+  TOP_K(type=f32,ne=[128,2048,1,1],k=40,ties=0):                1024 runs - 42473.56 us/run -     1344 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,2048,1,1],k=40,ties=0):                1024 runs - 42255.76 us/run -     2368 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=40,ties=0):                1024 runs - 42606.49 us/run -     4416 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=40,ties=0):               1024 runs - 43336.45 us/run -     8512 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=40,ties=0):               1024 runs - 43247.66 us/run -    16704 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=40,ties=0):               1015 runs - 42821.98 us/run -    33088 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=40,ties=0):                510 runs - 41956.09 us/run -    65856 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=40,ties=0):               256 runs - 41980.25 us/run -   131392 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=40,ties=0):               128 runs - 41600.48 us/run -   262464 kB/run - [1;34m   6.02 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=40,ties=0):                65 runs - 42512.02 us/run -   520320 kB/run - [1;34m  11.67 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=40,ties=0):                       21 runs - 52861.38 us/run -  1600320 kB/run - [1;34m  28.87 GB/s[0m
+  TOP_K(type=f32,ne=[128,4096,1,1],k=40,ties=0):                1024 runs - 84919.86 us/run -     2688 kB/run - [1;34m   0.03 GB/s[0m
+  TOP_K(type=f32,ne=[256,4096,1,1],k=40,ties=0):                1024 runs - 84507.73 us/run -     4736 kB/run - [1;34m   0.05 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=40,ties=0):                1024 runs - 86034.11 us/run -     8832 kB/run - [1;34m   0.10 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=40,ties=0):               1024 runs - 86715.38 us/run -    17024 kB/run - [1;34m   0.19 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=40,ties=0):               1005 runs - 86493.31 us/run -    33408 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=40,ties=0):                508 runs - 85576.93 us/run -    66176 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=40,ties=0):                255 runs - 83862.09 us/run -   131712 kB/run - [1;34m   1.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=40,ties=0):               128 runs - 83923.48 us/run -   262784 kB/run - [1;34m   2.99 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=40,ties=0):                64 runs - 83169.69 us/run -   524928 kB/run - [1;34m   6.02 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=40,ties=0):                33 runs - 84955.88 us/run -  1040640 kB/run - [1;34m  11.68 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=40,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                      11 runs - 105699.73 us/run -  3200640 kB/run - [1;34m  28.88 GB/s[0m
+  TOP_K(type=f32,ne=[512,1,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                65536 runs -    15.38 us/run -        4 kB/run - [1;34m   0.25 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               64512 runs -    15.60 us/run -        6 kB/run - [1;34m   0.37 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               65536 runs -    15.36 us/run -       10 kB/run - [1;34m   0.62 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               64512 runs -    15.53 us/run -       18 kB/run - [1;34m   1.11 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               52224 runs -    19.18 us/run -       34 kB/run - [1;34m   1.69 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              53248 runs -    19.11 us/run -       66 kB/run - [1;34m   3.29 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              53248 runs -    18.92 us/run -      130 kB/run - [1;34m   6.55 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              53248 runs -    18.82 us/run -      255 kB/run - [1;34m  12.96 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             48128 runs -    20.95 us/run -      783 kB/run - [1;34m  35.66 GB/s[0m
+  TOP_K(type=f32,ne=[512,2,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                29696 runs -    34.12 us/run -        8 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               29696 runs -    34.13 us/run -       12 kB/run - [1;34m   0.34 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               29696 runs -    34.62 us/run -       20 kB/run - [1;34m   0.55 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               29696 runs -    34.31 us/run -       36 kB/run - [1;34m   1.00 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               24576 runs -    41.48 us/run -       68 kB/run - [1;34m   1.56 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              24576 runs -    42.35 us/run -      132 kB/run - [1;34m   2.97 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              24576 runs -    41.94 us/run -      260 kB/run - [1;34m   5.91 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              24576 runs -    41.69 us/run -      511 kB/run - [1;34m  11.71 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             22528 runs -    45.14 us/run -     1566 kB/run - [1;34m  33.10 GB/s[0m
+  TOP_K(type=f32,ne=[512,4,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                14336 runs -    73.58 us/run -       16 kB/run - [1;34m   0.21 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               14336 runs -    74.14 us/run -       24 kB/run - [1;34m   0.31 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               14336 runs -    73.66 us/run -       40 kB/run - [1;34m   0.52 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               14336 runs -    71.68 us/run -       72 kB/run - [1;34m   0.96 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               12288 runs -    86.17 us/run -      136 kB/run - [1;34m   1.51 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              12288 runs -    87.55 us/run -      264 kB/run - [1;34m   2.88 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              11264 runs -    88.93 us/run -      520 kB/run - [1;34m   5.58 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              11264 runs -    89.46 us/run -     1023 kB/run - [1;34m  10.91 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             11264 runs -    93.84 us/run -     3133 kB/run - [1;34m  31.84 GB/s[0m
+  TOP_K(type=f32,ne=[512,8,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                 6144 runs -   172.11 us/run -       32 kB/run - [1;34m   0.18 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                7168 runs -   155.14 us/run -       48 kB/run - [1;34m   0.30 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                6144 runs -   171.70 us/run -       80 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                6144 runs -   170.68 us/run -      144 kB/run - [1;34m   0.80 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                6144 runs -   184.95 us/run -      272 kB/run - [1;34m   1.40 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               5120 runs -   199.53 us/run -      528 kB/run - [1;34m   2.52 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               6144 runs -   182.84 us/run -     1040 kB/run - [1;34m   5.42 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               6144 runs -   182.78 us/run -     2047 kB/run - [1;34m  10.68 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              5120 runs -   202.98 us/run -     6266 kB/run - [1;34m  29.44 GB/s[0m
+  TOP_K(type=f32,ne=[512,16,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -   514.78 us/run -       64 kB/run - [1;34m   0.12 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               3072 runs -   374.04 us/run -       96 kB/run - [1;34m   0.24 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   511.33 us/run -      160 kB/run - [1;34m   0.30 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               3072 runs -   358.20 us/run -      288 kB/run - [1;34m   0.77 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               3072 runs -   414.94 us/run -      544 kB/run - [1;34m   1.25 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              3072 runs -   449.21 us/run -     1056 kB/run - [1;34m   2.24 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   564.69 us/run -     2080 kB/run - [1;34m   3.51 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   561.40 us/run -     4094 kB/run - [1;34m   6.96 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             2048 runs -   493.88 us/run -    12532 kB/run - [1;34m  24.20 GB/s[0m
+  TOP_K(type=f32,ne=[512,32,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                2048 runs -  1049.30 us/run -      128 kB/run - [1;34m   0.12 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   801.19 us/run -      192 kB/run - [1;34m   0.23 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   774.23 us/run -      320 kB/run - [1;34m   0.39 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -   809.88 us/run -      576 kB/run - [1;34m   0.68 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               2048 runs -  1029.38 us/run -     1088 kB/run - [1;34m   1.01 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -  1149.87 us/run -     2112 kB/run - [1;34m   1.75 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -  1196.93 us/run -     4160 kB/run - [1;34m   3.31 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -  1154.54 us/run -     8189 kB/run - [1;34m   6.76 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=512,ties=0):              2048 runs -  1226.43 us/run -    25064 kB/run - [1;34m  19.49 GB/s[0m
+  TOP_K(type=f32,ne=[512,64,1,1],k=512,ties=0):                 1024 runs -  1096.89 us/run -      256 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=512,ties=0):                1024 runs -  1106.27 us/run -      384 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=512,ties=0):                1024 runs -  1100.27 us/run -      640 kB/run - [1;34m   0.55 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=512,ties=0):                1024 runs -  1725.85 us/run -     1152 kB/run - [1;34m   0.64 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=512,ties=0):                1024 runs -  1334.07 us/run -     2176 kB/run - [1;34m   1.56 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=512,ties=0):               1024 runs -  1336.45 us/run -     4224 kB/run - [1;34m   3.01 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=512,ties=0):               1024 runs -  1343.47 us/run -     8320 kB/run - [1;34m   5.91 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              1024 runs -  1785.06 us/run -    16378 kB/run - [1;34m   8.75 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=512,ties=0):              1340 runs -  2448.13 us/run -    50128 kB/run - [1;34m  19.53 GB/s[0m
+  TOP_K(type=f32,ne=[512,128,1,1],k=512,ties=0):                1024 runs -  2191.67 us/run -      512 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=512,ties=0):               1024 runs -  2212.29 us/run -      768 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=512,ties=0):               1024 runs -  2199.42 us/run -     1280 kB/run - [1;34m   0.56 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=512,ties=0):               1024 runs -  2496.19 us/run -     2304 kB/run - [1;34m   0.88 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=512,ties=0):               1024 runs -  2668.99 us/run -     4352 kB/run - [1;34m   1.56 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=512,ties=0):              1024 runs -  2704.63 us/run -     8448 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=512,ties=0):              1024 runs -  2684.79 us/run -    16640 kB/run - [1;34m   5.91 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             1024 runs -  2706.95 us/run -    32756 kB/run - [1;34m  11.54 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=512,ties=0):                      670 runs -  4883.53 us/run -   100256 kB/run - [1;34m  19.58 GB/s[0m
+  TOP_K(type=f32,ne=[512,256,1,1],k=512,ties=0):                1024 runs -  4382.85 us/run -     1024 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=512,ties=0):               1024 runs -  4424.36 us/run -     1536 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=512,ties=0):               1024 runs -  4681.51 us/run -     2560 kB/run - [1;34m   0.52 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=512,ties=0):               1024 runs -  4429.97 us/run -     4608 kB/run - [1;34m   0.99 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=512,ties=0):               1024 runs -  5399.61 us/run -     8704 kB/run - [1;34m   1.54 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=512,ties=0):              1024 runs -  5411.99 us/run -    16896 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=512,ties=0):              1009 runs -  5380.53 us/run -    33280 kB/run - [1;34m   5.90 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              513 runs -  5412.82 us/run -    65512 kB/run - [1;34m  11.54 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=512,ties=0):                      336 runs -  9783.29 us/run -   200512 kB/run - [1;34m  19.55 GB/s[0m
+  TOP_K(type=f32,ne=[512,512,1,1],k=512,ties=0):                1024 runs -  9048.34 us/run -     2048 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=512,ties=0):               1024 runs -  8847.65 us/run -     3072 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=512,ties=0):               1024 runs -  8798.56 us/run -     5120 kB/run - [1;34m   0.55 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=512,ties=0):               1024 runs -  8966.85 us/run -     9216 kB/run - [1;34m   0.98 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=512,ties=0):               1024 runs - 10794.99 us/run -    17408 kB/run - [1;34m   1.54 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=512,ties=0):               993 runs - 10829.53 us/run -    33792 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=512,ties=0):               505 runs - 10749.71 us/run -    66560 kB/run - [1;34m   5.90 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              257 runs - 10826.53 us/run -   131024 kB/run - [1;34m  11.54 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=512,ties=0):                      168 runs - 19559.33 us/run -   401024 kB/run - [1;34m  19.55 GB/s[0m
+  TOP_K(type=f32,ne=[512,1024,1,1],k=512,ties=0):               1024 runs - 17817.13 us/run -     4096 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=512,ties=0):              1024 runs - 17715.51 us/run -     6144 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=512,ties=0):              1024 runs - 17815.21 us/run -    10240 kB/run - [1;34m   0.55 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=512,ties=0):              1024 runs - 17940.95 us/run -    18432 kB/run - [1;34m   0.98 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=512,ties=0):               964 runs - 21591.41 us/run -    34816 kB/run - [1;34m   1.54 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=512,ties=0):                      497 runs - 21667.02 us/run -    67584 kB/run - [1;34m   2.97 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=512,ties=0):                      253 runs - 21496.88 us/run -   133120 kB/run - [1;34m   5.91 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=512,ties=0):                      129 runs - 21654.26 us/run -   262048 kB/run - [1;34m  11.54 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=512,ties=0):                      42 runs - 24225.93 us/run -   802048 kB/run - [1;34m  31.57 GB/s[0m
+  TOP_K(type=f32,ne=[512,2048,1,1],k=512,ties=0):               1024 runs - 35425.03 us/run -     8192 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=512,ties=0):              1024 runs - 35862.82 us/run -    12288 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=512,ties=0):              1024 runs - 35630.16 us/run -    20480 kB/run - [1;34m   0.55 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=512,ties=0):               911 runs - 35885.68 us/run -    36864 kB/run - [1;34m   0.98 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=512,ties=0):               482 runs - 43176.98 us/run -    69632 kB/run - [1;34m   1.54 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=512,ties=0):                      249 runs - 43323.44 us/run -   135168 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=512,ties=0):                      127 runs - 42971.86 us/run -   266240 kB/run - [1;34m   5.91 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                      65 runs - 43608.54 us/run -   524096 kB/run - [1;34m  11.46 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=512,ties=0):                      42 runs - 78459.02 us/run -  1604096 kB/run - [1;34m  19.50 GB/s[0m
+  TOP_K(type=f32,ne=[512,4096,1,1],k=512,ties=0):               1024 runs - 71140.32 us/run -    16384 kB/run - [1;34m   0.22 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=512,ties=0):              1024 runs - 71741.82 us/run -    24576 kB/run - [1;34m   0.33 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=512,ties=0):               820 runs - 71242.95 us/run -    40960 kB/run - [1;34m   0.55 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=512,ties=0):               456 runs - 71771.72 us/run -    73728 kB/run - [1;34m   0.98 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=512,ties=0):               241 runs - 86363.54 us/run -   139264 kB/run - [1;34m   1.54 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=512,ties=0):                      125 runs - 86650.26 us/run -   270336 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=512,ties=0):                       64 runs - 85960.38 us/run -   532480 kB/run - [1;34m   5.91 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=512,ties=0):                       33 runs - 87405.06 us/run -  1048192 kB/run - [1;34m  11.44 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=512,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                     11 runs - 95050.73 us/run -  3208192 kB/run - [1;34m  32.19 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              64512 runs -    15.60 us/run -        8 kB/run - [1;34m   0.49 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              64512 runs -    15.55 us/run -       12 kB/run - [1;34m   0.74 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              65536 runs -    15.38 us/run -       20 kB/run - [1;34m   1.24 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              66560 runs -    15.24 us/run -       36 kB/run - [1;34m   2.25 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             52224 runs -    19.29 us/run -       68 kB/run - [1;34m   3.36 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             53248 runs -    19.01 us/run -      132 kB/run - [1;34m   6.62 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             52224 runs -    19.18 us/run -      257 kB/run - [1;34m  12.82 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+            48128 runs -    21.09 us/run -      785 kB/run - [1;34m  35.51 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              29696 runs -    34.62 us/run -       16 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              29696 runs -    34.12 us/run -       24 kB/run - [1;34m   0.67 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              29696 runs -    34.34 us/run -       40 kB/run - [1;34m   1.11 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              30720 runs -    33.53 us/run -       72 kB/run - [1;34m   2.05 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             24576 runs -    41.89 us/run -      136 kB/run - [1;34m   3.10 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             24576 runs -    41.88 us/run -      264 kB/run - [1;34m   6.01 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             23552 runs -    42.57 us/run -      515 kB/run - [1;34m  11.56 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+            21504 runs -    46.81 us/run -     1570 kB/run - [1;34m  32.00 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              14336 runs -    74.54 us/run -       32 kB/run - [1;34m   0.41 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              14336 runs -    74.08 us/run -       48 kB/run - [1;34m   0.62 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              14336 runs -    73.89 us/run -       80 kB/run - [1;34m   1.03 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              14336 runs -    70.91 us/run -      144 kB/run - [1;34m   1.94 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             12288 runs -    87.04 us/run -      272 kB/run - [1;34m   2.98 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             12288 runs -    86.81 us/run -      528 kB/run - [1;34m   5.80 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             12288 runs -    86.59 us/run -     1031 kB/run - [1;34m  11.36 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+            11264 runs -    95.85 us/run -     3141 kB/run - [1;34m  31.25 GB/s[0m
+  TOP_K(type=f32,ne=[1024,8,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               6144 runs -   172.04 us/run -       64 kB/run - [1;34m   0.35 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               6144 runs -   171.81 us/run -       96 kB/run - [1;34m   0.53 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               6144 runs -   173.44 us/run -      160 kB/run - [1;34m   0.88 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               6144 runs -   169.78 us/run -      288 kB/run - [1;34m   1.62 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              5120 runs -   207.02 us/run -      544 kB/run - [1;34m   2.51 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              6144 runs -   185.16 us/run -     1056 kB/run - [1;34m   5.44 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              6144 runs -   185.70 us/run -     2063 kB/run - [1;34m  10.60 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             5120 runs -   205.08 us/run -     6282 kB/run - [1;34m  29.21 GB/s[0m
+  TOP_K(type=f32,ne=[1024,16,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   519.77 us/run -      128 kB/run - [1;34m   0.23 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   509.99 us/run -      192 kB/run - [1;34m   0.36 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              3072 runs -   363.24 us/run -      320 kB/run - [1;34m   0.84 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              3072 runs -   354.18 us/run -      576 kB/run - [1;34m   1.55 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             3072 runs -   417.05 us/run -     1088 kB/run - [1;34m   2.49 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             2048 runs -   569.34 us/run -     2112 kB/run - [1;34m   3.54 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             2048 runs -   570.37 us/run -     4126 kB/run - [1;34m   6.90 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                    2048 runs -   614.03 us/run -    12564 kB/run - [1;34m  19.51 GB/s[0m
+  TOP_K(type=f32,ne=[1024,32,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -  1037.69 us/run -      256 kB/run - [1;34m   0.24 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -  1044.91 us/run -      384 kB/run - [1;34m   0.35 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   832.63 us/run -      640 kB/run - [1;34m   0.73 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   800.09 us/run -     1152 kB/run - [1;34m   1.37 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             2048 runs -   927.48 us/run -     2176 kB/run - [1;34m   2.24 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             2048 runs -   923.01 us/run -     4224 kB/run - [1;34m   4.36 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             2048 runs -   939.98 us/run -     8253 kB/run - [1;34m   8.37 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=1024,ties=0):                     2048 runs -  1007.83 us/run -    25128 kB/run - [1;34m  23.78 GB/s[0m
+  TOP_K(type=f32,ne=[1024,64,1,1],k=1024,ties=0):               1024 runs -  1107.42 us/run -      512 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=1024,ties=0):               1024 runs -  1100.64 us/run -      768 kB/run - [1;34m   0.67 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=1024,ties=0):               1024 runs -  1107.50 us/run -     1280 kB/run - [1;34m   1.10 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=1024,ties=0):               1024 runs -  1095.38 us/run -     2304 kB/run - [1;34m   2.01 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=1024,ties=0):              1024 runs -  1346.08 us/run -     4352 kB/run - [1;34m   3.08 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=1024,ties=0):              1024 runs -  1352.13 us/run -     8448 kB/run - [1;34m   5.96 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=1024,ties=0):              1024 runs -  1375.17 us/run -    16506 kB/run - [1;34m  11.45 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=1024,ties=0):                      668 runs -  1503.57 us/run -    50256 kB/run - [1;34m  31.88 GB/s[0m
+  TOP_K(type=f32,ne=[1024,128,1,1],k=1024,ties=0):              1024 runs -  2214.71 us/run -     1024 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=1024,ties=0):              1024 runs -  2384.42 us/run -     1536 kB/run - [1;34m   0.61 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=1024,ties=0):              1024 runs -  2214.17 us/run -     2560 kB/run - [1;34m   1.10 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=1024,ties=0):              1024 runs -  2190.04 us/run -     4608 kB/run - [1;34m   2.01 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=1024,ties=0):                     1024 runs -  2722.21 us/run -     8704 kB/run - [1;34m   3.05 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=1024,ties=0):                     1024 runs -  2704.66 us/run -    16896 kB/run - [1;34m   5.96 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=1024,ties=0):                     1017 runs -  2749.68 us/run -    33012 kB/run - [1;34m  11.45 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=1024,ties=0):                     334 runs -  3007.09 us/run -   100512 kB/run - [1;34m  31.88 GB/s[0m
+  TOP_K(type=f32,ne=[1024,256,1,1],k=1024,ties=0):              1024 runs -  4430.47 us/run -     2048 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=1024,ties=0):              1024 runs -  4401.90 us/run -     3072 kB/run - [1;34m   0.67 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=1024,ties=0):              1024 runs -  4428.93 us/run -     5120 kB/run - [1;34m   1.10 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=1024,ties=0):              1024 runs -  4444.27 us/run -     9216 kB/run - [1;34m   1.98 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=1024,ties=0):                     1024 runs -  5443.57 us/run -    17408 kB/run - [1;34m   3.05 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=1024,ties=0):                      993 runs -  5412.27 us/run -    33792 kB/run - [1;34m   5.95 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=1024,ties=0):                      509 runs -  5494.12 us/run -    66024 kB/run - [1;34m  11.46 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=1024,ties=0):                     167 runs -  6010.43 us/run -   201024 kB/run - [1;34m  31.90 GB/s[0m
+  TOP_K(type=f32,ne=[1024,512,1,1],k=1024,ties=0):              1024 runs -  8863.00 us/run -     4096 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=1024,ties=0):              1024 runs -  8817.15 us/run -     6144 kB/run - [1;34m   0.66 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=1024,ties=0):              1024 runs -  8969.41 us/run -    10240 kB/run - [1;34m   1.09 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=1024,ties=0):              1024 runs -  8887.16 us/run -    18432 kB/run - [1;34m   1.98 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=1024,ties=0):                      964 runs - 10886.44 us/run -    34816 kB/run - [1;34m   3.05 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=1024,ties=0):                      497 runs - 10821.65 us/run -    67584 kB/run - [1;34m   5.96 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=1024,ties=0):                      255 runs - 10989.37 us/run -   132048 kB/run - [1;34m  11.46 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=1024,ties=0):                      84 runs - 12019.26 us/run -   402048 kB/run - [1;34m  31.90 GB/s[0m
+  TOP_K(type=f32,ne=[1024,1024,1,1],k=1024,ties=0):                     1024 runs - 17956.68 us/run -     8192 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=1024,ties=0):                     1024 runs - 17834.01 us/run -    12288 kB/run - [1;34m   0.66 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=1024,ties=0):                     1024 runs - 17938.88 us/run -    20480 kB/run - [1;34m   1.09 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=1024,ties=0):                      911 runs - 17773.05 us/run -    36864 kB/run - [1;34m   1.98 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=1024,ties=0):                     482 runs - 21772.21 us/run -    69632 kB/run - [1;34m   3.05 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=1024,ties=0):                     249 runs - 21646.42 us/run -   135168 kB/run - [1;34m   5.96 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=1024,ties=0):                     128 runs - 21985.20 us/run -   264096 kB/run - [1;34m  11.46 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=1024,ties=0):                     42 runs - 24202.50 us/run -   804096 kB/run - [1;34m  31.68 GB/s[0m
+  TOP_K(type=f32,ne=[1024,2048,1,1],k=1024,ties=0):                     1024 runs - 35920.45 us/run -    16384 kB/run - [1;34m   0.43 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=1024,ties=0):                     1024 runs - 35674.31 us/run -    24576 kB/run - [1;34m   0.66 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=1024,ties=0):                      820 runs - 35876.86 us/run -    40960 kB/run - [1;34m   1.09 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=1024,ties=0):                      456 runs - 35548.17 us/run -    73728 kB/run - [1;34m   1.98 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=1024,ties=0):                     241 runs - 43548.56 us/run -   139264 kB/run - [1;34m   3.05 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=1024,ties=0):                     125 runs - 43293.70 us/run -   270336 kB/run - [1;34m   5.95 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=1024,ties=0):                      64 runs - 44446.42 us/run -   528192 kB/run - [1;34m  11.33 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=1024,ties=0):                     21 runs - 48119.24 us/run -  1608192 kB/run - [1;34m  31.87 GB/s[0m
+  TOP_K(type=f32,ne=[1024,4096,1,1],k=1024,ties=0):                     1024 runs - 71838.71 us/run -    32768 kB/run - [1;34m   0.44 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=1024,ties=0):                      683 runs - 71339.73 us/run -    49152 kB/run - [1;34m   0.66 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=1024,ties=0):                      410 runs - 71748.46 us/run -    81920 kB/run - [1;34m   1.09 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=1024,ties=0):                      228 runs - 71084.57 us/run -   147456 kB/run - [1;34m   1.98 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=1024,ties=0):                     121 runs - 87111.15 us/run -   278528 kB/run - [1;34m   3.05 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=1024,ties=0):                      63 runs - 86577.19 us/run -   540672 kB/run - [1;34m   5.96 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=1024,ties=0):                      32 runs - 88575.38 us/run -  1056384 kB/run - [1;34m  11.37 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=1024,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                    11 runs - 96226.73 us/run -  3216384 kB/run - [1;34m  31.88 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              64512 runs -    15.58 us/run -       16 kB/run - [1;34m   0.98 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              64512 runs -    15.59 us/run -       24 kB/run - [1;34m   1.47 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              65536 runs -    15.29 us/run -       40 kB/run - [1;34m   2.50 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             65536 runs -    15.30 us/run -       72 kB/run - [1;34m   4.49 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             52224 runs -    19.15 us/run -      136 kB/run - [1;34m   6.77 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             51200 runs -    19.72 us/run -      261 kB/run - [1;34m  12.67 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+            46080 runs -    22.01 us/run -      789 kB/run - [1;34m  34.20 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              29696 runs -    34.60 us/run -       32 kB/run - [1;34m   0.88 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              29696 runs -    34.21 us/run -       48 kB/run - [1;34m   1.34 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              29696 runs -    34.07 us/run -       80 kB/run - [1;34m   2.24 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             29696 runs -    34.11 us/run -      144 kB/run - [1;34m   4.03 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             24576 runs -    41.63 us/run -      272 kB/run - [1;34m   6.23 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             23552 runs -    42.65 us/run -      523 kB/run - [1;34m  11.71 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+            21504 runs -    47.93 us/run -     1578 kB/run - [1;34m  31.41 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              14336 runs -    73.78 us/run -       64 kB/run - [1;34m   0.83 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              14336 runs -    73.78 us/run -       96 kB/run - [1;34m   1.24 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              14336 runs -    73.22 us/run -      160 kB/run - [1;34m   2.08 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             14336 runs -    71.54 us/run -      288 kB/run - [1;34m   3.84 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             12288 runs -    86.68 us/run -      544 kB/run - [1;34m   5.99 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             11264 runs -    88.86 us/run -     1047 kB/run - [1;34m  11.24 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+            10240 runs -    98.58 us/run -     3157 kB/run - [1;34m  30.54 GB/s[0m
+  TOP_K(type=f32,ne=[2048,8,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               6144 runs -   173.36 us/run -      128 kB/run - [1;34m   0.70 GB/s[0m
+  TOP_K(type=f32,ne=[4096,8,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               7168 runs -   154.21 us/run -      192 kB/run - [1;34m   1.19 GB/s[0m
+  TOP_K(type=f32,ne=[8192,8,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+               7168 runs -   152.39 us/run -      320 kB/run - [1;34m   2.00 GB/s[0m
+  TOP_K(type=f32,ne=[16384,8,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              6144 runs -   170.78 us/run -      576 kB/run - [1;34m   3.22 GB/s[0m
+  TOP_K(type=f32,ne=[32768,8,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              5120 runs -   207.72 us/run -     1088 kB/run - [1;34m   5.00 GB/s[0m
+  TOP_K(type=f32,ne=[65000,8,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              5120 runs -   210.38 us/run -     2095 kB/run - [1;34m   9.50 GB/s[0m
+  TOP_K(type=f32,ne=[200000,8,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             5120 runs -   231.08 us/run -     6314 kB/run - [1;34m  26.06 GB/s[0m
+  TOP_K(type=f32,ne=[2048,16,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   523.28 us/run -      256 kB/run - [1;34m   0.47 GB/s[0m
+  TOP_K(type=f32,ne=[4096,16,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              3072 runs -   366.33 us/run -      384 kB/run - [1;34m   1.00 GB/s[0m
+  TOP_K(type=f32,ne=[8192,16,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              3072 runs -   355.02 us/run -      640 kB/run - [1;34m   1.72 GB/s[0m
+  TOP_K(type=f32,ne=[16384,16,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             3072 runs -   357.58 us/run -     1152 kB/run - [1;34m   3.07 GB/s[0m
+  TOP_K(type=f32,ne=[32768,16,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             3072 runs -   415.00 us/run -     2176 kB/run - [1;34m   5.00 GB/s[0m
+  TOP_K(type=f32,ne=[65000,16,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             3072 runs -   422.41 us/run -     4190 kB/run - [1;34m   9.46 GB/s[0m
+  TOP_K(type=f32,ne=[200000,16,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+                    2048 runs -   513.64 us/run -    12628 kB/run - [1;34m  23.45 GB/s[0m
+  TOP_K(type=f32,ne=[2048,32,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -  1052.86 us/run -      512 kB/run - [1;34m   0.46 GB/s[0m
+  TOP_K(type=f32,ne=[4096,32,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -   937.81 us/run -      768 kB/run - [1;34m   0.78 GB/s[0m
+  TOP_K(type=f32,ne=[8192,32,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+              2048 runs -  1028.13 us/run -     1280 kB/run - [1;34m   1.19 GB/s[0m
+  TOP_K(type=f32,ne=[16384,32,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             2048 runs -  1037.15 us/run -     2304 kB/run - [1;34m   2.12 GB/s[0m
+  TOP_K(type=f32,ne=[32768,32,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             2048 runs -  1153.71 us/run -     4352 kB/run - [1;34m   3.60 GB/s[0m
+  TOP_K(type=f32,ne=[65000,32,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup complete
+             2048 runs -  1178.81 us/run -     8381 kB/run - [1;34m   6.78 GB/s[0m
+  TOP_K(type=f32,ne=[200000,32,1,1],k=2048,ties=0): ggml_backend_cuda_graph_compute: CUDA graph warmup reset
+                    2048 runs -  1343.76 us/run -    25256 kB/run - [1;34m  17.92 GB/s[0m
+  TOP_K(type=f32,ne=[2048,64,1,1],k=2048,ties=0):               1024 runs -  1101.97 us/run -     1024 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[4096,64,1,1],k=2048,ties=0):               1024 runs -  1107.41 us/run -     1536 kB/run - [1;34m   1.32 GB/s[0m
+  TOP_K(type=f32,ne=[8192,64,1,1],k=2048,ties=0):               1024 runs -  1525.11 us/run -     2560 kB/run - [1;34m   1.60 GB/s[0m
+  TOP_K(type=f32,ne=[16384,64,1,1],k=2048,ties=0):              1024 runs -  1110.29 us/run -     4608 kB/run - [1;34m   3.96 GB/s[0m
+  TOP_K(type=f32,ne=[32768,64,1,1],k=2048,ties=0):              1024 runs -  1354.79 us/run -     8704 kB/run - [1;34m   6.13 GB/s[0m
+  TOP_K(type=f32,ne=[65000,64,1,1],k=2048,ties=0):              1024 runs -  1395.38 us/run -    16762 kB/run - [1;34m  11.46 GB/s[0m
+  TOP_K(type=f32,ne=[200000,64,1,1],k=2048,ties=0):                      665 runs -  2214.29 us/run -    50512 kB/run - [1;34m  21.76 GB/s[0m
+  TOP_K(type=f32,ne=[2048,128,1,1],k=2048,ties=0):              1024 runs -  2202.40 us/run -     2048 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[4096,128,1,1],k=2048,ties=0):              1024 runs -  2214.59 us/run -     3072 kB/run - [1;34m   1.32 GB/s[0m
+  TOP_K(type=f32,ne=[8192,128,1,1],k=2048,ties=0):              1024 runs -  2187.21 us/run -     5120 kB/run - [1;34m   2.23 GB/s[0m
+  TOP_K(type=f32,ne=[16384,128,1,1],k=2048,ties=0):                     1024 runs -  2255.49 us/run -     9216 kB/run - [1;34m   3.90 GB/s[0m
+  TOP_K(type=f32,ne=[32768,128,1,1],k=2048,ties=0):                     1024 runs -  2924.28 us/run -    17408 kB/run - [1;34m   5.68 GB/s[0m
+  TOP_K(type=f32,ne=[65000,128,1,1],k=2048,ties=0):                     1001 runs -  2792.75 us/run -    33524 kB/run - [1;34m  11.45 GB/s[0m
+  TOP_K(type=f32,ne=[200000,128,1,1],k=2048,ties=0):                     333 runs -  3093.34 us/run -   101024 kB/run - [1;34m  31.15 GB/s[0m
+  TOP_K(type=f32,ne=[2048,256,1,1],k=2048,ties=0):              1024 runs -  4411.03 us/run -     4096 kB/run - [1;34m   0.89 GB/s[0m
+  TOP_K(type=f32,ne=[4096,256,1,1],k=2048,ties=0):              1024 runs -  4442.53 us/run -     6144 kB/run - [1;34m   1.32 GB/s[0m
+  TOP_K(type=f32,ne=[8192,256,1,1],k=2048,ties=0):              1024 runs -  4441.64 us/run -    10240 kB/run - [1;34m   2.20 GB/s[0m
+  TOP_K(type=f32,ne=[16384,256,1,1],k=2048,ties=0):                     1024 runs -  4513.63 us/run -    18432 kB/run - [1;34m   3.89 GB/s[0m
+  TOP_K(type=f32,ne=[32768,256,1,1],k=2048,ties=0):                      964 runs -  5420.45 us/run -    34816 kB/run - [1;34m   6.13 GB/s[0m
+  TOP_K(type=f32,ne=[65000,256,1,1],k=2048,ties=0):                      501 runs -  5581.65 us/run -    67048 kB/run - [1;34m  11.46 GB/s[0m
+  TOP_K(type=f32,ne=[200000,256,1,1],k=2048,ties=0):                     167 runs -  6187.59 us/run -   202048 kB/run - [1;34m  31.14 GB/s[0m
+  TOP_K(type=f32,ne=[2048,512,1,1],k=2048,ties=0):              1024 runs -  8927.28 us/run -     8192 kB/run - [1;34m   0.88 GB/s[0m
+  TOP_K(type=f32,ne=[4096,512,1,1],k=2048,ties=0):              1024 runs -  8978.57 us/run -    12288 kB/run - [1;34m   1.31 GB/s[0m
+  TOP_K(type=f32,ne=[8192,512,1,1],k=2048,ties=0):              1024 runs -  8885.00 us/run -    20480 kB/run - [1;34m   2.20 GB/s[0m
+  TOP_K(type=f32,ne=[16384,512,1,1],k=2048,ties=0):                      911 runs -  9023.07 us/run -    36864 kB/run - [1;34m   3.90 GB/s[0m
+  TOP_K(type=f32,ne=[32768,512,1,1],k=2048,ties=0):                      482 runs - 10838.69 us/run -    69632 kB/run - [1;34m   6.13 GB/s[0m
+  TOP_K(type=f32,ne=[65000,512,1,1],k=2048,ties=0):                      251 runs - 11171.24 us/run -   134096 kB/run - [1;34m  11.45 GB/s[0m
+  TOP_K(type=f32,ne=[200000,512,1,1],k=2048,ties=0):                      84 runs - 12371.29 us/run -   404096 kB/run - [1;34m  31.15 GB/s[0m
+  TOP_K(type=f32,ne=[2048,1024,1,1],k=2048,ties=0):                     1024 runs - 17860.07 us/run -    16384 kB/run - [1;34m   0.87 GB/s[0m
+  TOP_K(type=f32,ne=[4096,1024,1,1],k=2048,ties=0):                     1024 runs - 17956.18 us/run -    24576 kB/run - [1;34m   1.31 GB/s[0m
+  TOP_K(type=f32,ne=[8192,1024,1,1],k=2048,ties=0):                      820 runs - 17770.31 us/run -    40960 kB/run - [1;34m   2.20 GB/s[0m
+  TOP_K(type=f32,ne=[16384,1024,1,1],k=2048,ties=0):                     456 runs - 18051.69 us/run -    73728 kB/run - [1;34m   3.90 GB/s[0m
+  TOP_K(type=f32,ne=[32768,1024,1,1],k=2048,ties=0):                     241 runs - 21677.70 us/run -   139264 kB/run - [1;34m   6.13 GB/s[0m
+  TOP_K(type=f32,ne=[65000,1024,1,1],k=2048,ties=0):                     126 runs - 22333.74 us/run -   268192 kB/run - [1;34m  11.45 GB/s[0m
+  TOP_K(type=f32,ne=[200000,1024,1,1],k=2048,ties=0):                     42 runs - 25034.02 us/run -   808192 kB/run - [1;34m  30.79 GB/s[0m
+  TOP_K(type=f32,ne=[2048,2048,1,1],k=2048,ties=0):                     1024 runs - 35735.70 us/run -    32768 kB/run - [1;34m   0.87 GB/s[0m
+  TOP_K(type=f32,ne=[4096,2048,1,1],k=2048,ties=0):                      683 runs - 35919.57 us/run -    49152 kB/run - [1;34m   1.30 GB/s[0m
+  TOP_K(type=f32,ne=[8192,2048,1,1],k=2048,ties=0):                      410 runs - 35531.25 us/run -    81920 kB/run - [1;34m   2.20 GB/s[0m
+  TOP_K(type=f32,ne=[16384,2048,1,1],k=2048,ties=0):                     228 runs - 36101.51 us/run -   147456 kB/run - [1;34m   3.90 GB/s[0m
+  TOP_K(type=f32,ne=[32768,2048,1,1],k=2048,ties=0):                     121 runs - 43357.90 us/run -   278528 kB/run - [1;34m   6.13 GB/s[0m
+  TOP_K(type=f32,ne=[65000,2048,1,1],k=2048,ties=0):                      63 runs - 45037.00 us/run -   536384 kB/run - [1;34m  11.36 GB/s[0m
+  TOP_K(type=f32,ne=[200000,2048,1,1],k=2048,ties=0):                     21 runs - 49492.14 us/run -  1616384 kB/run - [1;34m  31.15 GB/s[0m
+  TOP_K(type=f32,ne=[2048,4096,1,1],k=2048,ties=0):                      513 runs - 71440.11 us/run -    65536 kB/run - [1;34m   0.87 GB/s[0m
+  TOP_K(type=f32,ne=[4096,4096,1,1],k=2048,ties=0):                      342 runs - 71838.46 us/run -    98304 kB/run - [1;34m   1.31 GB/s[0m
+  TOP_K(type=f32,ne=[8192,4096,1,1],k=2048,ties=0):                      205 runs - 71079.69 us/run -   163840 kB/run - [1;34m   2.20 GB/s[0m
+  TOP_K(type=f32,ne=[16384,4096,1,1],k=2048,ties=0):                     114 runs - 72215.19 us/run -   294912 kB/run - [1;34m   3.89 GB/s[0m
+  TOP_K(type=f32,ne=[32768,4096,1,1],k=2048,ties=0):                      61 runs - 86712.84 us/run -   557056 kB/run - [1;34m   6.13 GB/s[0m
+  TOP_K(type=f32,ne=[65000,4096,1,1],k=2048,ties=0):                      32 runs - 89736.31 us/run -  1072768 kB/run - [1;34m  11.40 GB/s[0m
+  TOP_K(type=f32,ne=[200000,4096,1,1],k=2048,ties=0):                     11 runs - 98966.45 us/run -  3232768 kB/run - [1;34m  31.15 GB/s[0m
+  Backend CUDA0: [1;32mOK[0m
+Backend 2/2: CPU
+  Skipping CPU backend
+2/2 backends passed
+[1;32mOK[0m
