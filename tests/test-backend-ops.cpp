@@ -1617,6 +1617,7 @@ struct test_case {
             size_t target_size = is_cpu ? target_size_cpu : target_size_gpu;
             n_runs = (int)std::min<int64_t>(ggml_graph_size(gf) - ggml_graph_n_nodes(gf), target_size / op_size(out)) + 1;
         }
+        n_runs = std::min<int>(n_runs, 1024);
 
         // duplicate the op
         for (int i = 1; i < n_runs; i++) {
